@@ -1,0 +1,49 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const s = sectionMap[key];
+    return !s || s.enabled === 1 || s.enabled === true;
+  }
+-%>
+<!doctype html>
+<html lang="id" class="h-full" style="scroll-behavior:smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title><%= content.partner_one %> &amp; <%= content.partner_two %> — Wedding Invitation</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/themes/theme8/public/style.css" />
+  </head>
+  <body class="h-full">
+    <div id="app" class="h-full w-full">
+      <%- include('partials/nav', { hasSection }) %>
+
+      <% if (hasSection('hero')) { %><%- include('partials/hero') %><% } %>
+      <% if (hasSection('story')) { %><%- include('partials/story', { story }) %><% } %>
+      <% if (hasSection('gallery')) { %><%- include('partials/gallery', { gallery }) %><% } %>
+      <% if (hasSection('events')) { %><%- include('partials/events', { events }) %><% } %>
+      <% if (hasSection('rsvp')) { %><%- include('partials/rsvp') %><% } %>
+      <% if (hasSection('gift')) { %><%- include('partials/gift', { gifts }) %><% } %>
+      <% if (hasSection('wishes')) { %><%- include('partials/wishes', { wishes }) %><% } %>
+
+      <%- include('partials/footer') %>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      window.__SITE__ = {
+        siteId: <%= site.id %>,
+        slug: <%- JSON.stringify(site.slug) %>,
+        apiBase: <%- JSON.stringify(apiBase) %>,
+        weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+      };
+      window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+    </script>
+    <script src="/themes/theme8/public/script.js"></script>
+    <%- include('../shared/music.ejs', { site }) %>
+  </body>
+</html>

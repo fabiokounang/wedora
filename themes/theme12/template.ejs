@@ -1,0 +1,62 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const s = sectionMap[key];
+    return !s || s.enabled === 1 || s.enabled === true;
+  }
+  const storiesArray = typeof story !== 'undefined' && story ? story : [];
+  const eventRows = (events || []).slice().sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
+  const rawKeepHero = content.keep_hero_visible_after_open;
+  const keepHeroVisibleAfterOpen = !!(rawKeepHero != null && String(rawKeepHero).trim().match(/^(ya|yes|1|true|on)$/i));
+-%>
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<%- include('partials/head', { content, site }) %>
+<body class="h-full t12-body">
+<div class="loader-wrap" id="loader">
+  <div class="loader-leaf" style="margin-bottom:22px">
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 4C24 4 8 16 8 28c0 8.8 7.2 16 16 16s16-7.2 16-16C40 16 24 4 24 4z" fill="var(--secondary)" opacity="0.6" /><path d="M24 12v28M18 20c3 2 6 2 6 2M30 26c-3 2-6 2-6 2" stroke="var(--text)" stroke-width="1.2" opacity="0.4" /></svg>
+  </div>
+  <p style="font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:0.12em;margin:0 0 6px;font-weight:300">Menyiapkan undangan</p>
+  <p style="font-size:11px;letter-spacing:0.18em;opacity:0.5;margin:0 0 14px">DIGITAL &amp; RAMAH LINGKUNGAN</p>
+  <div class="loader-dots"><span style="background:var(--primary)"></span><span style="background:var(--primary)"></span><span style="background:var(--primary)"></span></div>
+</div>
+<div class="progress-bar" id="progressBar"></div>
+<% if (site.music_enabled && site.music_url) { %>
+<button type="button" class="music-btn" id="musicBtn" aria-label="Musik latar">
+  <div class="music-bars"><span style="height:6px;background:var(--primary)"></span><span style="height:10px;background:var(--primary)"></span><span style="height:4px;background:var(--primary)"></span></div>
+</button>
+<% } %>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="appWrap" class="<%= hasSection('hero') ? 'inv-closed' : 'inv-open' %>" style="height:100%;overflow:hidden">
+<% if (hasSection('hero')) { %>
+<%- include('partials/cover', { content, helpers }) %>
+<% } %>
+<div id="mainScroll" class="main-scroll">
+<% if (hasSection('story')) { %><%- include('partials/story', { content, story: storiesArray, helpers }) %><% } %>
+<% if (hasSection('events')) { %><%- include('partials/events', { events: eventRows, content, helpers }) %><% } %>
+<% if (hasSection('location')) { %><%- include('partials/location', { events: eventRows, content }) %><% } %>
+<% if (hasSection('rsvp')) { %><%- include('partials/rsvp') %><% } %>
+<% if (hasSection('gallery')) { %><%- include('partials/gallery', { gallery }) %><% } %>
+<% if (hasSection('wishes')) { %><%- include('partials/wishes', { wishes }) %><% } %>
+<% if (hasSection('gift')) { %><%- include('partials/gift', { gifts, content }) %><% } %>
+<%- include('partials/footer', { content }) %>
+</div>
+</div>
+<script>
+  window.__SITE__ = {
+    siteId: <%= site.id %>,
+    slug: <%- JSON.stringify(site.slug) %>,
+    apiBase: <%- JSON.stringify(apiBase) %>,
+    weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    musicUrl: <%- JSON.stringify(site.music_url || null) %>,
+    musicAutoplay: <%= site.music_autoplay ? 1 : 0 %>,
+    keepHeroVisibleAfterOpen: <%- JSON.stringify(keepHeroVisibleAfterOpen) %>,
+  };
+  window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+<script src="/themes/theme12/public/script.js"></script>
+</body>
+</html>

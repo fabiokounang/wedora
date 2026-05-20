@@ -1,0 +1,26 @@
+<nav id="main-nav" class="sticky-nav fixed top-0 left-0 w-full z-50 px-4 py-3">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <a href="#home" class="font-display text-gold text-lg tracking-wider"><%= brand %></a>
+    <button id="mobile-toggle" type="button" class="md:hidden text-champagne" aria-label="Menu">
+      <i data-lucide="menu" style="width: 24px; height: 24px"></i>
+    </button>
+    <div id="nav-links" class="hidden md:flex gap-8">
+      <a href="#home" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">Home</a>
+      <% if (hasSection('story')) { %><a href="#story" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">Our Story</a><% } %>
+      <% if (hasSection('events')) { %><a href="#events" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">Celebration</a><% } %>
+      <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">RSVP</a><% } %>
+      <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">Moments</a><% } %>
+      <% if (hasSection('gift')) { %><a href="#gift" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">Gifts</a><% } %>
+      <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold transition-colors">With Love</a><% } %>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden flex-col items-center gap-4 py-6">
+    <a href="#home" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">Home</a>
+    <% if (hasSection('story')) { %><a href="#story" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">Our Story</a><% } %>
+    <% if (hasSection('events')) { %><a href="#events" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">Celebration</a><% } %>
+    <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">RSVP</a><% } %>
+    <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">Moments</a><% } %>
+    <% if (hasSection('gift')) { %><a href="#gift" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">Gifts</a><% } %>
+    <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link font-ui text-xs tracking-[.2em] uppercase text-champagne/80 hover:text-gold">With Love</a><% } %>
+  </div>
+</nav>

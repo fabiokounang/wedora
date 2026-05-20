@@ -1,0 +1,122 @@
+<%# Sub-scene: How We Met %>
+<% if (content.how_we_met_text) { %>
+<section id="story" class="scene" style="background:var(--ivory)">
+  <div class="w-full max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <div class="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+      <div class="w-full md:w-1/2 stagger-1">
+        <div class="art-frame">
+          <svg class="svg-scene w-full" viewBox="0 0 400 500" style="background:var(--surface)">
+            <defs>
+              <linearGradient id="rain" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="var(--dusty-pink)" stop-opacity=".1" />
+                <stop offset="100%" stop-color="var(--gold)" stop-opacity=".05" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="500" fill="url(#rain)" />
+            <circle cx="200" cy="180" r="60" fill="none" stroke="var(--gold)" stroke-width=".5" opacity=".3" />
+            <circle cx="200" cy="180" r="45" fill="none" stroke="var(--dusty-pink)" stroke-width=".3" opacity=".4" />
+            <path d="M160 260 Q180 240 200 260 Q220 240 240 260" fill="none" stroke="var(--gold)" stroke-width="1" opacity=".5" />
+            <line x1="120" y1="100" x2="122" y2="140" stroke="var(--taupe)" stroke-width=".3" opacity=".3" />
+            <line x1="280" y1="80" x2="282" y2="130" stroke="var(--taupe)" stroke-width=".3" opacity=".3" />
+            <line x1="180" y1="60" x2="181" y2="100" stroke="var(--taupe)" stroke-width=".3" opacity=".2" />
+          </svg>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2">
+        <div class="stagger-2 chapter-num">Chapter One</div>
+        <h2 class="stagger-2 font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--deep)">How We Met</h2>
+        <div class="stagger-3 gold-line" style="margin-left:0"></div>
+        <p class="stagger-3 font-story text-lg md:text-xl leading-relaxed mt-6" style="color:var(--taupe);line-height:1.9">
+          <%= content.how_we_met_text %>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<% } else { %>
+<section id="story" class="scene" style="background:var(--ivory)">
+  <div class="w-full max-w-4xl mx-auto px-6 py-24">
+    <div class="text-center stagger-1">
+      <div class="chapter-num">Chapter One</div>
+      <h2 class="font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--deep)"><%= content.story_title || 'Our Story' %></h2>
+      <div class="gold-line"></div>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%# Sub-scene: Our Journey / Timeline %>
+<% if (story && story.length > 0) { %>
+<section class="scene" style="background:linear-gradient(180deg,var(--surface),var(--ivory))">
+  <div class="w-full max-w-4xl mx-auto px-6 py-24">
+    <div class="text-center stagger-1">
+      <div class="chapter-num">Chapter Two</div>
+      <h2 class="font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--deep)"><%= content.story_title || 'Our Journey' %></h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="relative mt-20 stagger-2">
+      <div class="timeline-line"></div>
+      <% story.forEach(function(item, idx) { %>
+      <div class="relative flex items-center mb-20">
+        <% if (idx % 2 === 0) { %>
+        <div class="w-1/2 pr-8 md:pr-12 text-right">
+          <% if (item.date_label) { %><div class="chapter-num"><%= item.date_label %></div><% } %>
+          <h3 class="font-story text-2xl mt-2" style="color:var(--deep)"><%= item.title %></h3>
+          <% if (item.description) { %><p class="font-story text-base mt-2" style="color:var(--taupe)"><%= item.description %></p><% } %>
+        </div>
+        <div class="timeline-dot" style="top:50%"></div>
+        <div class="w-1/2 pl-8 md:pl-12"></div>
+        <% } else { %>
+        <div class="w-1/2 pr-8 md:pr-12"></div>
+        <div class="timeline-dot" style="top:50%"></div>
+        <div class="w-1/2 pl-8 md:pl-12">
+          <% if (item.date_label) { %><div class="chapter-num"><%= item.date_label %></div><% } %>
+          <h3 class="font-story text-2xl mt-2" style="color:var(--deep)"><%= item.title %></h3>
+          <% if (item.description) { %><p class="font-story text-base mt-2" style="color:var(--taupe)"><%= item.description %></p><% } %>
+        </div>
+        <% } %>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%# Sub-scene: The Proposal %>
+<% if (content.proposal_text) { %>
+<section class="scene" style="background:var(--deep)">
+  <div class="w-full max-w-6xl mx-auto px-6 py-20 md:py-32">
+    <div class="flex flex-col md:flex-row-reverse items-center gap-12 md:gap-20">
+      <div class="w-full md:w-1/2 stagger-1">
+        <div class="art-frame" style="border-color:rgba(196,169,106,.3)">
+          <svg class="svg-scene w-full" viewBox="0 0 400 500" style="background:#2A2420">
+            <defs>
+              <radialGradient id="glow">
+                <stop offset="0%" stop-color="var(--gold)" stop-opacity=".15" />
+                <stop offset="100%" stop-color="transparent" />
+              </radialGradient>
+            </defs>
+            <rect width="400" height="500" fill="#2A2420" />
+            <circle cx="200" cy="200" r="120" fill="url(#glow)" />
+            <circle cx="80" cy="60" r="1" fill="var(--gold)" opacity=".6" />
+            <circle cx="320" cy="80" r="1.2" fill="var(--gold)" opacity=".5" />
+            <circle cx="150" cy="40" r=".8" fill="var(--gold)" opacity=".4" />
+            <circle cx="260" cy="50" r="1" fill="var(--gold)" opacity=".7" />
+            <ellipse cx="200" cy="280" rx="25" ry="30" fill="none" stroke="var(--gold)" stroke-width="2" opacity=".7" />
+            <circle cx="200" cy="252" r="6" fill="none" stroke="var(--dusty-pink)" stroke-width="1.5" opacity=".8" />
+            <text x="200" y="380" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="14" fill="var(--taupe)" font-style="italic">she said yes</text>
+          </svg>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2">
+        <div class="stagger-2 chapter-num" style="color:rgba(196,169,106,.7)">Chapter Three</div>
+        <h2 class="stagger-2 font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--ivory)">The Proposal</h2>
+        <div class="stagger-3 gold-line" style="margin-left:0;opacity:.4"></div>
+        <p class="stagger-3 font-story text-lg md:text-xl leading-relaxed mt-6" style="color:var(--taupe);line-height:1.9">
+          <%= content.proposal_text %>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<% } %>

@@ -1,0 +1,34 @@
+<% const storyIcons = ['coffee', 'heart', 'gem', 'sparkles']; %>
+<section id="story" class="section-pad">
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="reveal">
+      <p class="uppercase tracking-[5px] text-xs mb-3" style="color: var(--secondary);"><%= content.story_subtitle || 'Our Journey' %></p>
+      <h2 class="font-serif-display text-3xl md:text-4xl font-light mb-8" style="color: var(--text);"><%= content.story_title || 'A Love Story' %></h2>
+      <div class="w-12 h-px mx-auto mb-8" style="background: var(--secondary);"></div>
+    </div>
+    <div class="reveal space-y-6">
+      <% (story || []).forEach(function (item, idx) {
+           const icon = storyIcons[idx % storyIcons.length];
+      %>
+      <div class="flex items-center gap-4 text-left card-warm p-6">
+        <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style="background: rgba(139, 41, 66, 0.4);">
+          <i data-lucide="<%= icon %>" style="width: 20px; height: 20px; color: var(--secondary);"></i>
+        </div>
+        <div>
+          <% if (item.date_label) { %><p class="font-serif-display italic text-sm mb-1" style="color: var(--secondary);"><%= item.date_label %></p><% } %>
+          <p class="font-serif-display text-base mb-1" style="color: var(--text);"><%= item.title %></p>
+          <% if (item.description) { %><p class="text-sm leading-relaxed" style="color: rgba(245, 230, 216, 0.7);"><%= item.description %></p><% } %>
+        </div>
+      </div>
+      <% }) %>
+      <% if (!story || story.length === 0) { %>
+        <p class="text-sm" style="color: rgba(245, 230, 216, 0.6);">Our story will appear here soon…</p>
+      <% } %>
+    </div>
+    <% if (content.closing_quote) { %>
+    <div class="reveal mt-8">
+      <p class="font-serif-display italic text-base md:text-lg leading-relaxed" style="color: rgba(245, 230, 216, 0.6);"><%= content.closing_quote %></p>
+    </div>
+    <% } %>
+  </div>
+</section>

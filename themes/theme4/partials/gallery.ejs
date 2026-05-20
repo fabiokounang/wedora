@@ -1,0 +1,21 @@
+<section id="gallery" class="section-pad" style="background: var(--burgundy, #3d1420);">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="reveal">
+      <p class="uppercase tracking-[5px] text-xs mb-3" style="color: var(--secondary);">Moments</p>
+      <h2 class="font-serif-display text-3xl md:text-4xl font-light mb-8" style="color: var(--text);">Our Gallery</h2>
+    </div>
+    <div class="reveal grid grid-cols-2 md:grid-cols-3 gap-3">
+      <% (gallery || []).forEach(function (item) { %>
+        <a href="<%= item.image_url %>" data-lightbox="theme4-gallery" <% if (item.caption) { %>data-title="<%= item.caption %>"<% } %> class="gallery-item block overflow-hidden">
+          <img src="<%= item.thumbnail_url || item.image_url %>" alt="<%= item.caption || 'Photo' %>" class="w-full h-full object-cover" />
+        </a>
+      <% }) %>
+      <% if (!gallery || gallery.length === 0) { %>
+        <p class="col-span-full text-sm" style="color: rgba(245, 230, 216, 0.45);">Gallery akan ditampilkan di sini.</p>
+      <% } %>
+    </div>
+    <% if (gallery && gallery.length > 0) { %>
+      <p class="reveal mt-6 text-xs italic" style="color: rgba(245, 230, 216, 0.4);">Klik foto untuk memperbesar</p>
+    <% } %>
+  </div>
+</section>

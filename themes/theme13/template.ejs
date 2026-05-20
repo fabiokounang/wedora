@@ -1,0 +1,66 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const sec = sectionMap[key];
+    return !sec || sec.enabled === 1 || sec.enabled === true;
+  }
+  const storiesArray = typeof story !== 'undefined' && story ? story : [];
+  const eventRows = (events || []).slice().sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
+  const partnerOne = (content.partner_one || 'Daniel').trim() || 'Daniel';
+  const partnerTwo = (content.partner_two || 'Sophia').trim() || 'Sophia';
+  const heroDateLabel =
+    (content.wedding_date && helpers.formatDate(content.wedding_date)) || '15 Juni 2025';
+  const invitationMsg =
+    (content.invitation_message && String(content.invitation_message).trim()) ||
+    'Together with their families, we invite you to celebrate our union';
+  const rawKeepHero = content.keep_hero_visible_after_open;
+  const keepHeroVisibleAfterOpen = !!(rawKeepHero != null && String(rawKeepHero).trim().match(/^(ya|yes|1|true|on)$/i));
+-%>
+<!doctype html>
+<html lang="id" class="h-full">
+<%- include('partials/head', { content }) %>
+<body class="h-full font-sans-clean" style="background: linear-gradient(160deg, #fdf8f3, #faf0e6, #f5e6d8);">
+<% if (hasSection('hero')) { %>
+<%- include('partials/cover', { content, partnerOne, partnerTwo }) %>
+<% } %>
+<div id="invitation" class="h-full overflow-y-auto invitation-scroll opacity-0 transition-opacity duration-1000" style="scroll-behavior: smooth;">
+  <div id="petals-container" class="fixed inset-0 pointer-events-none z-1 overflow-hidden"></div>
+  <% if (hasSection('hero')) { %>
+  <%- include('partials/hero', { content, partnerOne, partnerTwo, heroDateLabel, invitationMsg }) %>
+  <% } %>
+  <% if (hasSection('countdown')) { %>
+  <%- include('partials/countdown') %>
+  <% } %>
+  <% if (hasSection('story')) { %>
+  <%- include('partials/story', { content, storiesArray, helpers }) %>
+  <% } %>
+  <% if (hasSection('gallery')) { %>
+  <%- include('partials/gallery', { gallery }) %>
+  <% } %>
+  <% if (hasSection('events')) { %>
+  <%- include('partials/events', { content, eventRows, helpers }) %>
+  <% } %>
+  <% if (hasSection('rsvp')) { %>
+  <%- include('partials/rsvp') %>
+  <% } %>
+  <% if (hasSection('wishes')) { %>
+  <%- include('partials/wishes', { wishes }) %>
+  <% } %>
+  <%- include('partials/footer', { content, partnerOne, partnerTwo }) %>
+</div>
+<div id="t13-toast" class="t13-toast" role="status" aria-live="polite"></div>
+<script>
+  window.__SITE__ = {
+    siteId: <%= site.id %>,
+    slug: <%- JSON.stringify(site.slug) %>,
+    apiBase: <%- JSON.stringify(apiBase) %>,
+    weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    keepHeroVisibleAfterOpen: <%- JSON.stringify(keepHeroVisibleAfterOpen) %>,
+    hasCover: <%= hasSection('hero') ? 1 : 0 %>,
+  };
+</script>
+<script src="/themes/theme13/public/script.js"></script>
+<%- include('../shared/music.ejs', { site }) %>
+</body>
+</html>

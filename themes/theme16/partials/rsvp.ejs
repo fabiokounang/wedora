@@ -1,0 +1,33 @@
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-xl mx-auto">
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-center text-[#3d3128] mb-4">RSVP</h2>
+    <p class="text-center text-[#8b7355] mb-10">Mohon konfirmasi kehadiran Anda</p>
+    <form id="rsvpForm" class="glass-card p-8 space-y-5" autocomplete="on">
+      <div>
+        <label for="rsvpName" class="block text-sm text-[#6b5a4a] mb-1">Nama lengkap</label>
+        <input id="rsvpName" name="guest_name" type="text" required class="t16-input" placeholder="Nama Anda" autocomplete="name">
+      </div>
+      <div>
+        <label for="rsvpPhone" class="block text-sm text-[#6b5a4a] mb-1">WhatsApp (opsional)</label>
+        <input id="rsvpPhone" name="guest_phone" type="tel" class="t16-input" inputmode="tel" autocomplete="tel" placeholder="08… / 628…">
+      </div>
+      <div>
+        <p class="block text-sm text-[#6b5a4a] mb-2">Kehadiran</p>
+        <div class="flex flex-wrap gap-3">
+          <label class="t16-radio-pill"><input type="radio" name="attend" id="attendYes" class="sr-only" value="yes" checked> <span>Hadir</span></label>
+          <label class="t16-radio-pill"><input type="radio" name="attend" id="attendNo" class="sr-only" value="no"> <span>Berhalangan</span></label>
+        </div>
+      </div>
+      <div>
+        <label for="rsvpGuests" class="block text-sm text-[#6b5a4a] mb-1">Jumlah tamu</label>
+        <input id="rsvpGuests" name="guests_count" type="number" min="1" max="20" value="1" class="t16-input" inputmode="numeric">
+      </div>
+      <div>
+        <label for="rsvpMsg" class="block text-sm text-[#6b5a4a] mb-1">Pesan (opsional)</label>
+        <textarea id="rsvpMsg" name="notes" rows="3" class="t16-input t16-textarea" placeholder="Ucapan untuk mempelai…"></textarea>
+      </div>
+      <button type="submit" id="rsvpSubmitBtn" class="btn-glow w-full text-white py-3 rounded-full text-sm tracking-wider uppercase font-medium">Kirim RSVP</button>
+      <p id="rsvp-msg" class="text-center text-[#d4af37] text-sm hidden">Terima kasih atas konfirmasinya.</p>
+    </form>
+  </div>
+</section>

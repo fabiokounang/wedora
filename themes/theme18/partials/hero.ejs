@@ -1,0 +1,15 @@
+<section class="t18-reveal t18-hero">
+  <div class="t18-hero-inner">
+    <p class="t18-sans t18-eyebrow">The Wedding of</p>
+    <h1 class="t18-serif t18-hero-names"><%= partnerOne %> <em>&amp;</em> <%= partnerTwo %></h1>
+    <p class="t18-hero-date"><%= heroDateLabel %></p>
+    <div class="t18-divider"></div>
+  </div>
+</section>
+<% if (coupleQuote) { %>
+<section class="t18-reveal t18-section-pad t18-center">
+  <blockquote class="t18-quote">
+    <p class="t18-serif t18-quote-text">"<%= coupleQuote %>"</p>
+  </blockquote>
+</section>
+<% } %>

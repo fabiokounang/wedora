@@ -1,0 +1,18 @@
+<section id="wishes" class="py-20 px-4 bg-white">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-serif text-3xl md:text-4xl text-center text-gray-800 mb-4 fade-in">Love Notes</h2>
+    <p class="text-center text-gray-500 mb-10 fade-in">Leave a sweet message for the couple</p>
+    <form id="wish-form" class="bg-rose-pale/50 rounded-3xl p-6 mb-8 fade-in">
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input type="text" id="wish-name" required placeholder="Your name" class="flex-1 px-4 py-3 rounded-xl border border-rose-light/50 focus:outline-none focus:border-rose-soft focus:ring-2 focus:ring-rose-soft/20 bg-white" />
+        <input type="text" id="wish-text" required placeholder="Your message..." class="flex-[2] px-4 py-3 rounded-xl border border-rose-light/50 focus:outline-none focus:border-rose-soft focus:ring-2 focus:ring-rose-soft/20 bg-white" />
+        <button type="submit" id="wish-btn" class="px-6 py-3 bg-rose-soft text-white rounded-xl hover:bg-[#D88A8A] transition-colors font-medium whitespace-nowrap">
+          <i data-lucide="send" class="w-4 h-4 inline"></i> Send
+        </button>
+      </div>
+      <div id="wish-error" class="hidden mt-3 text-center py-2 bg-red-50 text-red-600 rounded-xl text-sm"></div>
+    </form>
+    <div id="wishes-list" class="space-y-4"></div>
+    <p id="no-wishes" class="text-center text-gray-400 italic py-8">Be the first to leave a love note! 💕</p>
+  </div>
+</section>

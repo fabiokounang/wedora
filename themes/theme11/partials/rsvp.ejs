@@ -1,0 +1,24 @@
+<section class="wedding-section" style="text-align:center;">
+  <div class="reveal section-inner" style="max-width:440px;">
+    <h2 class="section-title">RSVP</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <p class="rsvp-lead">Konfirmasi kehadiran Anda</p>
+    <form id="rsvpForm" class="rsvp-form-stack text-left">
+      <label class="sr-only" for="rsvpName">Nama</label>
+      <input class="rsvp-input" type="text" id="rsvpName" name="name" placeholder="Nama Anda" required autocomplete="name">
+      <label class="sr-only" for="rsvpPhone">Nomor WhatsApp</label>
+      <input class="rsvp-input" type="tel" id="rsvpPhone" name="guest_phone" inputmode="tel" autocomplete="tel" placeholder="Nomor WhatsApp / HP">
+      <label class="sr-only" for="rsvpAttend">Kehadiran</label>
+      <select class="rsvp-input" id="rsvpAttend" name="attendance" aria-label="Kehadiran">
+        <option value="yes">Dengan senang hati hadir</option>
+        <option value="no">Berhalangan</option>
+      </select>
+      <label class="sr-only" for="rsvpGuests">Jumlah tamu</label>
+      <input class="rsvp-input" type="number" id="rsvpGuests" name="guests_count" min="1" value="1" inputmode="numeric" placeholder="Jumlah tamu (termasuk Anda)">
+      <label class="sr-only" for="rsvpMsg">Pesan</label>
+      <textarea class="rsvp-input" id="rsvpMsg" name="notes" rows="3" placeholder="Pesan untuk mempelai (opsional)"></textarea>
+      <button type="submit" class="rsvp-btn" id="rsvpBtn">Kirim RSVP</button>
+    </form>
+    <p id="rsvpStatus" class="rsvp-status" role="status" aria-live="polite"></p>
+  </div>
+</section>

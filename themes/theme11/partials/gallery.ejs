@@ -1,0 +1,17 @@
+<section class="wedding-section wedding-section--tint" style="text-align:center;">
+  <div class="reveal section-inner--wide">
+    <h2 class="section-title">Galeri</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <% if (gallery && gallery.length) { %>
+    <div class="gallery-grid">
+      <% gallery.forEach(function (g) { %>
+      <div class="gallery-item reveal">
+        <img src="<%= g.image_url || g.thumbnail_url %>" alt="<%= (g.caption || 'Gallery').replace(/"/g, '&quot;') %>" loading="lazy" decoding="async" />
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p class="section-muted-lead" style="margin-top:1.5rem;">Foto galeri dapat diunggah di admin.</p>
+    <% } %>
+  </div>
+</section>

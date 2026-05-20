@@ -1,0 +1,48 @@
+<div id="t17-cover">
+  <div id="t17-particles-bg" class="t17-particles-bg"></div>
+  <!-- Left curtain -->
+  <div class="t17-curtain-left">
+    <div class="t17-curtain-glow"></div>
+    <svg class="t17-curtain-svg t17-curtain-svg--right t17-sway" viewBox="0 0 200 800" fill="none">
+      <path d="M180 0 C160 100 200 200 150 300 C120 380 180 450 160 550 C140 650 190 720 170 800" stroke="#b5c5a3" stroke-width="2" fill="none"/>
+      <circle cx="160" cy="150" r="8" fill="#e8b4b8" opacity="0.8"/>
+      <circle cx="175" cy="300" r="6" fill="#f4c9c0" opacity="0.7"/>
+      <circle cx="150" cy="500" r="10" fill="#e8b4b8" opacity="0.6"/>
+      <circle cx="170" cy="650" r="7" fill="#f4c9c0" opacity="0.8"/>
+      <path d="M155 140 Q165 130 175 140 Q165 155 155 140Z" fill="#e8b4b8" opacity="0.5"/>
+      <path d="M145 490 Q155 480 165 490 Q155 505 145 490Z" fill="#f4c9c0" opacity="0.5"/>
+    </svg>
+  </div>
+  <!-- Right curtain -->
+  <div class="t17-curtain-right">
+    <div class="t17-curtain-glow"></div>
+    <svg class="t17-curtain-svg t17-curtain-svg--left t17-sway" style="animation-delay:-2s;" viewBox="0 0 200 800" fill="none">
+      <path d="M20 0 C40 100 0 200 50 300 C80 380 20 450 40 550 C60 650 10 720 30 800" stroke="#b5c5a3" stroke-width="2" fill="none"/>
+      <circle cx="40" cy="180" r="9" fill="#e8b4b8" opacity="0.7"/>
+      <circle cx="25" cy="350" r="6" fill="#f4c9c0" opacity="0.8"/>
+      <circle cx="50" cy="520" r="8" fill="#e8b4b8" opacity="0.6"/>
+      <circle cx="30" cy="700" r="7" fill="#f4c9c0" opacity="0.7"/>
+    </svg>
+  </div>
+  <!-- Center glass card -->
+  <div class="t17-cover-center">
+    <div class="t17-glass-card t17-cover-card">
+      <svg class="mx-auto mb-4 w-32" viewBox="0 0 120 40" fill="none">
+        <path d="M10 30 Q30 5 60 20 Q90 5 110 30" stroke="#d4a574" stroke-width="1.5" fill="none"/>
+        <circle cx="60" cy="18" r="4" fill="#e8b4b8"/>
+        <circle cx="35" cy="15" r="3" fill="#b5c5a3"/>
+        <circle cx="85" cy="15" r="3" fill="#b5c5a3"/>
+      </svg>
+      <p class="t17-serif t17-eyebrow"><%= coverSubtitle %></p>
+      <h1 class="t17-serif t17-cover-names t17-glow-text"><%= p1f %> <span class="italic" style="font-size:0.8em;">&</span> <%= p2f %></h1>
+      <p class="t17-cover-date"><%= heroDateLabel %></p>
+      <div class="t17-divider-gold"></div>
+      <p class="t17-guest-label">Dear Honored Guest</p>
+      <button id="t17-open-btn" class="t17-btn-shimmer">Open Invitation</button>
+      <svg class="mx-auto mt-5 w-24" viewBox="0 0 100 30" fill="none">
+        <path d="M10 5 Q50 35 90 5" stroke="#d4a574" stroke-width="1" fill="none"/>
+        <circle cx="50" cy="20" r="3" fill="#e8b4b8"/>
+      </svg>
+    </div>
+  </div>
+</div>

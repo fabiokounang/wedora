@@ -1,0 +1,657 @@
+<div class="page-header page-header--inner">
+  <div>
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Super admin</p>
+    <h1 class="dash-title">Konten publik</h1>
+    <p class="muted small">Mengatur teks halaman beranda, harga, CTA, footer, dan meta default. Harga di tabel perbandingan baris tertentu disinkronkan dari paket billing.</p>
+  </div>
+</div>
+
+<% if (typeof formError !== 'undefined' && formError) { %>
+  <div class="flash flash-error"><%= formError %></div>
+<% } %>
+
+<div class="public-cms-tab-bar" role="tablist" data-public-cms-tab-bar aria-label="Bagian konten publik">
+  <button type="button" class="public-cms-tab is-active" role="tab" id="cms-tab-seo" data-public-cms-tab="seo" aria-controls="cms-panel-seo" aria-selected="true">SEO</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-footer" data-public-cms-tab="footer" aria-controls="cms-panel-footer" aria-selected="false">Footer</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-cta" data-public-cms-tab="cta" aria-controls="cms-panel-cta" aria-selected="false">CTA</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-home-hero" data-public-cms-tab="home-hero" aria-controls="cms-panel-home-hero" aria-selected="false">Beranda · Hero</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-home-stats" data-public-cms-tab="home-stats" aria-controls="cms-panel-home-stats" aria-selected="false">Beranda · Statistik &amp; fitur</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-home-about" data-public-cms-tab="home-about" aria-controls="cms-panel-home-about" aria-selected="false">Beranda · Tentang kami</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-home-mid" data-public-cms-tab="home-mid" aria-controls="cms-panel-home-mid" aria-selected="false">Beranda · Langkah &amp; testimoni</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-home-preview" data-public-cms-tab="home-preview" aria-controls="cms-panel-home-preview" aria-selected="false">Beranda · Pratinjau paket</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-price-hero" data-public-cms-tab="price-hero" aria-controls="cms-panel-price-hero" aria-selected="false">Harga · Hero</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-price-cards" data-public-cms-tab="price-cards" aria-controls="cms-panel-price-cards" aria-selected="false">Harga · Kartu</button>
+  <button type="button" class="public-cms-tab" role="tab" id="cms-tab-price-table" data-public-cms-tab="price-table" aria-controls="cms-panel-price-table" aria-selected="false">Harga · Tabel &amp; FAQ</button>
+</div>
+
+<form method="POST" action="/landing-cms" class="admin-form">
+  <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+  <div id="cms-panel-seo" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-seo" data-public-cms-tab="seo">
+    <h2 class="tab-panel-title">SEO &amp; judul halaman</h2>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="seo-homeTitle">Judul halaman beranda</label>
+        <input id="seo-homeTitle" class="form-group__control" type="text" name="seo[homeTitle]" maxlength="200" value="<%= cms.seo.homeTitle %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="seo-pricingTitle">Judul halaman harga</label>
+        <input id="seo-pricingTitle" class="form-group__control" type="text" name="seo[pricingTitle]" maxlength="200" value="<%= cms.seo.pricingTitle %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="seo-catalogTitle">Judul halaman katalog</label>
+        <input id="seo-catalogTitle" class="form-group__control" type="text" name="seo[catalogTitle]" maxlength="200" value="<%= cms.seo.catalogTitle %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="seo-meta">Meta deskripsi default (publik)</label>
+        <textarea id="seo-meta" class="form-group__control" name="seo[defaultMetaDescription]" rows="3" maxlength="600"><%= cms.seo.defaultMetaDescription %></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div id="cms-panel-footer" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-footer" data-public-cms-tab="footer" hidden>
+    <h2 class="tab-panel-title">Footer</h2>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="ft-brand">Nama brand (logo teks)</label>
+        <input id="ft-brand" class="form-group__control" type="text" name="footer[brandName]" maxlength="120" value="<%= cms.footer.brandName %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ft-tag">Tagline</label>
+        <textarea id="ft-tag" class="form-group__control" name="footer[tagline]" rows="2" maxlength="4000"><%= cms.footer.tagline %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ft-c1t">Judul kolom 1</label>
+        <input id="ft-c1t" class="form-group__control" type="text" name="footer[col1Title]" maxlength="120" value="<%= cms.footer.col1Title %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ft-c1a">Teks link katalog</label>
+        <input id="ft-c1a" class="form-group__control" type="text" name="footer[col1LinkCatalog]" maxlength="120" value="<%= cms.footer.col1LinkCatalog %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ft-c1b">Teks link harga</label>
+        <input id="ft-c1b" class="form-group__control" type="text" name="footer[col1LinkPricing]" maxlength="120" value="<%= cms.footer.col1LinkPricing %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ft-c2t">Judul kolom 2</label>
+        <input id="ft-c2t" class="form-group__control" type="text" name="footer[col2Title]" maxlength="120" value="<%= cms.footer.col2Title %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ft-c2a">Teks link masuk</label>
+        <input id="ft-c2a" class="form-group__control" type="text" name="footer[col2LinkLogin]" maxlength="120" value="<%= cms.footer.col2LinkLogin %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ft-c2b">Teks link daftar</label>
+        <input id="ft-c2b" class="form-group__control" type="text" name="footer[col2LinkRegister]" maxlength="120" value="<%= cms.footer.col2LinkRegister %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ft-b1">Baris bawah 1</label>
+        <input id="ft-b1" class="form-group__control" type="text" name="footer[bottomLine1]" maxlength="4000" value="<%= cms.footer.bottomLine1 %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ft-b2">Baris bawah 2</label>
+        <input id="ft-b2" class="form-group__control" type="text" name="footer[bottomLine2]" maxlength="4000" value="<%= cms.footer.bottomLine2 %>" />
+      </div>
+    </div>
+  </div>
+
+  <div id="cms-panel-cta" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-cta" data-public-cms-tab="cta" hidden>
+    <h2 class="tab-panel-title">Banner CTA</h2>
+    <h3 class="public-cms-subhead">Beranda</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="cta-h0">Judul baris 1</label>
+        <input id="cta-h0" class="form-group__control" type="text" name="cta[home][titleLines][0]" maxlength="500" value="<%= (cms.cta.home.titleLines && cms.cta.home.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="cta-h1">Judul baris 2</label>
+        <input id="cta-h1" class="form-group__control" type="text" name="cta[home][titleLines][1]" maxlength="500" value="<%= (cms.cta.home.titleLines && cms.cta.home.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="cta-hs">Subtitle</label>
+        <textarea id="cta-hs" class="form-group__control" name="cta[home][subtitle]" rows="2" maxlength="4000"><%= cms.cta.home.subtitle %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="cta-hp">Label tombol utama</label>
+        <input id="cta-hp" class="form-group__control" type="text" name="cta[home][primaryLabel]" maxlength="120" value="<%= cms.cta.home.primaryLabel %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="cta-hs2">Label tombol sekunder</label>
+        <input id="cta-hs2" class="form-group__control" type="text" name="cta[home][secondaryLabel]" maxlength="120" value="<%= cms.cta.home.secondaryLabel %>" />
+      </div>
+    </div>
+    <h3 class="public-cms-subhead">Halaman harga</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="cta-p0">Judul baris 1</label>
+        <input id="cta-p0" class="form-group__control" type="text" name="cta[pricing][titleLines][0]" maxlength="500" value="<%= (cms.cta.pricing.titleLines && cms.cta.pricing.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="cta-p1">Judul baris 2</label>
+        <input id="cta-p1" class="form-group__control" type="text" name="cta[pricing][titleLines][1]" maxlength="500" value="<%= (cms.cta.pricing.titleLines && cms.cta.pricing.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="cta-ps">Subtitle</label>
+        <textarea id="cta-ps" class="form-group__control" name="cta[pricing][subtitle]" rows="2" maxlength="4000"><%= cms.cta.pricing.subtitle %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="cta-pp">Label tombol utama</label>
+        <input id="cta-pp" class="form-group__control" type="text" name="cta[pricing][primaryLabel]" maxlength="120" value="<%= cms.cta.pricing.primaryLabel %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="cta-ps2">Label tombol sekunder</label>
+        <input id="cta-ps2" class="form-group__control" type="text" name="cta[pricing][secondaryLabel]" maxlength="120" value="<%= cms.cta.pricing.secondaryLabel %>" />
+      </div>
+    </div>
+    <p class="muted small">Tombol mengarah ke <code>/register</code> dan <code>/catalog</code> (tetap di kode).</p>
+  </div>
+
+  <div id="cms-panel-home-hero" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-home-hero" data-public-cms-tab="home-hero" hidden>
+    <h2 class="tab-panel-title">Beranda — Hero</h2>
+    <div class="admin-form__grid">
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="hh-ey">Eyebrow</label>
+        <input id="hh-ey" class="form-group__control" type="text" name="home[hero][eyebrow]" maxlength="500" value="<%= cms.home.hero.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hh-t1">Judul baris 1</label>
+        <input id="hh-t1" class="form-group__control" type="text" name="home[hero][titleLine1]" maxlength="500" value="<%= cms.home.hero.titleLine1 %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hh-em">Kata penekanan (miring)</label>
+        <input id="hh-em" class="form-group__control" type="text" name="home[hero][titleEmphasis]" maxlength="120" value="<%= cms.home.hero.titleEmphasis %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hh-t2">Judul baris 2</label>
+        <input id="hh-t2" class="form-group__control" type="text" name="home[hero][titleLine2]" maxlength="500" value="<%= cms.home.hero.titleLine2 %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hh-t3">Judul baris 3</label>
+        <input id="hh-t3" class="form-group__control" type="text" name="home[hero][titleLine3]" maxlength="500" value="<%= cms.home.hero.titleLine3 %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="hh-sub">Subtitle</label>
+        <textarea id="hh-sub" class="form-group__control" name="home[hero][subtitle]" rows="3" maxlength="4000"><%= cms.home.hero.subtitle %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hh-c1">CTA primer</label>
+        <input id="hh-c1" class="form-group__control" type="text" name="home[hero][ctaPrimary]" maxlength="120" value="<%= cms.home.hero.ctaPrimary %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hh-c2">CTA sekunder</label>
+        <input id="hh-c2" class="form-group__control" type="text" name="home[hero][ctaSecondary]" maxlength="120" value="<%= cms.home.hero.ctaSecondary %>" />
+      </div>
+    </div>
+  </div>
+
+  <div id="cms-panel-home-stats" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-home-stats" data-public-cms-tab="home-stats" hidden>
+    <h2 class="tab-panel-title">Beranda — Statistik &amp; fitur</h2>
+
+    <h3 class="public-cms-subhead">Statistik (bar di beranda)</h3>
+    <p class="public-cms-hint">Isi angka/teks dan label untuk tiap kotak. Centang &ldquo;Gunakan jumlah tema&rdquo; bila angka harus mengikuti banyaknya tema di katalog (teks angka diabaikan).</p>
+    <% var statsList = cms.home.stats || []; %>
+    <% for (var si = 0; si < 6; si++) { var st = statsList[si] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">Statistik <%= si + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group">
+            <label class="form-group__label" for="st-<%= si %>-val">Angka atau teks singkat</label>
+            <input id="st-<%= si %>-val" class="form-group__control" type="text" name="home[stats][<%= si %>][val]" maxlength="120" value="<%= st.val != null ? String(st.val) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="st-<%= si %>-lab">Label (teks di bawah angka)</label>
+            <input id="st-<%= si %>-lab" class="form-group__control" type="text" name="home[stats][<%= si %>][label]" maxlength="120" value="<%= st.label != null ? String(st.label) : '' %>" />
+          </div>
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label switch" for="st-<%= si %>-utc">
+              <input id="st-<%= si %>-utc" type="checkbox" name="home[stats][<%= si %>][useThemeCount]" value="1" <%= st.useThemeCount ? 'checked' : '' %> />
+              <span>Gunakan jumlah tema otomatis (bukan teks di atas)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <h3 class="public-cms-subhead">Seksi fitur</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="hf-ey">Eyebrow</label>
+        <input id="hf-ey" class="form-group__control" type="text" name="home[featuresSection][eyebrow]" maxlength="500" value="<%= cms.home.featuresSection.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hf-t0">Judul baris 1</label>
+        <input id="hf-t0" class="form-group__control" type="text" name="home[featuresSection][titleLines][0]" maxlength="500" value="<%= (cms.home.featuresSection.titleLines && cms.home.featuresSection.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hf-t1">Judul baris 2</label>
+        <input id="hf-t1" class="form-group__control" type="text" name="home[featuresSection][titleLines][1]" maxlength="500" value="<%= (cms.home.featuresSection.titleLines && cms.home.featuresSection.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="hf-sub">Subtitle</label>
+        <textarea id="hf-sub" class="form-group__control" name="home[featuresSection][subtitle]" rows="2" maxlength="4000"><%= cms.home.featuresSection.subtitle %></textarea>
+      </div>
+    </div>
+    <p class="public-cms-hint">Maksimal 6 kartu fitur. Emoji opsional di kolom ikon (mis. 🎨).</p>
+    <% var featList = cms.home.features || []; %>
+    <% for (var fi = 0; fi < 6; fi++) { var f = featList[fi] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">Fitur <%= fi + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group">
+            <label class="form-group__label" for="feat-<%= fi %>-ic">Ikon (emoji)</label>
+            <input id="feat-<%= fi %>-ic" class="form-group__control" type="text" name="home[features][<%= fi %>][icon]" maxlength="16" value="<%= f.icon != null ? String(f.icon) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="feat-<%= fi %>-ti">Judul</label>
+            <input id="feat-<%= fi %>-ti" class="form-group__control" type="text" name="home[features][<%= fi %>][title]" maxlength="500" value="<%= f.title != null ? String(f.title) : '' %>" />
+          </div>
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="feat-<%= fi %>-de">Deskripsi</label>
+            <textarea id="feat-<%= fi %>-de" class="form-group__control" name="home[features][<%= fi %>][desc]" rows="2" maxlength="4000"><%= f.desc != null ? String(f.desc) : '' %></textarea>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div id="cms-panel-home-about" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-home-about" data-public-cms-tab="home-about" hidden>
+    <h2 class="tab-panel-title">Beranda — Tentang kami</h2>
+    <% var ab = cms.home.aboutSection || {}; %>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="ab-ey">Eyebrow</label>
+        <input id="ab-ey" class="form-group__control" type="text" name="home[aboutSection][eyebrow]" maxlength="500" value="<%= ab.eyebrow || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ab-t0">Judul baris 1</label>
+        <input id="ab-t0" class="form-group__control" type="text" name="home[aboutSection][titleLines][0]" maxlength="500" value="<%= (ab.titleLines && ab.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ab-t1">Judul baris 2</label>
+        <input id="ab-t1" class="form-group__control" type="text" name="home[aboutSection][titleLines][1]" maxlength="500" value="<%= (ab.titleLines && ab.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ab-body">Cerita / paragraf utama</label>
+        <textarea id="ab-body" class="form-group__control" name="home[aboutSection][body]" rows="4" maxlength="4000"><%= ab.body || '' %></textarea>
+      </div>
+    </div>
+    <p class="public-cms-hint">Tiga kartu &ldquo;highlight&rdquo; opsional di bawah cerita (icon emoji + judul + deskripsi singkat). Kosongkan baris yang tidak dipakai.</p>
+    <% var hlList = ab.highlights || []; %>
+    <% for (var hi = 0; hi < 3; hi++) { var hl = hlList[hi] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">Highlight <%= hi + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group">
+            <label class="form-group__label" for="hl-<%= hi %>-ic">Ikon (emoji)</label>
+            <input id="hl-<%= hi %>-ic" class="form-group__control" type="text" name="home[aboutSection][highlights][<%= hi %>][icon]" maxlength="16" value="<%= hl.icon != null ? String(hl.icon) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="hl-<%= hi %>-ti">Judul</label>
+            <input id="hl-<%= hi %>-ti" class="form-group__control" type="text" name="home[aboutSection][highlights][<%= hi %>][title]" maxlength="500" value="<%= hl.title != null ? String(hl.title) : '' %>" />
+          </div>
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="hl-<%= hi %>-de">Deskripsi singkat</label>
+            <textarea id="hl-<%= hi %>-de" class="form-group__control" name="home[aboutSection][highlights][<%= hi %>][desc]" rows="2" maxlength="4000"><%= hl.desc != null ? String(hl.desc) : '' %></textarea>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div id="cms-panel-home-mid" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-home-mid" data-public-cms-tab="home-mid" hidden>
+    <h2 class="tab-panel-title">Beranda — Langkah, tema &amp; testimoni</h2>
+
+    <h3 class="public-cms-subhead">Langkah &amp; tema</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="hs-ey">Eyebrow langkah</label>
+        <input id="hs-ey" class="form-group__control" type="text" name="home[stepsSection][eyebrow]" maxlength="500" value="<%= cms.home.stepsSection.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hs-ti">Judul langkah</label>
+        <input id="hs-ti" class="form-group__control" type="text" name="home[stepsSection][title]" maxlength="500" value="<%= cms.home.stepsSection.title %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="hs-su">Subtitle langkah</label>
+        <textarea id="hs-su" class="form-group__control" name="home[stepsSection][subtitle]" rows="2" maxlength="4000"><%= cms.home.stepsSection.subtitle %></textarea>
+      </div>
+    </div>
+    <p class="public-cms-hint">Tiga langkah utama di beranda (boleh dikosongkan baris yang tidak dipakai).</p>
+    <% var stepList = cms.home.steps || []; %>
+    <% for (var li = 0; li < 5; li++) { var step = stepList[li] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">Langkah <%= li + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group">
+            <label class="form-group__label" for="step-<%= li %>-ti">Judul langkah</label>
+            <input id="step-<%= li %>-ti" class="form-group__control" type="text" name="home[steps][<%= li %>][title]" maxlength="500" value="<%= step.title != null ? String(step.title) : '' %>" />
+          </div>
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="step-<%= li %>-de">Penjelasan</label>
+            <textarea id="step-<%= li %>-de" class="form-group__control" name="home[steps][<%= li %>][desc]" rows="2" maxlength="4000"><%= step.desc != null ? String(step.desc) : '' %></textarea>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="ht-ey">Eyebrow koleksi tema</label>
+        <input id="ht-ey" class="form-group__control" type="text" name="home[themesSection][eyebrow]" maxlength="500" value="<%= cms.home.themesSection.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ht-t0">Judul tema baris 1</label>
+        <input id="ht-t0" class="form-group__control" type="text" name="home[themesSection][titleLines][0]" maxlength="500" value="<%= (cms.home.themesSection.titleLines && cms.home.themesSection.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ht-t1">Judul tema baris 2</label>
+        <input id="ht-t1" class="form-group__control" type="text" name="home[themesSection][titleLines][1]" maxlength="500" value="<%= (cms.home.themesSection.titleLines && cms.home.themesSection.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ht-su">Subtitle tema</label>
+        <textarea id="ht-su" class="form-group__control" name="home[themesSection][subtitle]" rows="2" maxlength="4000"><%= cms.home.themesSection.subtitle %></textarea>
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ht-em">Pesan jika tema kosong</label>
+        <input id="ht-em" class="form-group__control" type="text" name="home[themesSection][emptyMessage]" maxlength="4000" value="<%= cms.home.themesSection.emptyMessage %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ht-lk">Teks link semua tema</label>
+        <input id="ht-lk" class="form-group__control" type="text" name="home[themesSection][linkAllThemes]" maxlength="120" value="<%= cms.home.themesSection.linkAllThemes %>" />
+      </div>
+    </div>
+
+    <h3 class="public-cms-subhead">Testimoni</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="htt-ey">Eyebrow</label>
+        <input id="htt-ey" class="form-group__control" type="text" name="home[testimonialsSection][eyebrow]" maxlength="500" value="<%= cms.home.testimonialsSection.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="htt-ti">Judul</label>
+        <input id="htt-ti" class="form-group__control" type="text" name="home[testimonialsSection][title]" maxlength="500" value="<%= cms.home.testimonialsSection.title %>" />
+      </div>
+    </div>
+    <p class="public-cms-hint">Maksimal 6 testimoni. Kosongkan baris yang tidak dipakai.</p>
+    <% var testiList = cms.home.testimonials || []; %>
+    <% for (var ti = 0; ti < 6; ti++) { var t = testiList[ti] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">Testimoni <%= ti + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group">
+            <label class="form-group__label" for="te-<%= ti %>-st">Bintang (teks)</label>
+            <input id="te-<%= ti %>-st" class="form-group__control" type="text" name="home[testimonials][<%= ti %>][stars]" maxlength="32" value="<%= t.stars != null ? String(t.stars) : '' %>" placeholder="★★★★★" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="te-<%= ti %>-in">Inisial avatar</label>
+            <input id="te-<%= ti %>-in" class="form-group__control" type="text" name="home[testimonials][<%= ti %>][initials]" maxlength="8" value="<%= t.initials != null ? String(t.initials) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="te-<%= ti %>-na">Nama pasangan</label>
+            <input id="te-<%= ti %>-na" class="form-group__control" type="text" name="home[testimonials][<%= ti %>][name]" maxlength="500" value="<%= t.name != null ? String(t.name) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="te-<%= ti %>-lo">Lokasi / waktu</label>
+            <input id="te-<%= ti %>-lo" class="form-group__control" type="text" name="home[testimonials][<%= ti %>][location]" maxlength="500" value="<%= t.location != null ? String(t.location) : '' %>" />
+          </div>
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="te-<%= ti %>-tx">Kutipan</label>
+            <textarea id="te-<%= ti %>-tx" class="form-group__control" name="home[testimonials][<%= ti %>][text]" rows="3" maxlength="4000"><%= t.text != null ? String(t.text) : '' %></textarea>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div id="cms-panel-home-preview" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-home-preview" data-public-cms-tab="home-preview" hidden>
+    <h2 class="tab-panel-title">Beranda — Pratinjau paket</h2>
+
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-ey">Eyebrow</label>
+        <input id="hpp-ey" class="form-group__control" type="text" name="home[pricingPreviewSection][eyebrow]" maxlength="500" value="<%= cms.home.pricingPreviewSection.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-t0">Judul baris 1</label>
+        <input id="hpp-t0" class="form-group__control" type="text" name="home[pricingPreviewSection][titleLines][0]" maxlength="500" value="<%= (cms.home.pricingPreviewSection.titleLines && cms.home.pricingPreviewSection.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-t1">Judul baris 2</label>
+        <input id="hpp-t1" class="form-group__control" type="text" name="home[pricingPreviewSection][titleLines][1]" maxlength="500" value="<%= (cms.home.pricingPreviewSection.titleLines && cms.home.pricingPreviewSection.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="hpp-su">Subtitle</label>
+        <textarea id="hpp-su" class="form-group__control" name="home[pricingPreviewSection][subtitle]" rows="2" maxlength="4000"><%= cms.home.pricingPreviewSection.subtitle %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-lk">Teks link detail</label>
+        <input id="hpp-lk" class="form-group__control" type="text" name="home[pricingPreviewSection][linkDetail]" maxlength="120" value="<%= cms.home.pricingPreviewSection.linkDetail %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-cta-s">CTA kartu Starter</label>
+        <input id="hpp-cta-s" class="form-group__control" type="text" name="home[planCardCtas][starter]" maxlength="120" value="<%= cms.home.planCardCtas.starter %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-cta-st">CTA kartu Standar</label>
+        <input id="hpp-cta-st" class="form-group__control" type="text" name="home[planCardCtas][standard]" maxlength="120" value="<%= cms.home.planCardCtas.standard %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="hpp-cta-p">CTA kartu Premium</label>
+        <input id="hpp-cta-p" class="form-group__control" type="text" name="home[planCardCtas][premium]" maxlength="120" value="<%= cms.home.planCardCtas.premium %>" />
+      </div>
+    </div>
+    <p class="muted small">Nominal kartu mengikuti <strong>billing</strong>. Di bawah: ubah teks poin pada kartu harga; <strong>satu baris = satu poin</strong>. Kosongkan agar memakai daftar default dari sistem.</p>
+  </div>
+
+  <div id="cms-panel-price-hero" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-price-hero" data-public-cms-tab="price-hero" hidden>
+    <h2 class="tab-panel-title">Harga — Hero &amp; toggle</h2>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="ph-ey">Eyebrow</label>
+        <input id="ph-ey" class="form-group__control" type="text" name="pricing[hero][eyebrow]" maxlength="500" value="<%= cms.pricing.hero.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ph-t0">Judul baris 1</label>
+        <input id="ph-t0" class="form-group__control" type="text" name="pricing[hero][titleLines][0]" maxlength="500" value="<%= (cms.pricing.hero.titleLines && cms.pricing.hero.titleLines[0]) || '' %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ph-t1">Judul baris 2</label>
+        <input id="ph-t1" class="form-group__control" type="text" name="pricing[hero][titleLines][1]" maxlength="500" value="<%= (cms.pricing.hero.titleLines && cms.pricing.hero.titleLines[1]) || '' %>" />
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ph-su">Subtitle</label>
+        <textarea id="ph-su" class="form-group__control" name="pricing[hero][subtitle]" rows="2" maxlength="4000"><%= cms.pricing.hero.subtitle %></textarea>
+      </div>
+      <div class="form-group form-group--span-2">
+        <label class="form-group__label" for="ph-pr">Janji / promise</label>
+        <textarea id="ph-pr" class="form-group__control" name="pricing[hero][promise]" rows="2" maxlength="4000"><%= cms.pricing.hero.promise %></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ph-c1">Tombol utama</label>
+        <input id="ph-c1" class="form-group__control" type="text" name="pricing[hero][ctaPrimary]" maxlength="120" value="<%= cms.pricing.hero.ctaPrimary %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ph-c2">Tombol sekunder</label>
+        <input id="ph-c2" class="form-group__control" type="text" name="pricing[hero][ctaSecondary]" maxlength="120" value="<%= cms.pricing.hero.ctaSecondary %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ph-bd">Badge foto</label>
+        <input id="ph-bd" class="form-group__control" type="text" name="pricing[hero][photoBadge]" maxlength="120" value="<%= cms.pricing.hero.photoBadge %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="ph-al">Alt foto</label>
+        <input id="ph-al" class="form-group__control" type="text" name="pricing[hero][photoAlt]" maxlength="500" value="<%= cms.pricing.hero.photoAlt %>" />
+      </div>
+    </div>
+
+    <h3 class="public-cms-subhead">Toggle paket</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="pt-p">Label primer</label>
+        <input id="pt-p" class="form-group__control" type="text" name="pricing[toggle][primaryLabel]" maxlength="120" value="<%= cms.pricing.toggle.primaryLabel %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pt-s">Label sekunder</label>
+        <input id="pt-s" class="form-group__control" type="text" name="pricing[toggle][secondaryLabel]" maxlength="120" value="<%= cms.pricing.toggle.secondaryLabel %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pt-h">Hint sekunder</label>
+        <input id="pt-h" class="form-group__control" type="text" name="pricing[toggle][secondaryHint]" maxlength="120" value="<%= cms.pricing.toggle.secondaryHint %>" />
+      </div>
+    </div>
+  </div>
+
+  <div id="cms-panel-price-cards" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-price-cards" data-public-cms-tab="price-cards" hidden>
+    <h2 class="tab-panel-title">Harga — Teks kartu paket</h2>
+
+    <% var planCodes = ['starter', 'standard', 'premium']; %>
+    <h3 class="public-cms-subhead">Per paket</h3>
+    <% planCodes.forEach(function(code) { var pl = cms.pricing.plans[code]; %>
+      <h4 class="public-cms-minihead"><%= code %></h4>
+      <div class="admin-form__grid">
+        <div class="form-group">
+          <label class="form-group__label">Badge</label>
+          <input class="form-group__control" type="text" name="pricing[plans][<%= code %>][badge]" maxlength="120" value="<%= pl.badge %>" />
+        </div>
+        <div class="form-group">
+          <label class="form-group__label">Nama tampil</label>
+          <input class="form-group__control" type="text" name="pricing[plans][<%= code %>][displayName]" maxlength="500" value="<%= pl.displayName %>" />
+        </div>
+        <div class="form-group form-group--span-2">
+          <label class="form-group__label">Subtitle</label>
+          <textarea class="form-group__control" name="pricing[plans][<%= code %>][subtitle]" rows="2" maxlength="4000"><%= pl.subtitle %></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-group__label">Label CTA</label>
+          <input class="form-group__control" type="text" name="pricing[plans][<%= code %>][ctaLabel]" maxlength="500" value="<%= pl.ctaLabel %>" />
+        </div>
+        <div class="form-group form-group--span-2">
+          <label class="form-group__label" for="pl-<%= code %>-fl">Poin fitur di kartu (satu baris = satu poin, kosong = default sistem)</label>
+          <textarea id="pl-<%= code %>-fl" class="form-group__control" name="pricing[plans][<%= code %>][featureLines_text]" rows="8" maxlength="8000" placeholder="Contoh:&#10;Semua tema tersedia&#10;RSVP digital (maks 300 tamu)"><%= Array.isArray(pl.featureLines) && pl.featureLines.length ? pl.featureLines.join('\n') : '' %></textarea>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <div id="cms-panel-price-table" class="co-panel public-cms-tab-panel" role="tabpanel" aria-labelledby="cms-tab-price-table" data-public-cms-tab="price-table" hidden>
+    <h2 class="tab-panel-title">Harga — Tabel perbandingan &amp; FAQ</h2>
+
+    <h3 class="public-cms-subhead">Tabel perbandingan</h3>
+    <div class="form-group">
+      <label class="form-group__label" for="pc-ti">Judul seksi</label>
+      <input id="pc-ti" class="form-group__control" type="text" name="pricing_compareSectionTitle" maxlength="500" value="<%= cms.pricing.compareSectionTitle %>" />
+    </div>
+    <div class="form-group">
+      <label class="form-group__label" for="pc-th">Header kolom fitur</label>
+      <input id="pc-th" class="form-group__control" type="text" name="pricing_compareTableHeaderFeature" maxlength="120" value="<%= cms.pricing.compareTableHeaderFeature %>" />
+    </div>
+    <p class="muted small">Baris <strong>Harga per acara</strong> dan <strong>Masa aktif</strong> di situs tamu diisi otomatis dari paket billing. Isi nama fitur dan teks per kolom di bawah.</p>
+    <% var cmp = cms.pricing.compareRows || []; var cmpSlots = Math.min(Math.max(cmp.length, 12), 40); %>
+    <% for (var ri = 0; ri < cmpSlots; ri++) { var crow = cmp[ri] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">Baris tabel <%= ri + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="cmp-<%= ri %>-feat">Nama fitur (kolom kiri)</label>
+            <input id="cmp-<%= ri %>-feat" class="form-group__control" type="text" name="pricing[compareRows][<%= ri %>][feature]" maxlength="500" value="<%= crow.feature != null ? String(crow.feature) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="cmp-<%= ri %>-st">Starter</label>
+            <input id="cmp-<%= ri %>-st" class="form-group__control" type="text" name="pricing[compareRows][<%= ri %>][starter]" maxlength="500" value="<%= crow.starter != null ? String(crow.starter) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="cmp-<%= ri %>-std">Standar</label>
+            <input id="cmp-<%= ri %>-std" class="form-group__control" type="text" name="pricing[compareRows][<%= ri %>][standard]" maxlength="500" value="<%= crow.standard != null ? String(crow.standard) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="cmp-<%= ri %>-pr">Premium</label>
+            <input id="cmp-<%= ri %>-pr" class="form-group__control" type="text" name="pricing[compareRows][<%= ri %>][premium]" maxlength="500" value="<%= crow.premium != null ? String(crow.premium) : '' %>" />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label switch" for="cmp-<%= ri %>-chk">
+              <input id="cmp-<%= ri %>-chk" type="checkbox" name="pricing[compareRows][<%= ri %>][isCheck]" value="1" <%= crow.isCheck ? 'checked' : '' %> />
+              <span>Baris centang (✓/✗)</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label switch" for="cmp-<%= ri %>-strong">
+              <input id="cmp-<%= ri %>-strong" type="checkbox" name="pricing[compareRows][<%= ri %>][standardStrong]" value="1" <%= crow.standardStrong ? 'checked' : '' %> />
+              <span>Tebalkan kolom Standar</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <h3 class="public-cms-subhead">FAQ</h3>
+    <div class="admin-form__grid">
+      <div class="form-group">
+        <label class="form-group__label" for="pf-ey">Eyebrow</label>
+        <input id="pf-ey" class="form-group__control" type="text" name="pricing[faqSection][eyebrow]" maxlength="500" value="<%= cms.pricing.faqSection.eyebrow %>" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pf-ti">Judul</label>
+        <input id="pf-ti" class="form-group__control" type="text" name="pricing[faqSection][title]" maxlength="500" value="<%= cms.pricing.faqSection.title %>" />
+      </div>
+    </div>
+    <p class="public-cms-hint">Maksimal 10 pertanyaan. Kosongkan baris yang tidak dipakai.</p>
+    <% var faqList = cms.pricing.faq || []; var faqSlots = Math.min(Math.max(faqList.length, 6), 10); %>
+    <% for (var qi = 0; qi < faqSlots; qi++) { var fr = faqList[qi] || {}; %>
+      <div class="public-cms-block">
+        <p class="public-cms-block__legend">FAQ <%= qi + 1 %></p>
+        <div class="admin-form__grid">
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="faq-<%= qi %>-q">Pertanyaan</label>
+            <input id="faq-<%= qi %>-q" class="form-group__control" type="text" name="pricing[faqItems][<%= qi %>][q]" maxlength="500" value="<%= fr.q != null ? String(fr.q) : '' %>" />
+          </div>
+          <div class="form-group form-group--span-2">
+            <label class="form-group__label" for="faq-<%= qi %>-a">Jawaban</label>
+            <textarea id="faq-<%= qi %>-a" class="form-group__control" name="pricing[faqItems][<%= qi %>][a]" rows="3" maxlength="4000"><%= fr.a != null ? String(fr.a) : '' %></textarea>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="public-cms-actions">
+    <button type="submit" class="btn btn-primary">Simpan semua</button>
+    <a href="/" class="btn btn-outline" target="_blank" rel="noopener">Lihat beranda</a>
+    <a href="/pricing" class="btn btn-outline" target="_blank" rel="noopener">Lihat harga</a>
+  </div>
+</form>
+
+<script>
+(function () {
+  var bar = document.querySelector('[data-public-cms-tab-bar]');
+  if (!bar) return;
+  var tabs = bar.querySelectorAll('.public-cms-tab[role="tab"]');
+  var panels = document.querySelectorAll('.public-cms-tab-panel[role="tabpanel"]');
+  function show(id) {
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-public-cms-tab') === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.classList.toggle('is-active', on);
+      t.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(function (p) {
+      var on = p.getAttribute('data-public-cms-tab') === id;
+      if (on) p.removeAttribute('hidden');
+      else p.setAttribute('hidden', '');
+    });
+    try {
+      history.replaceState(null, '', '#cms-' + id);
+    } catch (e) {}
+  }
+  bar.addEventListener('click', function (e) {
+    var btn = e.target.closest('.public-cms-tab');
+    if (!btn || !bar.contains(btn)) return;
+    e.preventDefault();
+    show(btn.getAttribute('data-public-cms-tab'));
+  });
+  var initial = (window.location.hash || '').replace(/^#cms-/, '');
+  var valid = false;
+  tabs.forEach(function (t) {
+    if (t.getAttribute('data-public-cms-tab') === initial) valid = true;
+  });
+  var first = tabs[0] && tabs[0].getAttribute('data-public-cms-tab');
+  show(valid && initial ? initial : first || 'seo');
+})();
+</script>

@@ -1,0 +1,32 @@
+<section id="gift" class="relative z-10 w-full px-4 py-24">
+
+  <div class="max-w-xl mx-auto text-center section-reveal">
+
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/60">A Token of Love</p>
+
+    <h2 class="font-display text-4xl text-champagne mt-3">Gifts</h2>
+
+    <div class="gold-divider"></div>
+
+    <p id="gift-msg" class="text-champagne/50 text-lg mt-4 leading-relaxed">
+
+      <%= content.gift_message || 'Your presence is the greatest gift. If you wish to bless us further, thank you.' %>
+
+    </p>
+
+    <div class="mt-8 text-left">
+
+      <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+
+    </div>
+
+    <% if (!gifts || gifts.length === 0) { %>
+
+      <p class="text-champagne/40 text-sm mt-6">Informasi rekening dapat ditambahkan di admin.</p>
+
+    <% } %>
+
+  </div>
+
+</section>
+

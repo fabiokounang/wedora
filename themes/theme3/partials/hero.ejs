@@ -1,0 +1,30 @@
+<section id="hero" class="relative flex flex-col items-center justify-center text-center px-6" style="min-height:100%;padding-top:80px;padding-bottom:60px;">
+  <div class="relative z-10">
+    <p class="text-xs tracking-[0.4em] uppercase anim-fade-up" style="color:rgba(196,168,116,0.5);">Together with their families</p>
+    <h1 class="font-serif-display mt-6 anim-fade-up anim-delay-1 glow-gold" style="font-size:clamp(2.5rem,8vw,5.5rem);font-weight:300;letter-spacing:0.05em;line-height:1.1;">
+      <span id="heroName1"><%= content.partner_one %></span>
+      <span class="block my-2" style="font-size:0.35em;color:rgba(196,168,116,0.4);font-style:italic;letter-spacing:0.3em;">&amp;</span>
+      <span id="heroName2"><%= content.partner_two %></span>
+    </h1>
+    <div class="ornament-divider mt-6 anim-fade-up anim-delay-2" style="color:rgba(196,168,116,0.5);">&#10022;</div>
+    <p id="heroDate" class="mt-4 text-sm tracking-[0.3em] uppercase anim-fade-up anim-delay-3" style="color:rgba(196,168,116,0.7);">
+      <%= helpers.formatDate(content.wedding_date) %>
+    </p>
+    <% if (content.hero_quote) { %>
+    <p id="heroQuote" class="font-serif-display italic mt-8 max-w-md mx-auto anim-fade-up anim-delay-4" style="font-size:1.05rem;color:rgba(196,168,116,0.5);line-height:1.7;">
+      <%= content.hero_quote %>
+    </p>
+    <% } %>
+    <div id="countdown" class="flex gap-4 justify-center mt-10 anim-fade-up anim-delay-5">
+      <% ['Days','Hours','Mins','Secs'].forEach(function(label){ %>
+      <div class="countdown-unit rounded-lg px-4 py-3 text-center" style="min-width:64px;">
+        <div id="cd<%= label %>" class="font-serif-display text-2xl" style="color:#c4a874;">--</div>
+        <div class="text-[10px] tracking-widest uppercase mt-1" style="color:rgba(196,168,116,0.4);"><%= label %></div>
+      </div>
+      <% }) %>
+    </div>
+    <a href="#story" class="inline-block mt-12 anim-fade-up anim-delay-5" style="color:rgba(196,168,116,0.4);">
+      <img src="https://img.icons8.com/?size=96&id=39786&format=png&color=C4A874" alt="Scroll down" class="icon icon-md" style="animation:glowPulse 2s ease-in-out infinite;" />
+    </a>
+  </div>
+</section>

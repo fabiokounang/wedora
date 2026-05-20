@@ -1,0 +1,45 @@
+<%
+  const storyTitle = (content.story_title && String(content.story_title).trim()) || 'Our Love Story';
+  const defaultMilestones = [
+    { date_label: '2020', title: 'Pertama bertemu', description: 'Pertemuan yang mengubah segalanya.' },
+    { date_label: '2021', title: 'Kencan pertama', description: 'Awal dari perjalanan indah bersama.' },
+    { date_label: '2024', title: 'Lamaran', description: 'Janji setia di bawah langit berbintang.' },
+  ];
+  const rows = (storiesArray && storiesArray.length)
+    ? storiesArray.map(function(s) {
+        return { date_label: s.date_label || '', title: s.title || '', description: s.description || '' };
+      })
+    : (content.couple_story && String(content.couple_story).trim())
+      ? [{ date_label: '', title: storyTitle, description: String(content.couple_story).trim() }]
+      : defaultMilestones;
+-%>
+<section class="py-20 px-6 t21-section-beige reveal-section" data-section>
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-script text-center text-4xl mb-16" style="color:var(--gold)"><%= storyTitle %></h2>
+    <div class="relative">
+      <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px opacity-30" style="background:var(--gold)"></div>
+      <div class="space-y-16">
+        <% rows.forEach(function(item, idx) {
+             const isLeft = idx % 2 === 0;
+        %>
+          <div class="relative reveal-section">
+            <div class="timeline-dot absolute left-1/2 -translate-x-1/2 top-2"></div>
+            <% if (isLeft) { %>
+              <div class="ml-auto mr-0 md:mr-[55%] md:ml-0 pl-8 md:pl-0 md:pr-12 text-left md:text-right">
+                <% if (item.date_label) { %><p class="font-sans-alt text-xs tracking-widest uppercase mb-1" style="color:var(--taupe)"><%= item.date_label %></p><% } %>
+                <% if (item.title) { %><h4 class="font-script text-xl mb-2" style="color:var(--gold)"><%= item.title %></h4><% } %>
+                <% if (item.description) { %><p class="text-sm" style="color:var(--brown)"><%- item.description %></p><% } %>
+              </div>
+            <% } else { %>
+              <div class="ml-0 md:ml-[55%] pl-8 md:pl-12">
+                <% if (item.date_label) { %><p class="font-sans-alt text-xs tracking-widest uppercase mb-1" style="color:var(--taupe)"><%= item.date_label %></p><% } %>
+                <% if (item.title) { %><h4 class="font-script text-xl mb-2" style="color:var(--gold)"><%= item.title %></h4><% } %>
+                <% if (item.description) { %><p class="text-sm" style="color:var(--brown)"><%- item.description %></p><% } %>
+              </div>
+            <% } %>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+<div class="error-page">
+  <p class="error-page__code">403</p>
+  <h1 class="error-page__title">Akses ditolak</h1>
+  <p class="error-page__desc">Anda tidak punya izin untuk mengakses halaman ini. Jika ini seharusnya bisa diakses, silakan hubungi administrator.</p>
+  <div class="error-page__actions">
+    <% if (typeof user !== 'undefined' && user) { %>
+      <a href="/dashboard" class="btn btn-primary btn-pill">Dashboard</a>
+    <% } else { %>
+      <a href="/login" class="btn btn-primary btn-pill">Masuk ke akun</a>
+    <% } %>
+    <a href="/" class="btn btn-soft btn-pill">Ke halaman utama</a>
+  </div>
+  <div class="error-page__decor" aria-hidden="true">✦</div>
+</div>

@@ -1,0 +1,29 @@
+<%
+  const firstStory = (story && story[0]) ? story[0] : null;
+  const storyBody = (firstStory && firstStory.description)
+    ? firstStory.description
+    : (content.couple_story || '');
+  const storyHeading = content.story_title || 'Cerita kami';
+-%>
+<section class="wedding-section" style="text-align:center;">
+  <div class="reveal section-inner">
+    <h2 class="section-title"><%= storyHeading %></h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <div class="couple-row">
+      <div class="reveal-left" style="text-align:center;">
+        <div class="couple-avatar"><span aria-hidden="true">🤵</span></div>
+        <p class="font-serif-elegant" style="font-size:1.4rem;color:var(--warm-gold);margin-top:0.75rem;"><%= content.partner_one || '' %></p>
+        <p style="font-size:0.75rem;color:var(--text-muted);">The Groom</p>
+      </div>
+      <div class="couple-heart" aria-hidden="true"><span>♥</span></div>
+      <div class="reveal-right" style="text-align:center;">
+        <div class="couple-avatar"><span aria-hidden="true">👰</span></div>
+        <p class="font-serif-elegant" style="font-size:1.4rem;color:var(--warm-gold);margin-top:0.75rem;"><%= content.partner_two || '' %></p>
+        <p style="font-size:0.75rem;color:var(--text-muted);">The Bride</p>
+      </div>
+    </div>
+    <% if (storyBody) { %>
+    <div class="reveal story-body" style="color:var(--text-muted);line-height:1.85;font-size:0.95rem;max-width:480px;margin:0 auto;"><%- storyBody %></div>
+    <% } %>
+  </div>
+</section>

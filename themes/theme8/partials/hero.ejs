@@ -1,0 +1,37 @@
+<section id="hero" class="scene visible" style="min-height:100%;background:linear-gradient(160deg,var(--ivory) 0%,var(--surface) 40%,#EDE4D8 100%)">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <svg class="absolute top-8 left-8 opacity-10 hero-ornament" width="120" height="120" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="55" fill="none" stroke="var(--gold)" stroke-width=".5" />
+      <circle cx="60" cy="60" r="40" fill="none" stroke="var(--dusty-pink)" stroke-width=".3" />
+    </svg>
+    <svg class="absolute bottom-12 right-12 opacity-10 hero-ornament" style="animation-delay:-3s" width="80" height="80" viewBox="0 0 80 80">
+      <path d="M40 5 L75 40 L40 75 L5 40Z" fill="none" stroke="var(--gold)" stroke-width=".5" />
+    </svg>
+  </div>
+  <div class="text-center px-6 relative z-10">
+    <div class="stagger-1 chapter-num mb-6">Together with their families</div>
+    <div class="stagger-2">
+      <h1 class="font-story text-5xl md:text-7xl lg:text-8xl font-light tracking-wide" style="color:var(--deep)">
+        <span><%= content.partner_one %></span>
+        <span class="block text-2xl md:text-3xl font-light italic my-3" style="color:var(--gold)">&amp;</span>
+        <span><%= content.partner_two %></span>
+      </h1>
+    </div>
+    <div class="stagger-3 gold-line"></div>
+    <% if (content.hero_tagline) { %>
+    <div class="stagger-3 font-story text-lg md:text-xl italic mt-4" style="color:var(--taupe)">
+      <%= content.hero_tagline %>
+    </div>
+    <% } %>
+    <div class="stagger-4 mt-8">
+      <div class="font-story text-2xl md:text-3xl font-light" style="color:var(--dusty-pink)">
+        <%= helpers.formatDate(content.wedding_date) %>
+      </div>
+    </div>
+    <div class="stagger-4 mt-16 opacity-40">
+      <svg width="24" height="24" viewBox="0 0 24 24" class="mx-auto" style="animation:float 2s ease-in-out infinite">
+        <path d="M12 5v14M5 12l7 7 7-7" stroke="var(--gold)" fill="none" stroke-width="1" />
+      </svg>
+    </div>
+  </div>
+</section>

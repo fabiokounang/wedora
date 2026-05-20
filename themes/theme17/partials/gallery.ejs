@@ -1,0 +1,18 @@
+<section class="t17-reveal-section t17-section-pad">
+  <h2 class="t17-serif t17-section-heading">Gallery</h2>
+  <div class="t17-gallery-grid">
+    <% if (gallery && gallery.length > 0) { %>
+      <% for (const img of gallery) { %>
+      <div class="t17-gallery-item">
+        <img src="<%= img.url || img.image_url %>" alt="<%= img.caption || 'Gallery' %>" class="t17-gallery-img">
+      </div>
+      <% } %>
+    <% } else { %>
+      <% for (let i = 0; i < 6; i++) { %>
+      <div class="t17-gallery-item t17-gallery-empty">
+        <i data-lucide="image" class="t17-gallery-placeholder-icon"></i>
+      </div>
+      <% } %>
+    <% } %>
+  </div>
+</section>

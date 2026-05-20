@@ -1,0 +1,26 @@
+<% const icons = ['coffee', 'heart', 'sparkles', 'gem']; %>
+<section id="story" class="py-20 px-4" style="background: linear-gradient(180deg, #FFFAF7 0%, #FFF0F0 100%);">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-serif text-3xl md:text-4xl text-center text-gray-800 mb-4 fade-in"><%= content.story_title || 'Our Love Story' %></h2>
+    <p class="text-center text-gray-500 mb-12 fade-in"><%= content.story_subtitle || 'How two hearts became one' %></p>
+    <div class="space-y-12">
+      <% (story || []).forEach(function (item, idx) {
+           const icon = icons[idx % icons.length];
+      %>
+      <div class="flex gap-6 items-start fade-in">
+        <div class="flex-shrink-0 w-12 h-12 bg-rose-soft/20 rounded-full flex items-center justify-center">
+          <i data-lucide="<%= icon %>" class="w-5 h-5 text-rose-soft"></i>
+        </div>
+        <div>
+          <h3 class="font-serif text-xl text-gray-800 mb-1"><%= item.title %></h3>
+          <% if (item.date_label) { %><p class="text-xs text-rose-soft mb-1"><%= item.date_label %></p><% } %>
+          <% if (item.description) { %><p class="text-gray-500 font-light leading-relaxed"><%= item.description %></p><% } %>
+        </div>
+      </div>
+      <% }) %>
+      <% if (!story || story.length === 0) { %>
+        <p class="text-center text-gray-400 fade-in">Cerita kalian akan tampil di sini.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

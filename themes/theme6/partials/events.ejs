@@ -1,0 +1,33 @@
+<% const evIcons = ['church', 'music', 'wine', 'heart']; %>
+<section id="event" class="py-20 px-4 bg-white">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-serif text-3xl md:text-4xl text-center text-gray-800 mb-4 fade-in">The Day</h2>
+    <p class="text-center text-gray-500 mb-12 fade-in"><%= content.events_subtitle || 'Join us as we say "I do"' %></p>
+    <div class="grid md:grid-cols-2 gap-8">
+      <% (events || []).forEach(function (ev, idx) {
+           const icon = evIcons[idx % evIcons.length];
+           const d = ev.datetime ? helpers.toDate(ev.datetime) : null;
+      %>
+      <div class="bg-gradient-to-br from-warmwhite to-rose-pale rounded-3xl p-8 text-center fade-in shadow-sm">
+        <div class="w-14 h-14 bg-rose-soft/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="<%= icon %>" class="w-6 h-6 text-rose-soft"></i>
+        </div>
+        <h3 class="font-serif text-2xl text-gray-800 mb-2"><%= ev.title %></h3>
+        <% if (d) { %>
+          <p class="text-gray-600 font-medium"><%= helpers.formatDate(d) %></p>
+          <p class="text-gray-500"><%= String(d.getHours()).padStart(2, '0') %>:<%= String(d.getMinutes()).padStart(2, '0') %></p>
+        <% } %>
+        <% if (ev.venue_name || ev.address) { %>
+          <p class="text-gray-500 mt-3 whitespace-pre-line"><% if (ev.venue_name) { %><%= ev.venue_name %><br /><% } %><%= ev.address || '' %></p>
+        <% } %>
+        <% if (ev.map_url) { %>
+          <a href="<%= ev.map_url %>" target="_blank" rel="noopener noreferrer" class="inline-block mt-3 text-sm text-rose-soft hover:underline">Map</a>
+        <% } %>
+      </div>
+      <% }) %>
+      <% if (!events || events.length === 0) { %>
+        <p class="col-span-full text-center text-gray-400">Detail acara menyusul.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+<section id="gift" class="w-full py-24 px-6 bg-cream">
+
+  <div class="max-w-lg mx-auto text-center">
+
+    <h2 class="font-serif text-4xl md:text-5xl text-deep mb-4 fade-up">Wedding Gift</h2>
+
+    <p class="text-brown text-sm tracking-wide mb-12 fade-up">
+
+      <%= content.gift_message || 'Your presence is our greatest gift, but if you wish to bless us…' %>
+
+    </p>
+
+    <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+
+    <% if (!gifts || gifts.length === 0) { %>
+
+      <p class="text-warm text-sm italic mt-6">Gift info coming soon.</p>
+
+    <% } %>
+
+    <div id="copy-toast" class="hidden mt-3 text-warm text-xs">Copied to clipboard!</div>
+
+  </div>
+
+</section>
+

@@ -1,0 +1,15 @@
+html, body { height: 100%; margin: 0; }
+.app-wrapper { height: 100%; overflow-y: auto; overflow-x: hidden; }
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.heart-float { animation: floatHeart 6s ease-in-out infinite; }
+@keyframes floatHeart {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+.countdown-card { backdrop-filter: blur(10px); }
+.nav-active { color: #E8A0A0; border-bottom: 2px solid #E8A0A0; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-thumb { background: #F5D0D0; border-radius: 3px; }
+.gallery-img { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+.gallery-img:hover { transform: scale(1.03); box-shadow: 0 12px 40px rgba(232, 160, 160, 0.3); }

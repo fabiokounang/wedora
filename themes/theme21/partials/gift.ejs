@@ -1,0 +1,12 @@
+<section class="py-20 px-6 t21-section-ivory reveal-section" data-section>
+  <div class="max-w-md mx-auto text-center">
+    <h2 class="font-script text-3xl mb-4" style="color:var(--gold)">Amplop Digital</h2>
+    <p class="text-sm mb-8" style="color:var(--taupe)"><%= content.gift_message || 'Kehadiran Anda adalah hadiah terindah. Jika berkenan memberi tanda kasih:' %></p>
+    <div class="t21-card p-6 rounded-2xl text-left">
+      <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+    </div>
+    <% if (!gifts || !gifts.length) { %>
+      <p class="text-xs mt-4" style="color:var(--taupe)">Rekening dapat diatur di panel admin (koleksi amplop digital).</p>
+    <% } %>
+  </div>
+</section>

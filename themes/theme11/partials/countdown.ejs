@@ -1,0 +1,8 @@
+<section class="wedding-section wedding-section--tint" style="text-align:center;">
+  <div class="reveal section-inner">
+    <h2 class="section-title">Menuju hari bahagia</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <p class="font-serif-elegant" style="font-size:clamp(1.35rem,4vw,2rem);color:var(--warm-gold);margin:1.25rem 0 0;"><%= helpers.formatDateTime(content.wedding_date) || helpers.formatDate(content.wedding_date) %></p>
+    <div id="countdown" class="countdown-row" style="display:flex;justify-content:center;gap:clamp(0.75rem,3vw,1.5rem);flex-wrap:wrap;margin-top:1.75rem;"></div>
+  </div>
+</section>

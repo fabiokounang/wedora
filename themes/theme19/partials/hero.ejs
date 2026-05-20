@@ -1,0 +1,16 @@
+<section class="t19-reveal t19-hero">
+  <div class="t19-hero-inner">
+    <p class="t19-sans t19-eyebrow">The Wedding of</p>
+    <h1 class="t19-script t19-hero-names"><%= partnerOne %> &amp; <%= partnerTwo %></h1>
+    <p class="t19-hero-date"><%= heroDateLabel %></p>
+    <div class="t19-gold-line"></div>
+  </div>
+</section>
+<% if (coupleQuote) { %>
+<section class="t19-reveal t19-section-pad t19-center">
+  <div class="t19-glass-card t19-quote-card">
+    <p class="t19-sans" style="font-size:1.5rem;margin-bottom:0.75rem;" aria-hidden="true">💌</p>
+    <p class="t19-serif t19-quote-text"><%= coupleQuote %></p>
+  </div>
+</section>
+<% } %>

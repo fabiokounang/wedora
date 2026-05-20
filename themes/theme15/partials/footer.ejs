@@ -1,0 +1,16 @@
+<section class="py-24 px-6 section-hidden" data-section>
+  <div class="max-w-lg mx-auto text-center">
+    <svg viewBox="0 0 60 60" class="w-8 mx-auto mb-6 opacity-40" aria-hidden="true">
+      <path d="M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25Z" fill="none" stroke="#d4af37" stroke-width="0.8" />
+    </svg>
+    <h2 class="font-serif-elegant text-3xl text-amber-900/80 italic mb-4">Terima kasih</h2>
+    <% if (content.footer_text) { %>
+      <div class="text-sm text-amber-700/55 leading-relaxed mb-6"><%- content.footer_text %></div>
+    <% } else { %>
+      <p class="text-sm text-amber-700/50 leading-relaxed mb-6">Suatu kehormatan dan berkah bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+    <% } %>
+    <p class="font-serif-elegant text-2xl text-amber-900/70 italic"><%= partnerOne %> &amp; <%= partnerTwo %></p>
+    <div class="ornament-line mx-auto mt-6"></div>
+    <p class="text-xs text-amber-700/30 mt-8 tracking-widest">Dibuat dengan penuh kasih</p>
+  </div>
+</section>

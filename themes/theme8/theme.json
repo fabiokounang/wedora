@@ -1,0 +1,38 @@
+{
+  "key": "theme8",
+  "name": "Storybook Ivory",
+  "version": "1.0.0",
+  "preview": "/themes/theme8/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "events", "required": true, "collection": "events" },
+    { "key": "rsvp", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" },
+    { "key": "wishes", "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama Mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama Mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & Jam", "required": true, "section": "hero" },
+    { "key": "hero_tagline", "type": "text", "label": "Tagline Hero", "section": "hero" },
+    { "key": "how_we_met_text", "type": "textarea", "label": "Narasi 'How We Met'", "section": "story" },
+    { "key": "story_title", "type": "text", "label": "Judul Timeline", "section": "story" },
+    { "key": "proposal_text", "type": "textarea", "label": "Narasi 'The Proposal'", "section": "story" },
+    { "key": "events_subtitle", "type": "text", "label": "Subtitle Events", "section": "events" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan Gift", "section": "gift" },
+    { "key": "closing_message", "type": "textarea", "label": "Pesan Penutup", "section": "wishes" }
+  ],
+  "theme_settings": {
+    "colors": [
+      { "key": "ivory", "default": "#FBF8F1" },
+      { "key": "gold", "default": "#C4A96A" },
+      { "key": "dusty_pink", "default": "#D4A0A0" }
+    ],
+    "fonts": [
+      { "key": "display", "options": ["Cormorant Garamond", "Playfair Display"] },
+      { "key": "body", "options": ["Josefin Sans", "Inter"] }
+    ]
+  }
+}

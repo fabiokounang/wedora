@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" role="img" aria-label="Envelope Elegance preview">
+  <defs>
+    <linearGradient id="t21bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fffdf8"/>
+      <stop offset="100%" style="stop-color:#f5ede3"/>
+    </linearGradient>
+    <linearGradient id="t21env" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5ede3"/>
+      <stop offset="100%" style="stop-color:#ede5da"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#t21bg)"/>
+  <!-- Envelope body -->
+  <rect x="130" y="100" width="140" height="100" rx="6" fill="url(#t21env)" stroke="#c9a96e" stroke-width="0.8" opacity="0.9"/>
+  <!-- Envelope flap -->
+  <polygon points="130,100 200,155 270,100" fill="#ede5da" stroke="#c9a96e" stroke-width="0.8"/>
+  <!-- Gold seal -->
+  <circle cx="200" cy="165" r="14" fill="#c9a96e" opacity="0.9"/>
+  <text x="200" y="170" text-anchor="middle" fill="#fff" font-family="Georgia,serif" font-size="11" font-style="italic">A&amp;B</text>
+  <!-- Name -->
+  <text x="200" y="240" text-anchor="middle" fill="#c9a96e" font-family="Georgia,serif" font-size="18" font-style="italic">A &amp; B</text>
+  <text x="200" y="264" text-anchor="middle" fill="#a89585" font-family="sans-serif" font-size="9" letter-spacing="0.3em">ENVELOPE ELEGANCE</text>
+</svg>

@@ -1,0 +1,45 @@
+<section id="rsvp" class="relative z-10 py-20 px-6">
+  <div class="max-w-lg mx-auto text-center">
+    <p class="text-xs tracking-[0.4em] uppercase reveal" style="color:rgba(196,168,116,0.4);">We hope you can make it</p>
+    <h2 class="font-serif-display mt-3 reveal" style="font-size:clamp(2rem,5vw,3.2rem);color:#c4a874;font-weight:300;">RSVP</h2>
+    <div class="ornament-divider mt-4 mb-10 reveal" style="color:rgba(196,168,116,0.3);">&#10022;</div>
+    <form id="rsvpForm" class="space-y-5 text-left reveal">
+      <div>
+        <label for="rsvpName" class="text-xs tracking-widest uppercase block mb-2" style="color:rgba(196,168,116,0.5);">Your Name</label>
+        <input id="rsvpName" name="guest_name" type="text" class="form-input w-full rounded-lg px-4 py-3 font-body text-sm" placeholder="Full name" required />
+      </div>
+      <div>
+        <label for="rsvpPhone" class="text-xs tracking-widest uppercase block mb-2" style="color:rgba(196,168,116,0.5);">WhatsApp / Phone</label>
+        <input id="rsvpPhone" name="guest_phone" type="tel" inputmode="tel" autocomplete="tel" class="form-input w-full rounded-lg px-4 py-3 font-body text-sm" placeholder="08… atau 628…" />
+      </div>
+      <div>
+        <label class="text-xs tracking-widest uppercase block mb-3" style="color:rgba(196,168,116,0.5);">Will you attend?</label>
+        <div class="flex gap-3">
+          <label class="flex-1 cursor-pointer">
+            <input type="radio" name="attendance" value="yes" class="hidden peer" required />
+            <div class="form-input rounded-lg px-4 py-3 text-center text-sm peer-checked:border-[#c4a874] peer-checked:bg-[rgba(196,168,116,0.1)] transition-all">Joyfully Accept</div>
+          </label>
+          <label class="flex-1 cursor-pointer">
+            <input type="radio" name="attendance" value="no" class="hidden peer" />
+            <div class="form-input rounded-lg px-4 py-3 text-center text-sm peer-checked:border-[#c4a874] peer-checked:bg-[rgba(196,168,116,0.1)] transition-all">Regretfully Decline</div>
+          </label>
+        </div>
+      </div>
+      <div>
+        <label for="rsvpGuests" class="text-xs tracking-widest uppercase block mb-2" style="color:rgba(196,168,116,0.5);">Number of Guests</label>
+        <select id="rsvpGuests" name="guests_count" class="form-input w-full rounded-lg px-4 py-3 font-body text-sm">
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+        </select>
+      </div>
+      <div>
+        <label for="rsvpNotes" class="text-xs tracking-widest uppercase block mb-2" style="color:rgba(196,168,116,0.5);">Notes or Dietary Needs</label>
+        <textarea id="rsvpNotes" name="notes" rows="3" class="form-input w-full rounded-lg px-4 py-3 font-body text-sm resize-none" placeholder="Any special requests..."></textarea>
+      </div>
+      <button id="rsvpBtn" type="submit" class="w-full rounded-lg py-3 text-sm tracking-widest uppercase transition-all duration-300" style="background:rgba(196,168,116,0.15);border:1px solid rgba(196,168,116,0.3);color:#c4a874;">Send RSVP</button>
+      <div id="rsvpStatus" class="text-center text-sm hidden" style="color:#c4a874;"></div>
+    </form>
+  </div>
+</section>

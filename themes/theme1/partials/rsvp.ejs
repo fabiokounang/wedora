@@ -1,0 +1,36 @@
+<section id="rsvp" class="w-full py-24 px-6 bg-cream">
+  <div class="max-w-lg mx-auto">
+    <h2 class="font-serif text-4xl md:text-5xl text-center text-deep mb-4 fade-up">RSVP</h2>
+    <p class="text-center text-brown text-sm tracking-wide mb-12 fade-up">
+      <%= content.rsvp_deadline || 'Kindly respond by July 15, 2025' %>
+    </p>
+    <form id="rsvp-form" class="space-y-5 fade-up">
+      <div>
+        <label for="rsvp-name" class="block text-xs tracking-widest uppercase text-brown mb-2">Your Name</label>
+        <input id="rsvp-name" name="guest_name" type="text" required class="w-full bg-beige border border-sand rounded-xl px-4 py-3 text-sm text-deep placeholder-warm/50" placeholder="Full name" />
+      </div>
+      <div>
+        <label for="rsvpPhone" class="block text-xs tracking-widest uppercase text-brown mb-2">WhatsApp / Phone</label>
+        <input id="rsvpPhone" name="guest_phone" type="tel" inputmode="tel" autocomplete="tel" class="w-full bg-beige border border-sand rounded-xl px-4 py-3 text-sm text-deep placeholder-warm/50" placeholder="08… atau 628…" />
+      </div>
+      <div>
+        <label for="rsvp-attend" class="block text-xs tracking-widest uppercase text-brown mb-2">Will you attend?</label>
+        <select id="rsvp-attend" name="attendance" required class="w-full bg-beige border border-sand rounded-xl px-4 py-3 text-sm text-deep">
+          <option value="">Please select</option>
+          <option value="yes">Joyfully Accept</option>
+          <option value="no">Regretfully Decline</option>
+        </select>
+      </div>
+      <div>
+        <label for="rsvp-guests" class="block text-xs tracking-widest uppercase text-brown mb-2">Number of Guests</label>
+        <input id="rsvp-guests" name="guests_count" type="number" min="1" max="10" value="1" class="w-full bg-beige border border-sand rounded-xl px-4 py-3 text-sm text-deep" />
+      </div>
+      <div>
+        <label for="rsvp-notes" class="block text-xs tracking-widest uppercase text-brown mb-2">Notes / Dietary Requirements</label>
+        <textarea id="rsvp-notes" name="notes" rows="3" class="w-full bg-beige border border-sand rounded-xl px-4 py-3 text-sm text-deep placeholder-warm/50 resize-none" placeholder="Any message for us…"></textarea>
+      </div>
+      <button type="submit" id="rsvp-btn" class="w-full py-3 rounded-full bg-brown text-cream text-sm tracking-widest uppercase hover:bg-deep transition-colors duration-300">Send RSVP</button>
+    </form>
+    <div id="rsvp-toast" class="hidden mt-4 p-4 rounded-xl bg-sand/60 text-center text-brown text-sm"></div>
+  </div>
+</section>

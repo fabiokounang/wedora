@@ -1,0 +1,32 @@
+<section id="gift" class="scene" style="background:linear-gradient(180deg,var(--surface),var(--ivory))">
+
+  <div class="w-full max-w-lg mx-auto px-6 py-24 text-center">
+
+    <div class="stagger-1 chapter-num">Your presence is our present</div>
+
+    <h2 class="stagger-1 font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--deep)">Wedding Gift</h2>
+
+    <div class="stagger-2 gold-line"></div>
+
+    <% if (content.gift_message) { %>
+
+    <p class="stagger-2 font-story text-base mt-4" style="color:var(--taupe);line-height:1.8"><%= content.gift_message %></p>
+
+    <% } %>
+
+    <div class="stagger-3 mt-10 text-left">
+
+      <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+
+    </div>
+
+    <% if (!gifts || gifts.length === 0) { %>
+
+    <p class="font-story text-base mt-8" style="color:var(--taupe);opacity:.6">Gift details will be available soon.</p>
+
+    <% } %>
+
+  </div>
+
+</section>
+

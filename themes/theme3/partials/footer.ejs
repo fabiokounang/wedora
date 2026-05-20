@@ -1,0 +1,7 @@
+<footer class="relative z-10 py-16 px-6 text-center" style="border-top:1px solid rgba(196,168,116,0.08);">
+  <p class="font-serif-display text-2xl glow-gold" style="color:#c4a874;"><%= brand %></p>
+  <% if (content.footer_message) { %>
+    <p class="mt-3 text-sm" style="color:rgba(196,168,116,0.4);"><%= content.footer_message %></p>
+  <% } %>
+  <p class="mt-2 text-xs" style="color:rgba(196,168,116,0.2);"><%= helpers.formatDate(content.wedding_date) %></p>
+</footer>

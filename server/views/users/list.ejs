@@ -1,0 +1,170 @@
+<div class="users-page">
+
+<%/* ── Page header ──────────────────────────────────────────────────────── */%>
+<div class="page-header">
+  <div>
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Manajemen</p>
+    <h1>Users</h1>
+    <p class="muted small">Kelola akun super admin dan client.</p>
+  </div>
+  <a href="/users/new" class="btn btn-primary btn-pill">+ New user</a>
+</div>
+
+<%/* ── Filter bar ───────────────────────────────────────────────────────── */%>
+<form class="co-panel filter-bar filter-bar--users" method="get" action="/users" id="users-filters">
+  <div class="filter-bar__search">
+    <label class="dt-label" for="dt-q">Cari</label>
+    <input
+      type="search"
+      id="dt-q"
+      name="q"
+      class="dt-input dt-input--search"
+      placeholder="Nama atau email…"
+      value="<%= dt.q %>"
+      autocomplete="off"
+    />
+  </div>
+  <div class="filter-bar__group">
+    <label class="dt-label" for="dt-role">Role</label>
+    <select id="dt-role" name="role" class="dt-select">
+      <option value="" <%= !dt.role ? 'selected' : '' %>>Semua</option>
+      <option value="super_admin" <%= dt.role === 'super_admin' ? 'selected' : '' %>>Super admin</option>
+      <option value="client" <%= dt.role === 'client' ? 'selected' : '' %>>Client</option>
+    </select>
+  </div>
+  <div class="filter-bar__group">
+    <label class="dt-label" for="dt-sort">Urutkan</label>
+    <select id="dt-sort" name="sort" class="dt-select">
+      <option value="name" <%= dt.sort === 'name' ? 'selected' : '' %>>Nama</option>
+      <option value="email" <%= dt.sort === 'email' ? 'selected' : '' %>>Email</option>
+      <option value="id" <%= dt.sort === 'id' ? 'selected' : '' %>>ID</option>
+      <option value="role" <%= dt.sort === 'role' ? 'selected' : '' %>>Role</option>
+      <option value="created" <%= dt.sort === 'created' ? 'selected' : '' %>>Terdaftar</option>
+    </select>
+  </div>
+  <div class="filter-bar__group">
+    <label class="dt-label" for="dt-order">Arah</label>
+    <select id="dt-order" name="order" class="dt-select">
+      <option value="asc" <%= dt.order === 'asc' ? 'selected' : '' %>>Naik (A→Z)</option>
+      <option value="desc" <%= dt.order === 'desc' ? 'selected' : '' %>>Turun (Z→A)</option>
+    </select>
+  </div>
+  <div class="filter-bar__group">
+    <label class="dt-label" for="dt-limit">Per halaman</label>
+    <select id="dt-limit" name="limit" class="dt-select">
+      <% [5, 10, 25, 50, 100].forEach(function(n) { %>
+        <option value="<%= n %>" <%= dt.limit === n ? 'selected' : '' %>><%= n %></option>
+      <% }) %>
+    </select>
+  </div>
+  <input type="hidden" name="page" value="1" />
+  <div class="filter-bar__actions">
+    <button type="submit" class="btn btn-primary btn-pill">Terapkan</button>
+    <a href="/users" class="btn btn-ghost btn-pill">Reset</a>
+  </div>
+</form>
+
+<%/* ── Table ────────────────────────────────────────────────────────────── */%>
+<%
+  var rowStart = dt.total === 0 ? 0 : (dt.page - 1) * dt.limit + 1;
+  var rowEnd = dt.total === 0 ? 0 : Math.min(dt.page * dt.limit, dt.total);
+  var lastPage = dt.totalPages;
+  var cur = dt.page;
+  var win = 5;
+  var startP = Math.max(1, cur - Math.floor(win / 2));
+  var endP = Math.min(lastPage, startP + win - 1);
+  if (endP - startP < win - 1) startP = Math.max(1, endP - win + 1);
+%>
+
+<div class="co-panel data-table-wrap">
+  <% if (!users || users.length === 0) { %>
+    <div class="empty-state empty-state--cozy">
+      <p class="empty-state__title">Tidak ada user</p>
+      <p class="muted small">Sesuaikan filter atau tambah user baru.</p>
+    </div>
+  <% } else { %>
+    <div class="data-table-scroll">
+      <table class="table data-table data-table--users">
+        <thead>
+          <tr>
+            <th class="dt-col-user" scope="col">User</th>
+            <th class="dt-col-email" scope="col">Email</th>
+            <th class="dt-col-role" scope="col">Role</th>
+            <th class="dt-col-registered" scope="col">Terdaftar</th>
+            <th class="dt-col-actions" scope="col"><span class="visually-hidden">Aksi</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(function(u) { %>
+            <tr>
+              <td class="dt-col-user">
+                <div class="user-cell">
+                  <div class="user-avatar" aria-hidden="true"><%= u.name ? u.name.charAt(0).toUpperCase() : '?' %></div>
+                  <div class="user-cell__info">
+                    <strong><%= u.name %></strong>
+                    <span class="muted small dt-mono">#<%= u.id %></span>
+                  </div>
+                </div>
+              </td>
+              <td class="dt-col-email dt-email"><%= u.email %></td>
+              <td class="dt-col-role">
+                <span class="badge badge-<%= u.role === 'super_admin' ? 'published' : 'draft' %>"><%= u.role %></span>
+              </td>
+              <td class="dt-col-registered muted small dt-nowrap">
+                <% if (u.created_at) { %>
+                  <%= new Date(u.created_at).toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
+                <% } else { %>—<% } %>
+              </td>
+              <td class="dt-actions">
+                <div class="dt-actions__row">
+                  <a class="btn btn-outline btn-sm btn-pill dt-action-edit" href="/users/<%= u.id %>/edit">Edit</a>
+                  <% if (typeof user !== 'undefined' && user && Number(user.id) !== Number(u.id)) { %>
+                    <form method="POST" action="/users/<%= u.id %>/delete" class="dt-inline-form" onsubmit="return confirm('Hapus user ini?');">
+                      <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                      <button type="submit" class="btn btn-danger btn-sm btn-pill dt-action-delete">Hapus</button>
+                    </form>
+                  <% } else { %>
+                    <span class="dt-actions__placeholder" title="Tidak dapat menghapus akun yang sedang dipakai">—</span>
+                  <% } %>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dt-footer">
+      <p class="dt-meta muted small">
+        Menampilkan <strong><%= rowStart %></strong>–<strong><%= rowEnd %></strong> dari <strong><%= dt.total %></strong> user
+      </p>
+      <% if (lastPage > 1) { %>
+        <nav class="pagination" aria-label="Halaman">
+          <% if (cur > 1) { %>
+            <a class="pagination__link btn btn-ghost btn-sm btn-pill" href="<%= usersQuery({ page: String(cur - 1) }) %>">← Sebelumnya</a>
+          <% } else { %>
+            <span class="pagination__link btn btn-ghost btn-sm btn-pill" aria-disabled="true" style="opacity:0.4; pointer-events:none">← Sebelumnya</span>
+          <% } %>
+
+          <div class="pagination__pages">
+            <% for (var pi = startP; pi <= endP; pi++) { %>
+              <% if (pi === cur) { %>
+                <span class="pagination__page pagination__page--current btn btn-primary btn-sm" aria-current="page"><%= pi %></span>
+              <% } else { %>
+                <a class="pagination__page btn btn-ghost btn-sm" href="<%= usersQuery({ page: String(pi) }) %>"><%= pi %></a>
+              <% } %>
+            <% } %>
+          </div>
+
+          <% if (cur < lastPage) { %>
+            <a class="pagination__link btn btn-ghost btn-sm btn-pill" href="<%= usersQuery({ page: String(cur + 1) }) %>">Berikutnya →</a>
+          <% } else { %>
+            <span class="pagination__link btn btn-ghost btn-sm btn-pill" aria-disabled="true" style="opacity:0.4; pointer-events:none">Berikutnya →</span>
+          <% } %>
+        </nav>
+      <% } %>
+    </div>
+  <% } %>
+</div>
+
+</div><%/* /.users-page */%>

@@ -1,0 +1,7 @@
+<footer class="py-12 px-6 text-center" style="background:#e8ede5;border-top:1px solid rgba(184,197,176,.2)">
+  <p class="font-serif text-sage-800 text-2xl"><%= content.partner_one %> &amp; <%= content.partner_two %></p>
+  <% if (content.footer_message) { %>
+    <p class="text-sage-500 text-sm mt-3"><%= content.footer_message %></p>
+  <% } %>
+  <p class="text-dusty-500 text-xs tracking-widest uppercase mt-2"><%= helpers.formatDate(content.wedding_date) %></p>
+</footer>

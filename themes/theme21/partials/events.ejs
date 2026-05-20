@@ -1,0 +1,43 @@
+<%
+  const defaultEvents = [
+    { title: 'Akad / Pemberkatan', datetime: content.wedding_date, venue_name: 'Tempat Acara', address: '' },
+    { title: 'Resepsi', datetime: content.wedding_date, venue_name: 'Ballroom', address: '' },
+  ];
+  const evRows = (eventRows && eventRows.length) ? eventRows : defaultEvents;
+-%>
+<section class="py-20 px-6 t21-section-ivory reveal-section" data-section>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-script text-center text-4xl mb-12" style="color:var(--gold)">Rangkaian Acara</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <% evRows.forEach(function (ev) {
+           const dt = helpers.toDate(ev.datetime || content.wedding_date);
+           let timeStr = '';
+           if (dt) {
+             timeStr = String(dt.getHours()).padStart(2,'0') + ':' + String(dt.getMinutes()).padStart(2,'0');
+           }
+      %>
+        <div class="t21-card p-8 rounded-2xl text-center reveal-section">
+          <h3 class="font-script text-2xl mb-4" style="color:var(--gold)"><%= ev.title %></h3>
+          <% if (ev.datetime || content.wedding_date) { %>
+            <p class="font-sans-alt text-sm mb-1" style="color:var(--taupe)"><%= helpers.formatDate(ev.datetime || content.wedding_date) %></p>
+          <% } %>
+          <% if (timeStr) { %>
+            <p class="font-sans-alt text-sm mb-3" style="color:var(--taupe)"><%= timeStr %> WIB</p>
+          <% } %>
+          <% if (ev.venue_name) { %>
+            <p class="font-medium mb-1" style="color:var(--brown)"><%= ev.venue_name %></p>
+          <% } %>
+          <% if (ev.address) { %>
+            <p class="text-sm" style="color:var(--taupe)"><%= ev.address %></p>
+          <% } %>
+          <% if (ev.map_url) { %>
+            <a href="<%= ev.map_url %>" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-xs font-sans-alt tracking-wider uppercase border border-[var(--gold)] text-[var(--gold)] px-4 py-2 rounded-full t21-link">Peta lokasi</a>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
+    <% if (content.location_note) { %>
+      <p class="text-center text-sm mt-8" style="color:var(--taupe)"><%= content.location_note %></p>
+    <% } %>
+  </div>
+</section>

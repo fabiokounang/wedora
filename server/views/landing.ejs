@@ -1,0 +1,19 @@
+<div class="hero">
+  <h1>Wedding Invitation SaaS</h1>
+  <p class="muted">Multi-theme, multi-tenant wedding invitation platform.</p>
+  <div class="row">
+    <a href="/login" class="btn btn-primary">Sign In</a>
+  </div>
+</div>
+
+<section class="themes">
+  <h2>Available Themes</h2>
+  <div class="cards">
+    <% themes.forEach(function(t) { %>
+      <div class="card">
+        <h3><%= t.name %></h3>
+        <p class="muted small">key: <code><%= t.key %></code> &middot; v<%= t.version || '1.0.0' %></p>
+      </div>
+    <% }) %>
+  </div>
+</section>

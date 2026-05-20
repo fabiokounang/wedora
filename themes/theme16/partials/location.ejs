@@ -1,0 +1,30 @@
+<%
+  const withMap = (eventRows || []).find(function (e) { return e.map_url && String(e.map_url).trim(); });
+  const ev0 = (eventRows && eventRows[0]) ? eventRows[0] : null;
+  const addr = (withMap && withMap.address) || (ev0 && ev0.address) || '';
+  const venue = (withMap && withMap.venue_name) || (ev0 && ev0.venue_name) || '';
+  const mapUrl = withMap && withMap.map_url ? String(withMap.map_url).trim() : '';
+  const mapsSearch = encodeURIComponent([venue, addr].filter(Boolean).join(' '));
+-%>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-[#3d3128] mb-6">Lokasi</h2>
+    <div class="glass-card p-8">
+      <% if (mapUrl) { %>
+        <iframe title="Peta lokasi" class="t16-map-frame rounded-xl mb-6" src="<%= mapUrl %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <% } else { %>
+        <div class="w-full h-48 bg-gradient-to-br from-[#e8ddd1] to-[#d4c5b5] rounded-xl flex items-center justify-center mb-6">
+          <i data-lucide="map-pin" class="w-12 h-12 text-[#8b7355] opacity-50"></i>
+        </div>
+      <% } %>
+      <% if (content.location_note) { %>
+        <p class="text-[#6b5a4a] mb-4"><%= content.location_note %></p>
+      <% } else if (addr || venue) { %>
+        <p class="text-[#6b5a4a] mb-6"><%= [venue, addr].filter(Boolean).join(' · ') %></p>
+      <% } %>
+      <% if (mapsSearch) { %>
+        <a href="https://www.google.com/maps/search/?api=1&query=<%= mapsSearch %>" target="_blank" rel="noopener noreferrer" class="btn-glow inline-block text-white px-8 py-3 rounded-full text-sm tracking-wider no-underline">Buka Google Maps</a>
+      <% } %>
+    </div>
+  </div>
+</section>

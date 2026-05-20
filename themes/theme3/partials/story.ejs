@@ -1,0 +1,30 @@
+<section id="story" class="relative z-10 py-20 px-6">
+  <div class="max-w-2xl mx-auto text-center">
+    <p class="text-xs tracking-[0.4em] uppercase reveal" style="color:rgba(196,168,116,0.4);">How it all began</p>
+    <h2 class="font-serif-display mt-3 reveal" style="font-size:clamp(2rem,5vw,3.2rem);color:#c4a874;font-weight:300;">
+      <%= content.story_title || 'Our Story' %>
+    </h2>
+    <div class="ornament-divider mt-4 mb-10 reveal" style="color:rgba(196,168,116,0.3);">&#9825;</div>
+
+    <% if (content.story_intro) { %>
+    <p class="reveal mb-8" style="color:rgba(212,197,169,0.7);line-height:1.9;"><%= content.story_intro %></p>
+    <% } %>
+
+    <div class="space-y-8 text-left" style="line-height:1.9;color:rgba(212,197,169,0.7);">
+      <% (story || []).forEach(function(item) { %>
+        <div class="reveal">
+          <% if (item.date_label) { %>
+            <p class="text-xs tracking-[0.3em] uppercase mb-2" style="color:rgba(196,168,116,0.5);"><%= item.date_label %></p>
+          <% } %>
+          <h3 class="font-serif-display text-xl mb-2" style="color:#c4a874;"><%= item.title %></h3>
+          <% if (item.description) { %>
+            <p><%= item.description %></p>
+          <% } %>
+        </div>
+      <% }) %>
+      <% if (!story || story.length === 0) { %>
+        <p class="reveal text-center" style="color:rgba(196,168,116,0.4);">Our story is being written...</p>
+      <% } %>
+    </div>
+  </div>
+</section>

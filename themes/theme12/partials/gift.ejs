@@ -1,0 +1,13 @@
+<section class="t12-section" style="text-align:center">
+  <div class="section-reveal" data-reveal>
+    <p class="t12-kicker">WEDDING GIFT</p>
+    <h2 class="t12-heading" style="margin-bottom:0.75rem">Amplop digital</h2>
+    <p class="t12-gift-lead t12-inner"><%= content.gift_message || 'Kehadiran Anda adalah hadiah terindah. Jika berkenan, kami menyediakan amplop digital berikut.' %></p>
+  </div>
+  <div class="section-zoom gift-wrap t12-gift-registry" data-reveal>
+    <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+  </div>
+  <% if (!gifts || !gifts.length) { %>
+  <p class="section-zoom t12-inner" data-reveal style="font-size:0.85rem;opacity:0.6;margin-top:0.75rem">Rekening dapat diatur di admin.</p>
+  <% } %>
+</section>

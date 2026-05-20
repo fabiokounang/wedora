@@ -1,0 +1,16 @@
+<section id="gallery" class="py-20 px-4 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="font-serif text-3xl md:text-4xl text-center text-gray-800 mb-4 fade-in">Gallery</h2>
+    <p class="text-center text-gray-500 mb-12 fade-in">Moments we treasure</p>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 fade-in">
+      <% (gallery || []).forEach(function (item) { %>
+      <a href="<%= item.image_url %>" data-lightbox="theme6-gallery" <% if (item.caption) { %>data-title="<%= item.caption %>"<% } %> class="gallery-img rounded-2xl aspect-square overflow-hidden block bg-gradient-to-br from-rose-light to-blush">
+        <img src="<%= item.thumbnail_url || item.image_url %>" alt="<%= item.caption || 'Photo' %>" class="w-full h-full object-cover" />
+      </a>
+      <% }) %>
+      <% if (!gallery || gallery.length === 0) { %>
+        <p class="col-span-full text-center text-gray-400 text-sm">Unggah foto melalui panel admin untuk menampilkan galeri.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

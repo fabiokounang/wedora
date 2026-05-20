@@ -1,0 +1,35 @@
+{
+  "key": "theme3",
+  "name": "Candlelight Elegance",
+  "version": "1.0.0",
+  "preview": "/themes/theme3/public/preview.svg",
+  "sections": [
+    { "key": "hero",    "required": true },
+    { "key": "story",   "required": false, "collection": "story_items" },
+    { "key": "events",  "required": true,  "collection": "events" },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "rsvp",    "required": false },
+    { "key": "gift",    "required": false, "collection": "gift_accounts" },
+    { "key": "wishes",  "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one",            "type": "text",     "label": "Nama Mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two",            "type": "text",     "label": "Nama Mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date",           "type": "datetime", "label": "Tanggal & Jam Akad", "required": true, "section": "hero" },
+    { "key": "hero_quote",             "type": "textarea", "label": "Kutipan Hero", "section": "hero" },
+    { "key": "story_title",            "type": "text",     "label": "Judul Story", "section": "story" },
+    { "key": "story_intro",            "type": "textarea", "label": "Intro sebelum timeline (opsional)", "section": "story" },
+    { "key": "gift_message",           "type": "textarea", "label": "Pesan Gift", "section": "gift" },
+    { "key": "footer_message",         "type": "textarea", "label": "Pesan Footer" }
+  ],
+  "theme_settings": {
+    "colors": [
+      { "key": "primary",    "default": "#c4a874" },
+      { "key": "background", "default": "#1a1714" }
+    ],
+    "fonts": [
+      { "key": "display", "options": ["Cormorant Garamond", "Playfair Display"] },
+      { "key": "body",    "options": ["Questrial", "Inter"] }
+    ]
+  }
+}

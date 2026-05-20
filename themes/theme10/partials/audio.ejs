@@ -1,0 +1,9 @@
+<audio id="audio_file" class="d-none">
+            <!-- <source src="horse.ogg" type="audio/ogg"> -->
+            <% if (site && Number(site.music_enabled) === 1 && site.music_url) { %>
+            <source src="<%= site.music_url %>" type="audio/mpeg">
+            <% } else { %>
+            <source src="https://petra.viding.co/music/40831411-679b1b9c555f8-1738218396.mp3" type="audio/mpeg">
+            <% } %>
+            Your browser does not support the audio element.
+        </audio>

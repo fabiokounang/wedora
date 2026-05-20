@@ -1,0 +1,37 @@
+<section class="t12-section" style="position:relative">
+  <div class="butterfly" style="top:24px;left:12%;opacity:0.1">
+    <svg width="24" height="20" viewBox="0 0 30 24" fill="none" aria-hidden="true"><path d="M15 12C10 4 0 2 0 10s10 10 15 2z" fill="var(--secondary)" opacity="0.5" /><path d="M15 12C20 4 30 2 30 10s-10 10-15 2z" fill="var(--primary)" opacity="0.5" /></svg>
+  </div>
+  <div class="section-reveal" data-reveal style="text-align:center;margin-bottom:1.75rem">
+    <p class="t12-kicker">KONFIRMASI KEDATANGAN</p>
+    <h2 class="t12-heading">RSVP</h2>
+  </div>
+  <form id="rsvpForm" class="section-zoom rsvp-card" data-reveal>
+    <div class="rsvp-field">
+      <label for="rsvpName" class="t12-kicker" style="display:block;text-align:left;margin-bottom:0.35rem">Nama</label>
+      <input id="rsvpName" name="name" type="text" class="rsvp-input" placeholder="Nama Anda" required autocomplete="name">
+    </div>
+    <div class="rsvp-field">
+      <label for="rsvpPhone" class="t12-kicker" style="display:block;text-align:left;margin-bottom:0.35rem">Nomor WhatsApp</label>
+      <input id="rsvpPhone" name="guest_phone" type="tel" class="rsvp-input" inputmode="tel" autocomplete="tel" placeholder="08… / 628…">
+    </div>
+    <div class="rsvp-field">
+      <p class="t12-kicker" style="text-align:left;margin-bottom:0.65rem">Kehadiran</p>
+      <div class="rsvp-pills">
+        <input type="radio" name="attend" id="attendYes" class="rsvp-radio" value="yes" checked>
+        <label for="attendYes" class="rsvp-label">Hadir</label>
+        <input type="radio" name="attend" id="attendNo" class="rsvp-radio" value="no">
+        <label for="attendNo" class="rsvp-label">Berhalangan</label>
+      </div>
+    </div>
+    <div class="rsvp-field">
+      <label for="rsvpGuests" class="t12-kicker" style="display:block;text-align:left;margin-bottom:0.35rem">Jumlah tamu</label>
+      <input id="rsvpGuests" name="guests_count" type="number" class="rsvp-input" min="1" value="1" inputmode="numeric">
+    </div>
+    <div class="rsvp-field">
+      <label for="rsvpMsg" class="t12-kicker" style="display:block;text-align:left;margin-bottom:0.35rem">Pesan (opsional)</label>
+      <textarea id="rsvpMsg" name="notes" class="rsvp-input" rows="3" placeholder="Ucapan singkat untuk mempelai…" style="resize:vertical;min-height:4.5rem;border-radius:8px;border:1px solid rgba(196,150,122,0.25);padding:10px"></textarea>
+    </div>
+    <button type="submit" class="rsvp-submit" id="rsvpSubmitBtn">Kirim RSVP</button>
+  </form>
+</section>

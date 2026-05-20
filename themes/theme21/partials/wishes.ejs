@@ -1,0 +1,29 @@
+<section class="py-20 px-6 t21-section-beige reveal-section" data-section>
+  <div class="max-w-md mx-auto">
+    <h2 class="font-script text-center text-3xl mb-4" style="color:var(--gold)">Ucapan &amp; Doa</h2>
+    <p class="text-center text-sm mb-8" style="color:var(--taupe)">Tinggalkan ucapan dan doa untuk mempelai</p>
+    <form id="wishForm" class="t21-card p-8 rounded-3xl space-y-4 mb-6">
+      <div>
+        <label for="wishName" class="font-sans-alt text-xs tracking-wider uppercase block mb-1" style="color:var(--taupe)">Nama</label>
+        <input id="wishName" type="text" required class="t21-input w-full" placeholder="Nama Anda" autocomplete="name">
+      </div>
+      <div>
+        <label for="wishMsg" class="font-sans-alt text-xs tracking-wider uppercase block mb-1" style="color:var(--taupe)">Ucapan</label>
+        <textarea id="wishMsg" rows="4" required class="t21-input t21-textarea w-full" placeholder="Tuliskan ucapan atau doa…"></textarea>
+      </div>
+      <button type="submit" id="wishBtn" class="t21-btn-submit w-full py-3 rounded-xl font-sans-alt text-sm tracking-wider uppercase">Kirim ucapan</button>
+    </form>
+    <div id="wishesList" class="space-y-3">
+      <% if (wishes && wishes.length) { %>
+        <% wishes.forEach(function(w) { %>
+          <div class="t21-card p-4 rounded-2xl t21-wish-card">
+            <% if (w.message) { %><p class="text-sm italic" style="color:var(--brown)">&ldquo;<%= w.message %>&rdquo;</p><% } %>
+            <p class="font-sans-alt text-xs mt-1" style="color:var(--taupe)">&mdash; <%= w.guest_name %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p id="noWishes" class="text-center text-sm italic" style="color:var(--taupe)">Jadilah yang pertama meninggalkan ucapan hangat.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

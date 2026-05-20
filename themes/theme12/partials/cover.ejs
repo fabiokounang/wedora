@@ -1,0 +1,30 @@
+<% function firstName(n) { var p = String(n || '').trim().split(/\s+/); return p[0] || '—'; } %>
+<section class="cover-section" id="coverSection">
+  <div class="cover-bg"></div>
+  <div class="cover-overlay"></div>
+  <div class="ornament float-1" style="top:8%;left:5%">
+    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" aria-hidden="true"><path d="M30 0C30 0 5 25 5 50c0 16 11 28 25 28s25-12 25-28C55 25 30 0 30 0z" fill="var(--secondary)" /></svg>
+  </div>
+  <div class="ornament float-2" style="top:12%;right:8%">
+    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="var(--primary)" opacity="0.5" /><path d="M25 5c0 20-15 20-15 20s15 0 15 20c0-20 15-20 15-20s-15 0-15-20z" fill="var(--primary)" opacity="0.6" /></svg>
+  </div>
+  <div class="ornament float-3" style="bottom:15%;left:10%">
+    <svg width="40" height="50" viewBox="0 0 40 50" fill="none" aria-hidden="true"><path d="M20 0C10 15 0 20 0 30c0 11 9 20 20 20s20-9 20-20c0-10-10-15-20-30z" fill="var(--primary)" opacity="0.4" /></svg>
+  </div>
+  <div class="butterfly" style="top:20%;right:15%">
+    <svg width="30" height="24" viewBox="0 0 30 24" fill="none" aria-hidden="true"><path d="M15 12C10 4 0 2 0 10s10 10 15 2z" fill="var(--primary)" opacity="0.4" /><path d="M15 12C20 4 30 2 30 10s-10 10-15 2z" fill="var(--secondary)" opacity="0.4" /></svg>
+  </div>
+  <div class="ornament deer-orn float-2" style="bottom:10%;right:6%">
+    <svg width="70" height="80" viewBox="0 0 70 80" fill="var(--text)" aria-hidden="true"><path d="M35 30c-3-10-8-18-8-18s-5 3-7 8c-1 3 0 6 2 8l5 4v10l-6 8-4 10h6l4-8 3 8h6l3-8 4 8h6l-4-10-6-8V32l5-4c2-2 3-5 2-8-2-5-7-8-7-8s-5 8-8 18zM27 12l-6-12 2 10-4-6 3 8zM43 12l6-12-2 10 4-6-3 8z" /></svg>
+  </div>
+  <div class="cover-content" id="coverContent">
+    <p style="font-family:'Josefin Sans',sans-serif;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;margin:0 0 1rem;color:rgba(255,255,255,0.78)"><%= content.cover_subtitle || 'THE WEDDING OF' %></p>
+    <h1 style="font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,8vw,4.25rem);color:#fff;margin:0;line-height:1.1;text-shadow:0 2px 30px rgba(0,0,0,0.2)"><%= firstName(content.partner_one) %></h1>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(255,255,255,0.85);margin:0.5rem 0;font-style:italic">&amp;</p>
+    <h1 style="font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,8vw,4.25rem);color:#fff;margin:0;line-height:1.1;text-shadow:0 2px 30px rgba(0,0,0,0.2)"><%= firstName(content.partner_two) %></h1>
+    <p style="font-family:'Josefin Sans',sans-serif;font-size:13px;letter-spacing:0.2em;color:rgba(255,255,255,0.78);margin:1.35rem 0 1.75rem">
+      <%= (helpers.formatDate(content.wedding_date) || '').toUpperCase() %>
+    </p>
+    <button type="button" class="open-btn" id="openBtn" aria-expanded="false">Buka undangan</button>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+<section class="t20-reveal t20-section-pad t20-center">
+  <h2 class="t20-cinzel t20-section-heading">Wedding Gift</h2>
+  <% if (content && content.gift_message) { %>
+  <p class="t20-gift-message"><%= content.gift_message %></p>
+  <% } %>
+  <%- include('../../shared/partials/gift-cards', { gifts }) %>
+</section>

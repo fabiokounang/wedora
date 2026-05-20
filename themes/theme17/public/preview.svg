@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#fdf8f4"/>
+  <!-- Left green curtain -->
+  <rect x="0" y="0" width="155" height="300" fill="#2d4a2d" opacity="0.88"/>
+  <!-- Right green curtain -->
+  <rect x="245" y="0" width="155" height="300" fill="#2d4a2d" opacity="0.88"/>
+  <!-- Floral accents on curtains -->
+  <circle cx="130" cy="80" r="6" fill="#e8b4b8" opacity="0.7"/>
+  <circle cx="140" cy="160" r="5" fill="#f4c9c0" opacity="0.6"/>
+  <circle cx="270" cy="100" r="6" fill="#e8b4b8" opacity="0.7"/>
+  <circle cx="260" cy="200" r="5" fill="#b5c5a3" opacity="0.6"/>
+  <!-- Center glass card -->
+  <rect x="130" y="55" width="140" height="190" rx="14" fill="rgba(255,255,255,0.85)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+  <!-- Floral ornament top -->
+  <path d="M170 80 Q200 65 230 80" stroke="#d4a574" stroke-width="1.5" fill="none"/>
+  <circle cx="200" cy="75" r="3" fill="#e8b4b8"/>
+  <!-- Gold divider -->
+  <line x1="168" y1="135" x2="232" y2="135" stroke="#d4a574" stroke-width="1" opacity="0.7"/>
+  <!-- Names text -->
+  <text x="200" y="123" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#3d2e1f">Amelia &amp; James</text>
+  <!-- Date text -->
+  <text x="200" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#8b7355" letter-spacing="2">JUNE 15, 2025</text>
+  <!-- Open button outline -->
+  <rect x="170" y="175" width="60" height="22" rx="11" fill="none" stroke="#d4a574" stroke-width="1.5"/>
+  <text x="200" y="190" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#d4a574">Open</text>
+  <!-- Label -->
+  <text x="200" y="268" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#8b7355">Floral Curtain</text>
+</svg>

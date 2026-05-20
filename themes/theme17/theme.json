@@ -1,0 +1,26 @@
+{
+  "key": "theme17",
+  "name": "Floral Curtain",
+  "version": "1.0.0",
+  "preview": "/themes/theme17/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "events", "required": false, "collection": "events" },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "rsvp", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" },
+    { "key": "wishes", "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & waktu acara utama", "required": true, "section": "hero" },
+    { "key": "cover_subtitle", "type": "text", "label": "Teks di cover (mis. You are invited to the wedding of)", "required": false, "section": "hero" },
+    { "key": "couple_quote", "type": "textarea", "label": "Sambutan / kutipan pasangan", "required": false, "section": "hero" },
+    { "key": "story_title", "type": "text", "label": "Judul cerita cinta", "required": false, "section": "story" },
+    { "key": "footer_text", "type": "textarea", "label": "Pesan penutup", "required": false, "section": "hero" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan hadiah digital", "required": false, "section": "gift" },
+    { "key": "location_note", "type": "textarea", "label": "Catatan lokasi (opsional)", "required": false, "section": "hero" }
+  ]
+}

@@ -1,0 +1,11 @@
+<section class="t18-reveal t18-section-pad t18-center">
+  <h2 class="t18-serif t18-section-heading">Location</h2>
+  <div class="t18-location-card">
+    <div class="t18-map-placeholder">
+      <i data-lucide="map-pin" style="width:3rem;height:3rem;color:#c9a87a;"></i>
+    </div>
+    <% if (content && content.location_note) { %>
+    <p class="t18-location-note"><%= content.location_note %></p>
+    <% } %>
+  </div>
+</section>

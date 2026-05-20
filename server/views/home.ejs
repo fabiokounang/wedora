@@ -1,0 +1,270 @@
+<% var H = cms && cms.home ? cms.home : {}; %>
+<% var hero = H.hero || {}; %>
+<% var ctaH = cms && cms.cta && cms.cta.home ? cms.cta.home : {}; %>
+<% var tc = typeof themeCount !== 'undefined' ? themeCount : (themes && themes.length) || 0; %>
+<% var planOrder = ['starter', 'standard', 'premium']; %>
+<% function money(n) { return Number(n || 0).toLocaleString('id-ID'); } %>
+
+<%/* ── Hero ─────────────────────────────────────────── */%>
+<section class="pub-hero">
+  <div class="pub-hero__inner">
+    <div class="pub-hero__content">
+      <span class="pub-hero__eyebrow"><%= hero.eyebrow %></span>
+      <h1 class="pub-hero__title">
+        <%= hero.titleLine1 %><br />
+        <em><%= hero.titleEmphasis %></em><%= hero.titleLine2 %><br />
+        <%= hero.titleLine3 %>
+      </h1>
+      <p class="pub-hero__subtitle">
+        <%= hero.subtitle %>
+      </p>
+      <div class="pub-hero__actions">
+        <a href="/catalog" class="btn-pub"><%= hero.ctaPrimary %></a>
+        <a href="/register" class="btn-pub btn-pub-outline"><%= hero.ctaSecondary %></a>
+      </div>
+    </div>
+
+    <div class="pub-hero__visual">
+      <div class="pub-hero__theme-stack">
+        <% if (themes && themes.length > 0) { %>
+          <div class="pub-hero__theme-float">
+            <img src="<%= themes[0].theme_preview_url %>" alt="Contoh tema undangan <%= themes[0].name %>" loading="eager" />
+            <span class="pub-hero__theme-float-label">✦ <%= themes[0].name %></span>
+          </div>
+          <% if (themes.length > 1) { %>
+            <div class="pub-hero__theme-mini pub-hero__theme-mini--1">
+              <img src="<%= themes[1].theme_preview_url %>" alt="<%= themes[1].name %>" loading="lazy" />
+            </div>
+          <% } %>
+          <% if (themes.length > 2) { %>
+            <div class="pub-hero__theme-mini pub-hero__theme-mini--2">
+              <img src="<%= themes[2].theme_preview_url %>" alt="<%= themes[2].name %>" loading="lazy" />
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%/* ── About us ─────────────────────────────────────── */%>
+<% var about = (H.aboutSection) || {}; %>
+<section class="pub-section pub-about" id="tentang">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= about.eyebrow || '' %></span>
+      <h2 class="pub-section__title">
+        <% var atl = about.titleLines || []; %>
+        <% atl.forEach(function(line, i) { %>
+          <%= line %><% if (i < atl.length - 1) { %><br /><% } %>
+        <% }); %>
+      </h2>
+      <% if (about.body) { %>
+        <p class="pub-section__subtitle"><%= about.body %></p>
+      <% } %>
+    </div>
+    <% var aHighlights = about.highlights || []; %>
+    <% if (aHighlights.length > 0) { %>
+      <div class="pub-about__highlights">
+        <% aHighlights.forEach(function(h) { %>
+          <div class="pub-about__highlight">
+            <div class="pub-about__highlight-icon"><%= h.icon || '' %></div>
+            <h3 class="pub-about__highlight-title"><%= h.title || '' %></h3>
+            <p class="pub-about__highlight-desc"><%= h.desc || '' %></p>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%/* ── Stats bar ─────────────────────────────────────── */%>
+<div class="pub-stats">
+  <div class="pub-stats__inner">
+    <% (H.stats || []).forEach(function(stat) { %>
+      <div class="pub-stat">
+        <span class="pub-stat__val"><% if (stat.useThemeCount) { %><%= tc %>+<% } else { %><%= stat.val %><% } %></span>
+        <span class="pub-stat__label"><%= stat.label %></span>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<%/* ── Features ───────────────────────────────────────── */%>
+<section class="pub-section">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= (H.featuresSection && H.featuresSection.eyebrow) || '' %></span>
+      <h2 class="pub-section__title">
+        <% var fl = (H.featuresSection && H.featuresSection.titleLines) || []; %>
+        <% fl.forEach(function(line, i) { %>
+          <%= line %><% if (i < fl.length - 1) { %><br /><% } %>
+        <% }); %>
+      </h2>
+      <p class="pub-section__subtitle"><%= (H.featuresSection && H.featuresSection.subtitle) || '' %></p>
+    </div>
+    <div class="pub-features">
+      <% (H.features || []).forEach(function(f) { %>
+        <div class="pub-feature-card">
+          <div class="pub-feature-card__icon"><%= f.icon %></div>
+          <h3 class="pub-feature-card__title"><%= f.title %></h3>
+          <p class="pub-feature-card__desc"><%= f.desc %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%/* ── How it works ────────────────────────────────────── */%>
+<section class="pub-section pub-section--alt">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= (H.stepsSection && H.stepsSection.eyebrow) || '' %></span>
+      <h2 class="pub-section__title"><%= (H.stepsSection && H.stepsSection.title) || '' %></h2>
+      <p class="pub-section__subtitle"><%= (H.stepsSection && H.stepsSection.subtitle) || '' %></p>
+    </div>
+    <div class="pub-steps">
+      <% (H.steps || []).forEach(function(step, idx) { %>
+        <div class="pub-step">
+          <div class="pub-step__num"><%= idx + 1 %></div>
+          <h3 class="pub-step__title"><%= step.title %></h3>
+          <p class="pub-step__desc"><%= step.desc %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%/* ── Theme showcase ───────────────────────────────────── */%>
+<section class="pub-section">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= (H.themesSection && H.themesSection.eyebrow) || '' %></span>
+      <h2 class="pub-section__title">
+        <% var tl = (H.themesSection && H.themesSection.titleLines) || []; %>
+        <% tl.forEach(function(line, i) { %>
+          <%= line %><% if (i < tl.length - 1) { %><br /><% } %>
+        <% }); %>
+      </h2>
+      <p class="pub-section__subtitle"><%= (H.themesSection && H.themesSection.subtitle) || '' %></p>
+    </div>
+
+    <% if (themes && themes.length > 0) { %>
+      <div class="pub-themes-grid">
+        <% themes.slice(0, 6).forEach(function(t) { %>
+          <article class="pub-theme-card">
+            <div class="pub-theme-card__thumb">
+              <img src="<%= t.theme_preview_url %>" alt="Tema pernikahan <%= t.name %>" loading="lazy" />
+              <div class="pub-theme-card__overlay">
+                <a href="<%= t.demoUrl %>" target="_blank" rel="noopener" class="btn-pub btn-pub-ghost btn-pub-sm">Lihat Demo</a>
+              </div>
+            </div>
+            <div class="pub-theme-card__body">
+              <h3 class="pub-theme-card__name"><%= t.name %></h3>
+              <div class="pub-theme-card__actions">
+                <a href="<%= t.demoUrl %>" target="_blank" rel="noopener" class="btn-pub btn-pub-outline btn-pub-sm">Demo live</a>
+                <a href="<%= t.useThemeUrl %>" class="btn-pub btn-pub-sm pub-theme-card__use">Pakai ini</a>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div style="text-align:center;padding:40px;color:var(--muted)">
+        <p><%= (H.themesSection && H.themesSection.emptyMessage) || 'Tema sedang disiapkan.' %></p>
+      </div>
+    <% } %>
+
+    <div style="text-align:center;margin-top:36px">
+      <a href="/catalog" class="pub-section-link"><%= (H.themesSection && H.themesSection.linkAllThemes) || 'Lihat semua tema' %></a>
+    </div>
+  </div>
+</section>
+
+<%/* ── Testimonials ────────────────────────────────────── */%>
+<section class="pub-section pub-section--alt">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= (H.testimonialsSection && H.testimonialsSection.eyebrow) || '' %></span>
+      <h2 class="pub-section__title"><%= (H.testimonialsSection && H.testimonialsSection.title) || '' %></h2>
+    </div>
+    <div class="pub-testimonials">
+      <% (H.testimonials || []).forEach(function(t) { %>
+        <div class="pub-testimonial">
+          <div class="pub-testimonial__stars"><%= t.stars %></div>
+          <p class="pub-testimonial__text">"<%= t.text %>"</p>
+          <div class="pub-testimonial__author">
+            <div class="pub-testimonial__avatar"><%= t.initials %></div>
+            <div>
+              <div class="pub-testimonial__name"><%= t.name %></div>
+              <div class="pub-testimonial__location"><%= t.location %></div>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%/* ── Pricing preview ────────────────────────────────── */%>
+<section class="pub-section">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= (H.pricingPreviewSection && H.pricingPreviewSection.eyebrow) || '' %></span>
+      <h2 class="pub-section__title">
+        <% var ptl = (H.pricingPreviewSection && H.pricingPreviewSection.titleLines) || []; %>
+        <% ptl.forEach(function(line, i) { %>
+          <%= line %><% if (i < ptl.length - 1) { %><br /><% } %>
+        <% }); %>
+      </h2>
+      <p class="pub-section__subtitle"><%= (H.pricingPreviewSection && H.pricingPreviewSection.subtitle) || '' %></p>
+    </div>
+    <div class="pub-pricing-grid">
+      <% var P = cms && cms.pricing && cms.pricing.plans ? cms.pricing.plans : {}; %>
+      <% var ctaCards = H.planCardCtas || {}; %>
+      <% planOrder.forEach(function(code) { %>
+        <% var plan = (plans || []).find(function(p) { return p.code === code; }); %>
+        <% if (!plan) return; %>
+        <% var copy = P[code] || {}; %>
+        <% var lines = (copy.featureLines && copy.featureLines.length) ? copy.featureLines : plan.features; %>
+        <% var featured = code === 'standard'; %>
+        <div class="pub-plan<%= featured ? ' pub-plan--featured' : '' %>">
+          <div class="pub-plan__badge"><%= copy.badge || plan.name %></div>
+          <h3 class="pub-plan__name"><%= copy.displayName || plan.name %></h3>
+          <div class="pub-plan__price-row">
+            <span class="pub-plan__currency">Rp</span>
+            <span class="pub-plan__price"><%= money(plan.amount) %></span>
+          </div>
+          <p class="pub-plan__subtitle">per acara · <%= plan.validity_label %></p>
+          <ul class="pub-plan__features">
+            <% lines.forEach(function(line) { %>
+              <li class="pub-plan__feat pub-plan__feat--yes"><span class="pub-plan__feat-icon">✓</span> <%= line %></li>
+            <% }); %>
+          </ul>
+          <a href="/register" class="btn-pub<%= featured ? '' : ' btn-pub-outline' %> pub-plan__cta"><%= ctaCards[code] || copy.ctaLabel || 'Pilih' %></a>
+        </div>
+      <% }); %>
+    </div>
+
+    <div style="text-align:center;margin-top:36px">
+      <a href="/pricing" class="pub-section-link"><%= (H.pricingPreviewSection && H.pricingPreviewSection.linkDetail) || 'Lihat detail semua paket' %></a>
+    </div>
+  </div>
+</section>
+
+<%/* ── CTA Banner ──────────────────────────────────────── */%>
+<div class="pub-cta-banner">
+  <div class="pub-cta-banner__inner">
+    <h2 class="pub-cta-banner__title">
+      <% var ctls = ctaH.titleLines || []; %>
+      <% ctls.forEach(function(line, i) { %>
+        <%= line %><% if (i < ctls.length - 1) { %><br /><% } %>
+      <% }); %>
+    </h2>
+    <p class="pub-cta-banner__subtitle"><%= ctaH.subtitle || '' %></p>
+    <div class="pub-cta-banner__actions">
+      <a href="/register" class="btn-pub btn-pub-white"><%= ctaH.primaryLabel || 'Mulai Gratis' %></a>
+      <a href="/catalog" class="btn-pub btn-pub-ghost"><%= ctaH.secondaryLabel || 'Katalog' %></a>
+    </div>
+  </div>
+</div>

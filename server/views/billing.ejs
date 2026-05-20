@@ -1,0 +1,156 @@
+<div class="page-header page-header--inner">
+  <div>
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Pembayaran</p>
+    <h1 class="dash-title">Billing & Paket</h1>
+    <p class="muted small">Tampilan dan harga disamakan dengan halaman pricing publik.</p>
+  </div>
+</div>
+
+<% if (requiredPayment) { %>
+  <div class="flash flash-warning">
+    <% if (requiredReason === 'quota') { %>
+      Slot acara Anda sudah habis. 1 pembayaran sukses = 1 slot undangan.
+    <% } else { %>
+      Akun Anda belum punya slot aktif. Pilih paket lalu lanjutkan pembayaran.
+    <% } %>
+  </div>
+<% } %>
+
+<% if (typeof checkoutFreeOk !== 'undefined' && checkoutFreeOk) { %>
+  <div class="flash flash-success">Pembayaran selesai dengan kode promo (gratis). Slot undangan Anda sudah bertambah.</div>
+<% } %>
+<% if (typeof checkoutError !== 'undefined' && checkoutError) { %>
+  <div class="flash flash-error"><%= checkoutError %></div>
+<% } %>
+
+<% if (typeof verifyRequired !== 'undefined' && verifyRequired) { %>
+  <div class="flash flash-warning">
+    Email Anda belum diverifikasi. Buka tautan di email pendaftaran (cek folder spam). Setelah terverifikasi, Anda bisa melanjutkan pembayaran dan membuat undangan.
+    <span class="muted small" style="display:block;margin-top:0.5rem">Pengaturan akun: <a href="/settings">/settings</a></span>
+  </div>
+<% } %>
+
+<div class="billing-promo-panel co-panel">
+  <label class="form-group__label billing-promo-panel__label" for="billing-promo-code">Kode promo / voucher</label>
+  <div class="billing-promo-panel__row">
+    <input type="text" id="billing-promo-code" class="billing-promo-input" placeholder="Opsional — masukkan kode lalu pilih paket di bawah" autocomplete="off" maxlength="48" spellcheck="false" />
+  </div>
+  <p class="muted small billing-promo-panel__hint">Kode berlaku untuk transaksi berikutnya. Diskon 100% = langsung aktif tanpa Midtrans.</p>
+</div>
+
+<div class="billing-credits">
+  <div class="stat-card stat-card--primary">
+    <span class="stat-card__val"><%= credits.available %></span>
+    <span class="stat-card__lab">Slot tersedia</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-card__val"><%= credits.paid %></span>
+    <span class="stat-card__lab">Pembayaran sukses</span>
+  </div>
+  <div class="stat-card stat-card--muted">
+    <span class="stat-card__val"><%= credits.used %></span>
+    <span class="stat-card__lab">Undangan terpakai</span>
+  </div>
+</div>
+
+<div class="billing-rule-note">
+  <strong>Aturan:</strong> 1 pembayaran sukses = 1 slot undangan (1 acara). Undangan yang sudah dibuat tetap bisa dikelola sesuai masa aktif paket.
+</div>
+
+<% if (activePlan) { %>
+  <div class="billing-active-order co-panel">
+    <h3 class="billing-active-order__title">Transaksi terbaru: <%= activePlan.plan_code.toUpperCase() %></h3>
+    <p class="muted small">Order: <code><%= activePlan.order_id %></code> &middot; Status: <strong><%= activePlan.status %></strong></p>
+  </div>
+<% } %>
+
+<div class="billing-plans">
+  <% plans.forEach(function(plan) { %>
+    <article class="billing-plan<%= plan.code === 'standard' ? ' billing-plan--featured' : '' %><%= typeof selectedPlan !== 'undefined' && selectedPlan === plan.code ? ' billing-plan--selected' : '' %>">
+      <div class="billing-plan__badge"><%= plan.code === 'standard' ? 'Paling Populer' : plan.name %></div>
+      <h3 class="billing-plan__name">Paket <%= plan.name %></h3>
+      <div class="billing-plan__price-row">
+        <span class="billing-plan__currency">Rp</span>
+        <span class="billing-plan__price"><%= Number(plan.amount).toLocaleString('id-ID') %></span>
+      </div>
+      <p class="billing-plan__period">per acara · <%= plan.validity_label %></p>
+      <ul class="billing-plan__features">
+          <% plan.features.forEach(function(f) { %>
+            <li><%= f %></li>
+          <% }) %>
+      </ul>
+      <form method="POST" action="/billing/checkout" class="billing-plan__form">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="hidden" name="plan_code" value="<%= plan.code %>" />
+        <input type="hidden" name="promo_code" value="" class="billing-promo-hidden" autocomplete="off" />
+        <button type="submit" class="btn <%= plan.code === 'standard' ? 'btn-primary' : 'btn-soft' %> btn-pill billing-plan__cta">
+          Bayar Paket <%= plan.name %>
+        </button>
+      </form>
+    </article>
+  <% }) %>
+</div>
+
+<section class="billing-history-section">
+  <h3>Riwayat transaksi</h3>
+  <% if (!orders || !orders.length) { %>
+    <p class="muted small">Belum ada transaksi.</p>
+  <% } else { %>
+    <div class="data-table-wrap">
+      <div class="data-table-scroll">
+      <table class="table data-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Paket</th>
+            <th>Promo</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Dibuat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(function(o) { %>
+            <tr>
+              <td><code><%= o.order_id %></code></td>
+              <td><%= o.plan_code %></td>
+              <td class="muted small"><%= o.promo_code ? o.promo_code : '—' %></td>
+              <td>
+                <% if (o.discount_amount && Number(o.discount_amount) > 0 && o.original_amount) { %>
+                  <span class="billing-price-strike">Rp <%= Number(o.original_amount).toLocaleString('id-ID') %></span><br />
+                <% } %>
+                Rp <%= Number(o.gross_amount).toLocaleString('id-ID') %>
+                <% if (o.discount_amount && Number(o.discount_amount) > 0) { %>
+                  <span class="muted small"><br />hemat Rp <%= Number(o.discount_amount).toLocaleString('id-ID') %></span>
+                <% } %>
+              </td>
+              <td><span class="badge"><%= o.status %></span></td>
+              <td><%= o.created_at %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  <% } %>
+</section>
+
+<script>
+(function () {
+  var src = document.getElementById('billing-promo-code');
+  function sync() {
+    var v = src ? String(src.value || '').trim() : '';
+    document.querySelectorAll('input.billing-promo-hidden').forEach(function (h) {
+      h.value = v;
+    });
+  }
+  if (src) {
+    src.addEventListener('input', sync);
+    src.addEventListener('change', sync);
+  }
+  document.querySelectorAll('.billing-plan__form').forEach(function (form) {
+    form.addEventListener('submit', sync);
+  });
+  sync();
+})();
+</script>

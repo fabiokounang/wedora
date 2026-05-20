@@ -1,0 +1,56 @@
+<%/* ── Catalog hero (full viewport — scroll untuk grid tema) ── */%>
+<section class="pub-catalog-hero" aria-label="Pengantar katalog tema">
+  <div class="pub-catalog-hero__inner">
+    <span class="pub-section__eyebrow">Pilih template impianmu</span>
+    <h1 class="pub-section__title">Katalog tema pernikahan</h1>
+    <p class="pub-section__subtitle">Semua tema responsif, elegan, dan bisa dikustomisasi warna, teks, serta foto sesuai keinginan pasangan.</p>
+  </div>
+  <button type="button" class="pub-catalog-hero__scroll-hint" aria-label="Scroll ke daftar tema">
+    <span class="pub-catalog-hero__scroll-icon" aria-hidden="true">↓</span>
+    <span class="pub-catalog-hero__scroll-label">Scroll untuk melihat tema</span>
+  </button>
+</section>
+
+<%/* ── All themes grid ───────────────────────────────── */%>
+<section id="catalog-themes" class="pub-section pub-section--alt pub-catalog-themes" aria-labelledby="catalog-themes-heading">
+  <h2 id="catalog-themes-heading" class="visually-hidden">Daftar tema</h2>
+  <% if (themes && themes.length > 0) { %>
+    <div class="pub-themes-full-grid">
+      <% themes.forEach(function(t) { %>
+        <article class="pub-theme-card pub-theme-card--catalog">
+          <div class="pub-theme-card__thumb">
+            <img src="<%= t.theme_preview_url %>" alt="Tema pernikahan <%= t.name %>" loading="lazy" draggable="false" />
+            <div class="pub-theme-card__overlay">
+              <a href="<%= t.demoUrl %>" target="_blank" rel="noopener" class="btn-pub btn-pub-ghost btn-pub-sm">Lihat Demo</a>
+            </div>
+          </div>
+          <div class="pub-theme-card__body">
+            <h3 class="pub-theme-card__name"><%= t.name %></h3>
+            <p class="pub-theme-card__meta">v<%= t.version || '1.0' %></p>
+            <div class="pub-theme-card__actions">
+              <a href="<%= t.demoUrl %>" target="_blank" rel="noopener" class="btn-pub btn-pub-outline btn-pub-sm">Demo live</a>
+              <a href="<%= t.useThemeUrl %>" class="btn-pub btn-pub-sm pub-theme-card__use">Pakai tema ini</a>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <div style="text-align:center;padding:80px 20px;color:var(--muted)">
+      <p style="font-size:3rem;margin-bottom:16px">🎨</p>
+      <p style="font-size:1.1rem">Tema sedang disiapkan. Cek kembali nanti.</p>
+    </div>
+  <% } %>
+</section>
+
+<%/* ── CTA ───────────────────────────────────────────── */%>
+<div class="pub-cta-banner">
+  <div class="pub-cta-banner__inner">
+    <h2 class="pub-cta-banner__title">Sudah menemukan tema yang cocok?</h2>
+    <p class="pub-cta-banner__subtitle">Daftar sekarang dan mulai buat undangan dalam hitungan menit.</p>
+    <div class="pub-cta-banner__actions">
+      <a href="/register" class="btn-pub btn-pub-white">Mulai Gratis</a>
+      <a href="/pricing" class="btn-pub btn-pub-ghost">Lihat harga</a>
+    </div>
+  </div>
+</div>

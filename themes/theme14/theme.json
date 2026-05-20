@@ -1,0 +1,35 @@
+{
+  "key": "theme14",
+  "name": "Golden Romance",
+  "version": "1.0.0",
+  "preview": "/themes/theme14/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "events", "required": false, "collection": "events" },
+    { "key": "location", "required": false },
+    { "key": "countdown", "required": false },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "rsvp", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" },
+    { "key": "wishes", "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & waktu acara utama", "required": true, "section": "hero" },
+    { "key": "cover_subtitle", "type": "text", "label": "Subjudul sampul (mis. THE WEDDING OF)", "required": false, "section": "hero" },
+    { "key": "invitation_message", "type": "textarea", "label": "Baris pembuka hero (mis. bersama keluarga)", "required": false, "section": "hero" },
+    { "key": "hero_venue_line", "type": "text", "label": "Baris lokasi di bawah tanggal hero (opsional)", "required": false, "section": "hero" },
+    { "key": "keep_hero_visible_after_open", "type": "text", "label": "Sampul tetap bisa di-scroll setelah buka (ya / yes)", "required": false, "section": "hero" },
+    { "key": "couple_quote", "type": "textarea", "label": "Kutipan / sambutan (blok welcome)", "required": false, "section": "story" },
+    { "key": "couple_quote_source", "type": "text", "label": "Sumber kutipan (opsional, mis. QS. Ar-Rum: 21)", "required": false, "section": "story" },
+    { "key": "story_title", "type": "text", "label": "Judul timeline cerita", "required": false, "section": "story" },
+    { "key": "couple_story", "type": "textarea", "label": "Cerita singkat (jika tanpa item timeline)", "required": false, "section": "story" },
+    { "key": "partner_one_bio", "type": "textarea", "label": "Bio / orang tua mempelai 1", "required": false, "section": "story" },
+    { "key": "partner_two_bio", "type": "textarea", "label": "Bio / orang tua mempelai 2", "required": false, "section": "story" },
+    { "key": "footer_text", "type": "textarea", "label": "Teks penutup (thank you)", "required": false, "section": "hero" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan amplop digital", "required": false, "section": "gift" },
+    { "key": "location_note", "type": "textarea", "label": "Catatan lokasi", "required": false, "section": "location" }
+  ]
+}

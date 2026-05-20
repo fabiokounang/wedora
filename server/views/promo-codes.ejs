@@ -1,0 +1,275 @@
+<%
+  function parsePromoMysqlDate(str) {
+    if (str == null || str === '') return null;
+    var s = String(str).trim();
+    var m = s.match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?/);
+    if (m) {
+      return new Date(
+        parseInt(m[1], 10),
+        parseInt(m[2], 10) - 1,
+        parseInt(m[3], 10),
+        parseInt(m[4], 10),
+        parseInt(m[5], 10),
+        m[6] != null && m[6] !== '' ? parseInt(m[6], 10) : 0
+      );
+    }
+    var dOnly = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (dOnly) {
+      return new Date(
+        parseInt(dOnly[1], 10),
+        parseInt(dOnly[2], 10) - 1,
+        parseInt(dOnly[3], 10),
+        0,
+        0,
+        0
+      );
+    }
+    var d = new Date(s.replace(' ', 'T'));
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function formatPromoDateTime(v) {
+    var d = parsePromoMysqlDate(v);
+    if (!d) return String(v == null ? '' : v);
+    var months = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+    function pad(n) { return n < 10 ? '0' + n : String(n); }
+    return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' ' +
+      pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+  }
+%>
+<div class="page-header page-header--inner">
+  <div>
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Billing</p>
+    <h1 class="dash-title">Kode promo / voucher</h1>
+    <p class="muted small">Buat kode diskon persen atau nominal IDR. Diskon 100% = pembayaran gratis (tanpa Midtrans). Klien memasukkan kode di halaman <a href="/billing">Billing</a>.</p>
+  </div>
+</div>
+
+<% if (promoNotice) { %>
+  <div class="flash flash-success"><%= promoNotice %></div>
+<% } %>
+<% if (promoError) { %>
+  <div class="flash flash-error"><%= promoError %></div>
+<% } %>
+
+<div class="co-panel promo-admin-create">
+  <h2 class="tab-panel-title">Tambah kode baru</h2>
+  <p class="muted small promo-admin-desc">Kode disimpan huruf besar. Kosongkan batas pakai / tanggal jika tidak dibatasi. Centang paket hanya jika kode <strong>khusus</strong> paket itu — tanpa centang = berlaku semua paket.</p>
+  <form method="POST" action="/promo-codes" class="form">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <div class="promo-admin-grid">
+      <div class="form-group">
+        <label class="form-group__label" for="pc-code">Kode</label>
+        <input id="pc-code" name="code" type="text" class="form-group__control" required maxlength="48" pattern="[A-Za-z0-9_-]{3,48}" placeholder="mis. NIKAH2026" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pc-type">Tipe diskon</label>
+        <select id="pc-type" name="discount_type" class="form-group__control">
+          <option value="percent">Persen (%)</option>
+          <option value="fixed">Nominal tetap (Rp)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pc-val">Nilai</label>
+        <input id="pc-val" name="discount_value" type="number" min="0" max="999999999" class="form-group__control" required value="10" />
+        <span class="form-group__hint muted small">Persen: 0–100. Nominal: potongan Rp dari harga paket (dibatasi tidak melebihi harga).</span>
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pc-max">Maks. pemakaian (global)</label>
+        <input id="pc-max" name="max_uses" type="number" min="0" class="form-group__control" placeholder="kosong = tak terbatas" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pc-per">Maks. per user (paid)</label>
+        <input id="pc-per" name="per_user_limit" type="number" min="1" class="form-group__control" value="1" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pc-from">Berlaku dari</label>
+        <input id="pc-from" name="valid_from" type="datetime-local" class="form-group__control" />
+      </div>
+      <div class="form-group">
+        <label class="form-group__label" for="pc-until">Berlaku sampai</label>
+        <input id="pc-until" name="valid_until" type="datetime-local" class="form-group__control" />
+      </div>
+      <div class="form-group form-group--wide">
+        <label class="form-group__label" for="pc-desc">Catatan internal</label>
+        <input id="pc-desc" name="description" type="text" class="form-group__control" maxlength="255" placeholder="Opsional" />
+      </div>
+      <div class="form-group form-group--wide promo-admin-plans">
+        <span class="form-group__label">Batasi ke paket (opsional)</span>
+        <div class="promo-plan-picker" role="group" aria-label="Paket yang boleh memakai kode ini">
+          <label class="promo-plan-option">
+            <input type="checkbox" name="plan_starter" value="1" class="promo-plan-option__input" />
+            <span class="promo-plan-option__box">
+              <span class="promo-plan-option__name">Starter</span>
+            </span>
+          </label>
+          <label class="promo-plan-option">
+            <input type="checkbox" name="plan_standard" value="1" class="promo-plan-option__input" />
+            <span class="promo-plan-option__box">
+              <span class="promo-plan-option__name">Standard</span>
+            </span>
+          </label>
+          <label class="promo-plan-option">
+            <input type="checkbox" name="plan_premium" value="1" class="promo-plan-option__input" />
+            <span class="promo-plan-option__box">
+              <span class="promo-plan-option__name">Premium</span>
+            </span>
+          </label>
+        </div>
+        <span class="form-group__hint muted small">Kosongkan semua = kode berlaku untuk <strong>semua</strong> paket.</span>
+      </div>
+      <div class="form-group form-group--wide">
+        <label class="switch switch--inline">
+          <input type="checkbox" name="active" value="1" checked />
+          <span class="switch__track"></span>
+          <span class="switch__label-text">Aktif</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="submit" class="btn btn-primary btn-pill">Simpan kode</button>
+    </div>
+  </form>
+</div>
+
+<div class="co-panel">
+  <h2 class="tab-panel-title">Kode yang ada</h2>
+  <% if (!promos || !promos.length) { %>
+    <p class="muted small">Belum ada kode promo.</p>
+  <% } else { %>
+    <div class="data-table-wrap">
+      <div class="data-table-scroll">
+      <table class="table data-table">
+        <thead>
+          <tr>
+            <th>Kode</th>
+            <th>Diskon</th>
+            <th>Paket</th>
+            <th>Global / user</th>
+            <th>Berlaku</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% promos.forEach(function(p) {
+               var plansLabel = 'Semua';
+               try {
+                 var raw = p.applicable_plans;
+                 var a = raw == null ? null : (typeof raw === 'string' ? JSON.parse(raw) : raw);
+                 if (Array.isArray(a) && a.length) plansLabel = a.join(', ');
+               } catch (e) { plansLabel = '—'; }
+               var disc = p.discount_type === 'fixed'
+                 ? ('Rp ' + Number(p.discount_value).toLocaleString('id-ID'))
+                 : (Number(p.discount_value) + '%');
+          %>
+          <tr>
+            <td><strong><%= p.code %></strong><% if (p.description) { %><br><span class="muted small"><%= p.description %></span><% } %></td>
+            <td><%= disc %></td>
+            <td class="muted small"><%= plansLabel %></td>
+            <td class="muted small"><%= p.max_uses != null ? p.max_uses : '∞' %> / user <%= p.per_user_limit %></td>
+            <td class="promo-valid-cell muted small">
+              <% if (p.valid_from) { %>
+                <span class="promo-valid-line"><span class="promo-valid-key">dari</span> <%= formatPromoDateTime(p.valid_from) %></span>
+              <% } %>
+              <% if (p.valid_until) { %>
+                <span class="promo-valid-line"><span class="promo-valid-key">s/d</span> <%= formatPromoDateTime(p.valid_until) %></span>
+              <% } %>
+              <% if (!p.valid_from && !p.valid_until) { %>—<% } %>
+            </td>
+            <td><span class="badge"><%= Number(p.active) ? 'aktif' : 'off' %></span></td>
+            <td>
+              <details class="promo-admin-edit">
+                <summary class="btn btn-soft btn-pill" style="cursor:pointer;list-style:none;">Edit</summary>
+                <div class="promo-admin-edit-body co-panel" style="margin-top:0.75rem;">
+                  <form method="POST" action="/promo-codes/<%= p.id %>" class="form">
+                    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                    <div class="promo-admin-grid">
+                      <div class="form-group">
+                        <label class="form-group__label">Tipe</label>
+                        <select name="discount_type" class="form-group__control">
+                          <option value="percent" <%= p.discount_type === 'percent' ? 'selected' : '' %>>Persen</option>
+                          <option value="fixed" <%= p.discount_type === 'fixed' ? 'selected' : '' %>>Nominal Rp</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-group__label">Nilai</label>
+                        <input name="discount_value" type="number" min="0" class="form-group__control" required value="<%= p.discount_value %>" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-group__label">Maks. global</label>
+                        <input name="max_uses" type="number" min="0" class="form-group__control" value="<%= p.max_uses != null ? p.max_uses : '' %>" placeholder="∞" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-group__label">Per user</label>
+                        <input name="per_user_limit" type="number" min="1" class="form-group__control" value="<%= p.per_user_limit %>" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-group__label">Dari</label>
+                        <input name="valid_from" type="datetime-local" class="form-group__control" value="<%= p.valid_from ? String(p.valid_from).replace(' ', 'T').slice(0,16) : '' %>" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-group__label">Sampai</label>
+                        <input name="valid_until" type="datetime-local" class="form-group__control" value="<%= p.valid_until ? String(p.valid_until).replace(' ', 'T').slice(0,16) : '' %>" />
+                      </div>
+                      <div class="form-group form-group--wide">
+                        <label class="form-group__label">Catatan</label>
+                        <input name="description" type="text" class="form-group__control" value="<%= p.description || '' %>" maxlength="255" />
+                      </div>
+                      <div class="form-group form-group--wide promo-admin-plans">
+                        <span class="form-group__label">Batasi ke paket</span>
+                        <div class="promo-plan-picker" role="group" aria-label="Paket">
+                          <%
+                            var planSet = {};
+                            try {
+                              var rawPlans = p.applicable_plans;
+                              var arrPlans = rawPlans == null ? [] : (typeof rawPlans === 'string' ? JSON.parse(rawPlans) : rawPlans);
+                              if (Array.isArray(arrPlans)) {
+                                arrPlans.forEach(function(x) { planSet[String(x).toLowerCase()] = 1; });
+                              }
+                            } catch (ex) { planSet = {}; }
+                          %>
+                          <label class="promo-plan-option">
+                            <input type="checkbox" name="plan_starter" value="1" class="promo-plan-option__input" <%= planSet.starter ? 'checked' : '' %> />
+                            <span class="promo-plan-option__box"><span class="promo-plan-option__name">Starter</span></span>
+                          </label>
+                          <label class="promo-plan-option">
+                            <input type="checkbox" name="plan_standard" value="1" class="promo-plan-option__input" <%= planSet.standard ? 'checked' : '' %> />
+                            <span class="promo-plan-option__box"><span class="promo-plan-option__name">Standard</span></span>
+                          </label>
+                          <label class="promo-plan-option">
+                            <input type="checkbox" name="plan_premium" value="1" class="promo-plan-option__input" <%= planSet.premium ? 'checked' : '' %> />
+                            <span class="promo-plan-option__box"><span class="promo-plan-option__name">Premium</span></span>
+                          </label>
+                        </div>
+                        <span class="form-group__hint muted small">Kosongkan semua = semua paket.</span>
+                      </div>
+                      <div class="form-group form-group--wide">
+                        <label class="switch switch--inline">
+                          <input type="checkbox" name="active" value="1" <%= Number(p.active) ? 'checked' : '' %> />
+                          <span class="switch__track"></span>
+                          <span class="switch__label-text">Aktif</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="promo-edit-actions">
+                      <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                      <button type="submit" form="promo-del-<%= p.id %>" class="btn btn-soft btn-pill promo-btn-delete">Hapus</button>
+                    </div>
+                  </form>
+                  <form id="promo-del-<%= p.id %>" method="POST" action="/promo-codes/<%= p.id %>/delete" onsubmit="return confirm('Hapus kode <%= p.code %>?');" hidden>
+                    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+                  </form>
+                </div>
+              </details>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,157 @@
+<% /* TINYINT/boolean/string dari DB — jangan hanya Number(...)===1 */ %>
+<% var _musOn = site && site.music_url && (Number(site.music_enabled) === 1 || site.music_enabled === true || site.music_enabled === '1'); %>
+<% var _musAp = site && (Number(site.music_autoplay) === 1 || site.music_autoplay === true || site.music_autoplay === '1'); %>
+<% if (_musOn) { %>
+<style>
+  @keyframes ws-music-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.55; }
+    50% { transform: scale(1.08); opacity: 0.25; }
+  }
+  @keyframes ws-music-shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  .ws-music-fab {
+    position: fixed;
+    z-index: 9999;
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
+    right: max(1.25rem, env(safe-area-inset-right));
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .ws-music-btn-wrap {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .ws-music-btn-wrap::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(212, 175, 130, 0.45), rgba(180, 130, 160, 0.35), rgba(212, 175, 130, 0.45));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 0;
+  }
+  .ws-music-btn-wrap.is-playing::before {
+    opacity: 1;
+    animation: ws-music-pulse 2.2s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ws-music-btn-wrap.is-playing::before {
+      animation: none;
+      opacity: 0.75;
+    }
+  }
+  .ws-music-btn {
+    position: relative;
+    z-index: 1;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #f5e6d8 0%, #e8d4c4 45%, #dcc9b8 100%);
+    background-size: 200% 200%;
+    color: #3d3329;
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.65) inset,
+      0 -2px 8px rgba(90, 70, 55, 0.12) inset,
+      0 10px 28px rgba(45, 35, 28, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .ws-music-btn:hover {
+    transform: scale(1.06);
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.75) inset,
+      0 12px 32px rgba(45, 35, 28, 0.28),
+      0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .ws-music-btn:active {
+    transform: scale(0.98);
+  }
+  .ws-music-btn:focus-visible {
+    outline: 2px solid #c4a574;
+    outline-offset: 3px;
+  }
+  .ws-music-btn-wrap.is-playing .ws-music-btn {
+    background: linear-gradient(145deg, #efe0d0 0%, #dcc9b8 50%, #cfbba8 100%);
+    animation: ws-music-shimmer 4s ease infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ws-music-btn-wrap.is-playing .ws-music-btn {
+      animation: none;
+    }
+  }
+  .ws-music-btn svg {
+    width: 1.45rem;
+    height: 1.45rem;
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.45));
+    transition: opacity 0.15s ease;
+  }
+</style>
+<div class="ws-music-fab" id="ws-music-fab" hidden>
+  <div class="ws-music-btn-wrap" id="ws-music-btn-wrap">
+    <button type="button" class="ws-music-btn" id="ws-music-toggle" aria-label="Putar musik latar" title="Musik">
+      <svg id="ws-music-icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="ws-music-icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" hidden aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+  </div>
+</div>
+<audio id="ws-music-audio" loop playsinline preload="none" src="<%= site.music_url %>"></audio>
+<script>
+(function () {
+  var audio = document.getElementById('ws-music-audio');
+  var fab = document.getElementById('ws-music-fab');
+  var wrap = document.getElementById('ws-music-btn-wrap');
+  var btn = document.getElementById('ws-music-toggle');
+  var iconPlay = document.getElementById('ws-music-icon-play');
+  var iconPause = document.getElementById('ws-music-icon-pause');
+  var wantAutoplay = <%= _musAp ? 'true' : 'false' %>;
+
+  function setPlaying(playing) {
+    if (playing) {
+      iconPlay.setAttribute('hidden', '');
+      iconPause.removeAttribute('hidden');
+      if (wrap) wrap.classList.add('is-playing');
+    } else {
+      iconPlay.removeAttribute('hidden');
+      iconPause.setAttribute('hidden', '');
+      if (wrap) wrap.classList.remove('is-playing');
+    }
+  }
+
+  fab.removeAttribute('hidden');
+
+  btn.addEventListener('click', function () {
+    if (audio.paused) {
+      audio.play().then(function () {
+        setPlaying(true);
+      }).catch(function () {});
+    } else {
+      audio.pause();
+      setPlaying(false);
+    }
+  });
+
+  audio.addEventListener('play', function () {
+    setPlaying(true);
+  });
+  audio.addEventListener('pause', function () { setPlaying(false); });
+
+  if (wantAutoplay) {
+    var p = audio.play();
+    if (p !== undefined) {
+      p.then(function () {
+        setPlaying(true);
+      }).catch(function () {});
+    }
+  }
+})();
+</script>
+<% } %>

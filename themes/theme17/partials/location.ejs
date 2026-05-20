@@ -1,0 +1,11 @@
+<section class="t17-reveal-section t17-section-pad t17-location-section">
+  <h2 class="t17-serif t17-section-heading">Location</h2>
+  <div class="t17-location-card t17-glass-card">
+    <div class="t17-map-placeholder">
+      <i data-lucide="map-pin" class="t17-map-pin-icon"></i>
+    </div>
+    <% if (content && content.location_note) { %>
+    <p class="t17-location-note"><%= content.location_note %></p>
+    <% } %>
+  </div>
+</section>

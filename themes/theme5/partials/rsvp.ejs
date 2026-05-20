@@ -1,0 +1,38 @@
+<section id="rsvp" class="relative z-10 w-full px-4 py-24">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/60 section-reveal">We'd Love Your Presence</p>
+    <h2 class="font-display text-4xl sm:text-5xl text-champagne mt-3 section-reveal">RSVP</h2>
+    <div class="gold-divider section-reveal"></div>
+  </div>
+  <div class="max-w-lg mx-auto mt-10 section-reveal">
+    <form id="rsvp-form" class="space-y-5">
+      <div>
+        <label for="rsvp-name" class="block font-ui text-xs tracking-[.15em] uppercase text-champagne/50 mb-2">Your Name</label>
+        <input type="text" id="rsvp-name" name="guest_name" required class="w-full rounded-lg px-4 py-3 font-body text-lg" placeholder="Full name" />
+      </div>
+      <div>
+        <label for="rsvpPhone" class="block font-ui text-xs tracking-[.15em] uppercase text-champagne/50 mb-2">WhatsApp / Phone</label>
+        <input type="tel" id="rsvpPhone" name="guest_phone" inputmode="tel" autocomplete="tel" class="w-full rounded-lg px-4 py-3 font-body text-lg" placeholder="08… / 628…" />
+      </div>
+      <div>
+        <label for="rsvp-attend" class="block font-ui text-xs tracking-[.15em] uppercase text-champagne/50 mb-2">Will You Attend?</label>
+        <select id="rsvp-attend" name="attendance" required class="w-full rounded-lg px-4 py-3 font-body text-lg">
+          <option value="">Please select</option>
+          <option value="yes">Joyfully Accept</option>
+          <option value="no">Regretfully Decline</option>
+        </select>
+      </div>
+      <div>
+        <label for="rsvp-guests" class="block font-ui text-xs tracking-[.15em] uppercase text-champagne/50 mb-2">Number of Guests</label>
+        <select id="rsvp-guests" name="guests_count" class="w-full rounded-lg px-4 py-3 font-body text-lg">
+          <% for (let n = 1; n <= 10; n++) { %><option value="<%= n %>"><%= n %></option><% } %>
+        </select>
+      </div>
+      <div>
+        <label for="rsvp-notes" class="block font-ui text-xs tracking-[.15em] uppercase text-champagne/50 mb-2">Notes or Dietary Requirements</label>
+        <textarea id="rsvp-notes" name="notes" rows="3" class="w-full rounded-lg px-4 py-3 font-body text-lg" placeholder="Any special requests..."></textarea>
+      </div>
+      <button type="submit" id="rsvp-btn" class="btn-rsvp w-full rounded-full py-3 font-ui text-xs tracking-[.2em] uppercase text-champagne">Send RSVP</button>
+    </form>
+  </div>
+</section>

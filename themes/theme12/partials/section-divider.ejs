@@ -1,0 +1,10 @@
+<% const t = typeof tone !== 'undefined' && tone === 'secondary' ? 'secondary' : 'primary'; const c = t === 'secondary' ? 'var(--secondary)' : 'var(--primary)'; %>
+<div class="section-divider">
+  <span style="background:<%= c %>"></span>
+  <% if (t === 'secondary') { %>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 0C4 5 0 6 0 10a8 8 0 0016 0c0-4-4-5-8-10z" fill="<%= c %>" opacity="0.4" /></svg>
+  <% } else { %>
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3l2 4 4.5.7-3.3 3.2.8 4.5L10 13l-4 2.4.8-4.5L3.5 7.7 8 7z" fill="<%= c %>" opacity="0.4" /></svg>
+  <% } %>
+  <span style="background:<%= c %>"></span>
+</div>

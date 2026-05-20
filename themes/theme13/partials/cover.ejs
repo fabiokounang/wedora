@@ -1,0 +1,16 @@
+<div id="cover-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center" style="background: radial-gradient(ellipse at center, #fdf8f3 0%, #f5e6d3 50%, #edd9c4 100%);">
+  <div id="particles-cover" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+  <p class="font-sans-clean text-sm tracking-[4px] uppercase mb-6 opacity-60" style="color: #9a7b5b;"><%= content.cover_subtitle || "You're Invited" %></p>
+  <div class="envelope-wrapper mb-8">
+    <div class="envelope">
+      <div class="envelope-body"></div>
+      <div id="envelope-flap" class="envelope-flap"></div>
+      <div class="envelope-heart">
+        💌
+      </div>
+      <div id="envelope-letter" class="envelope-letter"></div>
+    </div>
+  </div>
+  <p id="cover-names" class="font-serif-elegant text-3xl md:text-4xl mb-8 opacity-80" style="color: #6b5240;"><%= partnerOne %> &amp; <%= partnerTwo %></p>
+  <button type="button" id="btn-open" class="btn-open text-sm tracking-[2px] uppercase">Open Invitation</button>
+</div>

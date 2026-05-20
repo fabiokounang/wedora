@@ -1,0 +1,14 @@
+<section id="wishes" class="relative z-10 py-20 px-6">
+  <div class="max-w-2xl mx-auto text-center">
+    <p class="text-xs tracking-[0.4em] uppercase reveal" style="color:rgba(196,168,116,0.4);">Leave your blessings</p>
+    <h2 class="font-serif-display mt-3 reveal" style="font-size:clamp(2rem,5vw,3.2rem);color:#c4a874;font-weight:300;">Guest Wishes</h2>
+    <div class="ornament-divider mt-4 mb-10 reveal" style="color:rgba(196,168,116,0.3);">&#9825;</div>
+    <form id="wishForm" class="flex flex-col sm:flex-row gap-3 mb-8 reveal">
+      <input id="wishName" name="guest_name" type="text" class="form-input rounded-lg px-4 py-3 text-sm flex-shrink-0 sm:w-36" placeholder="Your name" required />
+      <input id="wishText" name="message" type="text" class="form-input rounded-lg px-4 py-3 text-sm flex-1" placeholder="Write a warm wish..." required />
+      <button id="wishBtn" type="submit" class="rounded-lg px-5 py-3 text-sm tracking-wider transition-all flex-shrink-0" style="background:rgba(196,168,116,0.15);border:1px solid rgba(196,168,116,0.3);color:#c4a874;">Send</button>
+    </form>
+    <div id="wishesList" class="space-y-4 text-left"></div>
+    <p id="noWishes" class="text-sm reveal" style="color:rgba(196,168,116,0.3);display:none;">Be the first to leave a wish for the couple &#9825;</p>
+  </div>
+</section>

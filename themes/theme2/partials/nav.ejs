@@ -1,0 +1,24 @@
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500" style="background:rgba(250,248,243,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,197,176,.2)">
+  <div class="max-w-5xl mx-auto px-4 flex items-center justify-between h-14">
+    <span class="font-serif text-sage-600 text-lg font-medium tracking-wide"><%= brand %></span>
+    <div class="hidden md:flex items-center gap-6 text-xs tracking-widest uppercase text-sage-700">
+      <a href="#home" class="nav-link hover:text-sage-500 transition-colors py-1">Home</a>
+      <% if (hasSection('story')) { %><a href="#story" class="nav-link hover:text-sage-500 transition-colors py-1">Story</a><% } %>
+      <% if (hasSection('events')) { %><a href="#events" class="nav-link hover:text-sage-500 transition-colors py-1">Events</a><% } %>
+      <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link hover:text-sage-500 transition-colors py-1">RSVP</a><% } %>
+      <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link hover:text-sage-500 transition-colors py-1">Gallery</a><% } %>
+      <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link hover:text-sage-500 transition-colors py-1">Wishes</a><% } %>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden text-sage-600" aria-label="Menu">
+      <img src="https://img.icons8.com/?size=96&id=36389&format=png&color=576857" alt="Menu icon" class="icon icon-sm" />
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 flex flex-col gap-3 text-xs tracking-widest uppercase text-sage-700 text-center">
+    <a href="#home" class="nav-link-m py-2 border-b border-sage-100">Home</a>
+    <% if (hasSection('story')) { %><a href="#story" class="nav-link-m py-2 border-b border-sage-100">Story</a><% } %>
+    <% if (hasSection('events')) { %><a href="#events" class="nav-link-m py-2 border-b border-sage-100">Events</a><% } %>
+    <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link-m py-2 border-b border-sage-100">RSVP</a><% } %>
+    <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link-m py-2 border-b border-sage-100">Gallery</a><% } %>
+    <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link-m py-2 border-b border-sage-100">Wishes</a><% } %>
+  </div>
+</nav>

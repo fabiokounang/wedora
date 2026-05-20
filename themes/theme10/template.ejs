@@ -1,0 +1,67 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  var storiesArray = typeof story !== 'undefined' && story ? story : [];
+  function hasSection(key) {
+    const s = sectionMap[key];
+    return !s || s.enabled === 1 || s.enabled === true;
+  }
+  function countdownDateAttr(iso) {
+    const d = helpers.toDate(iso);
+    if (!d) return '01/01/2030 12:00:00 UTC';
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${pad(d.getMonth() + 1)}/${pad(d.getDate())}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())} UTC`;
+  }
+  const eventRows = events || [];
+  const hasMoveable =
+    hasSection('story') ||
+    hasSection('events') ||
+    hasSection('rsvp') ||
+    hasSection('wishes') ||
+    hasSection('apology') ||
+    hasSection('gallery') ||
+    hasSection('stream') ||
+    hasSection('thank') ||
+    hasSection('gift');
+  const streamVid = (content && content.stream_youtube_id) ? String(content.stream_youtube_id).trim() : 'lC7SI0CpeSI';
+-%>
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head', { content, site, helpers }) %>
+<body>
+<%- include('partials/shell-top') %>
+<% if (hasSection('hero')) { %>
+<%- include('partials/cover', { content }) %>
+<%- include('partials/header-section', { content }) %>
+<% } %>
+<% if (hasMoveable) { %>
+<div class="moveable_section_wrapper position-relative">
+<% if (hasSection('story')) { %><%- include('partials/couple-section', { content, story: storiesArray, helpers, countdownDateAttr }) %><% } %>
+<% if (hasSection('events') || hasSection('rsvp')) { %><%- include('partials/venue-rsvp', { content, hasSection, events: eventRows, helpers, site }) %><% } %>
+<% if (hasSection('wishes')) { %><%- include('partials/wishes') %><% } %>
+<% if (hasSection('apology')) { %><%- include('partials/apology', { content }) %><% } %>
+<% if (hasSection('gallery')) { %><%- include('partials/gallery', { gallery }) %><% } %>
+<% if (hasSection('gift')) { %><%- include('partials/gift', { gifts, content }) %><% } %>
+<% if (hasSection('stream')) { %><%- include('partials/stream', { content }) %><% } %>
+<% if (hasSection('thank')) { %><%- include('partials/thank', { content }) %><% } %>
+                    </div>
+<% } %>
+<%- include('partials/footer') %>
+<%- include('partials/after-footer') %>
+<%- include('partials/audio', { site }) %>
+<%- include('partials/modals', { events: eventRows, helpers }) %>
+<%- include('partials/svg-clip') %>
+<script>
+  window.__SITE__ = {
+    siteId: <%= site.id %>,
+    slug: <%- JSON.stringify(site.slug) %>,
+    apiBase: <%- JSON.stringify(apiBase) %>,
+    weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    streamYoutubeId: <%- JSON.stringify(streamVid) %>,
+  };
+  window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+</script>
+<%- include('partials/scripts-body', { content, streamVid }) %>
+<script src="/themes/theme10/public/script.js"></script>
+</body>
+</html>

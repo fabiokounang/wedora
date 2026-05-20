@@ -1,0 +1,257 @@
+<div class="wa-blast-page">
+
+<%/* ── Page header ──────────────────────────────────────────────────────── */%>
+<div class="page-header wa-blast-header">
+  <div class="wa-blast-header__meta">
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Undangan · <strong><%= site.slug %></strong></p>
+    <h1>WhatsApp Blast</h1>
+    <p class="muted small" style="margin: 0.35rem 0 0">Kirim undangan ke banyak nomor via link <code>wa.me</code> — satu klik satu chat, atau pakai <strong>mode antrian</strong> supaya terbuka berurutan.</p>
+  </div>
+  <a href="/sites/<%= site.id %>" class="btn btn-ghost btn-pill">← Kembali ke situs</a>
+</div>
+
+<%/* ── Info callout ─────────────────────────────────────────────────────── */%>
+<div class="co-panel wa-blast-callout">
+  <div class="wa-blast-callout__icon" aria-hidden="true">ℹ️</div>
+  <div class="wa-blast-callout__body">
+    <p class="wa-blast-callout__p">
+      <strong>Tanpa API Meta:</strong> browser tidak bisa mengirim pesan WA ke pihak lain sepenuhnya otomatis. Setiap chat tetap butuh kamu menekan &quot;Kirim&quot; di WhatsApp. Untuk broadcast benar-benar otomatis dari server, perlu <strong>WhatsApp Business / Cloud API</strong> (biaya &amp; verifikasi bisnis).
+    </p>
+    <p class="wa-blast-callout__p muted small" style="margin-bottom: 0">
+      <strong>Mode antrian</strong> di halaman ini membuka link chat <strong>berurutan</strong> (satu per klik) — cara paling rapi di web tanpa integrasi resmi.
+    </p>
+  </div>
+</div>
+
+<%/* ── Input form ───────────────────────────────────────────────────────── */%>
+<div class="co-panel wa-blast-form-panel">
+  <h2 class="wa-blast-h2">Nomor &amp; pesan</h2>
+  <form method="POST" action="/sites/<%= site.id %>/wa-blast" class="form wa-blast-form">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <div class="wa-blast-form__grid">
+      <label class="wa-blast-form__field wa-blast-form__field--wide">
+        <span class="form-group__label">Daftar nomor</span>
+        <span class="form-group__hint muted small">Satu per baris, atau pisah koma / titik koma. Contoh: <code>08…</code>, <code>628…</code></span>
+        <textarea name="phones" rows="7" class="wa-blast-form__textarea" placeholder="081234567890&#10;6281234567890, 0856-0000-0000"><%= form.phones %></textarea>
+      </label>
+      <label class="wa-blast-form__field wa-blast-form__field--wide">
+        <span class="form-group__label">Teks undangan <span class="muted small">(opsional)</span></span>
+        <span class="form-group__hint muted small">Jadi isi chat pertama saat membuka WhatsApp</span>
+        <textarea name="message" rows="5" class="wa-blast-form__textarea" placeholder="Halo! Kami mengundang ke pernikahan kami. Cek undangan: ..."><%= form.message %></textarea>
+      </label>
+      <div class="wa-blast-form__field wa-blast-form__row">
+        <label class="switch wa-blast-save-switch">
+          <input type="checkbox" name="save_history" value="1" />
+          <span class="switch__track"></span>
+          <span class="wa-blast-save-switch__label">Simpan ke riwayat setelah generate</span>
+        </label>
+      </div>
+      <div class="wa-blast-form__actions">
+        <button type="submit" class="btn btn-primary btn-pill">⚡ Generate link</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<%/* ── Results ──────────────────────────────────────────────────────────── */%>
+<% if (results) { %>
+  <section class="co-panel wa-blast-results" aria-labelledby="wa-results-title">
+    <h2 class="wa-blast-h2" id="wa-results-title">Hasil</h2>
+
+    <% if (results.ok && results.ok.length) { %>
+
+      <%/* Stat summary */%>
+      <div class="wa-blast-summary">
+        <div class="wa-blast-stat">
+          <span class="wa-blast-stat__val"><%= results.ok.length %></span>
+          <span class="wa-blast-stat__lab">nomor valid</span>
+        </div>
+        <% if (results.errors && results.errors.length) { %>
+          <div class="wa-blast-stat wa-blast-stat--warn">
+            <span class="wa-blast-stat__val"><%= results.errors.length %></span>
+            <span class="wa-blast-stat__lab">gagal parse</span>
+          </div>
+        <% } %>
+      </div>
+
+      <%/* Queue mode */%>
+      <div class="wa-blast-queue co-panel" id="wa-blast-queue" data-n="<%= results.ok.length %>" style="margin-top: 1.25rem">
+        <div class="wa-blast-queue__head">
+          <div>
+            <h3 class="wa-blast-h3">Mode antrian</h3>
+            <p class="muted small wa-blast-queue__lead">Klik <strong>Mulai</strong> untuk buka chat pertama. Setelah kirim di WhatsApp, klik <strong>Nomor berikutnya</strong> untuk lanjut.</p>
+          </div>
+          <div class="wa-blast-queue__btns">
+            <button type="button" class="btn btn-primary btn-pill" id="wa-blast-start">▶ Mulai antrian</button>
+            <button type="button" class="btn btn-soft btn-pill" id="wa-blast-next" hidden>Nomor berikutnya →</button>
+          </div>
+        </div>
+        <div class="wa-blast-progress" aria-hidden="true">
+          <div class="wa-blast-progress__bar" id="wa-blast-progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="wa-blast-queue__status-row">
+          <p class="wa-blast-queue__status muted small" id="wa-blast-status" role="status">Belum dimulai.</p>
+          <p class="muted small wa-blast-queue__hint" id="wa-blast-hint" hidden>Izinkan pop-up jika browser meminta, supaya tab WhatsApp terbuka.</p>
+        </div>
+      </div>
+
+      <%/* Recipient list */%>
+      <div class="wa-blast-recipients">
+        <h3 class="wa-blast-h3" style="margin: 1.5rem 0 0.75rem">Semua penerima (<%= results.ok.length %>)</h3>
+        <ul class="wa-blast-list">
+          <% results.ok.forEach(function(r, i) { %>
+            <li class="wa-blast-list__item" data-idx="<%= i %>">
+              <span class="wa-blast-list__num"><%= i + 1 %></span>
+              <div class="wa-blast-list__body">
+                <span class="wa-blast-list__phone"><%= r.phone_e164 %></span>
+                <a class="wa-blast-list__link btn btn-soft btn-sm btn-pill" href="<%= r.wa_link %>" target="_blank" rel="noopener">Buka chat</a>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+
+      <%/* Copy all links */%>
+      <details class="wa-blast-details co-panel" style="margin-top: 1rem">
+        <summary class="wa-blast-details__summary">Salin semua link sekaligus</summary>
+        <div class="wa-blast-details__inner">
+          <textarea id="wa-all-links" class="wa-blast-form__textarea wa-blast-details__ta" readonly rows="<%= Math.min(12, results.ok.length + 2) %>"><% results.ok.forEach(function(r) { %><%= r.wa_link %>
+<% }) %></textarea>
+          <button type="button" class="btn btn-soft btn-pill" id="wa-copy-all">Salin semua</button>
+        </div>
+      </details>
+
+      <script type="application/json" id="wa-blast-json"><%- JSON.stringify({ links: results.ok.map(function (r) { return r.wa_link; }) }) %></script>
+
+    <% } else { %>
+      <div class="empty-state" style="padding: 2rem 0">
+        <p class="empty-state__title">Tidak ada nomor yang valid</p>
+        <p class="muted small">Periksa format nomor di atas dan coba lagi.</p>
+      </div>
+    <% } %>
+
+    <% if (results.errors && results.errors.length) { %>
+      <div class="wa-blast-errors-wrap" style="margin-top: 1.25rem">
+        <h3 class="wa-blast-h3">Baris tidak dikenali (<%= results.errors.length %>)</h3>
+        <ul class="wa-blast-errors">
+          <% results.errors.forEach(function(e) { %>
+            <li class="wa-blast-errors__item"><code><%= e.raw %></code> <span class="muted small">— <%= e.error %></span></li>
+          <% }) %>
+        </ul>
+      </div>
+    <% } %>
+  </section>
+<% } %>
+
+<%/* ── History ──────────────────────────────────────────────────────────── */%>
+<% if (history && history.length) { %>
+  <section class="co-panel wa-blast-history">
+    <h2 class="wa-blast-h2">Riwayat</h2>
+    <p class="muted small" style="margin-top: 0; margin-bottom: 1rem">Tersimpan hanya jika centang &quot;Simpan ke riwayat&quot; saat generate.</p>
+    <div class="data-table-scroll">
+      <table class="table data-table">
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Penerima</th>
+            <th>Pratinjau pesan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% history.forEach(function(h) { %>
+            <tr>
+              <td class="small muted dt-nowrap"><%= h.created_at %></td>
+              <td><strong><%= h.recipient_count %></strong></td>
+              <td class="small muted" style="max-width: 20rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap"><%= h.message.length > 80 ? h.message.slice(0, 80) + '…' : h.message %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% } %>
+
+</div><%/* /.wa-blast-page */%>
+
+<script>
+(function () {
+  var copyBtn = document.getElementById('wa-copy-all');
+  var ta = document.getElementById('wa-all-links');
+  if (copyBtn && ta) {
+    copyBtn.addEventListener('click', function () {
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      var done = function () {
+        copyBtn.textContent = 'Tersalin';
+        setTimeout(function () { copyBtn.textContent = 'Salin semua'; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ta.value).then(done).catch(function () {
+          try { document.execCommand('copy'); done(); } catch (e) {}
+        });
+      } else {
+        try { document.execCommand('copy'); done(); } catch (e) {}
+      }
+    });
+  }
+
+  var jsonEl = document.getElementById('wa-blast-json');
+  var startBtn = document.getElementById('wa-blast-start');
+  var nextBtn = document.getElementById('wa-blast-next');
+  var statusEl = document.getElementById('wa-blast-status');
+  var hintEl = document.getElementById('wa-blast-hint');
+  var barEl = document.getElementById('wa-blast-progress-bar');
+  if (!jsonEl || !startBtn || !nextBtn || !statusEl) return;
+
+  var data;
+  try { data = JSON.parse(jsonEl.textContent || '{}'); } catch (e) { return; }
+  var links = data.links || [];
+  var n = links.length;
+  /** Index berikutnya yang akan dibuka lewat tombol "Nomor berikutnya" (setelah Mulai sudah buka links[0]). */
+  var nextToOpen = 0;
+
+  function setProgress(openedCount) {
+    if (!barEl) return;
+    var pct = n === 0 ? 0 : Math.min(100, (openedCount / n) * 100);
+    barEl.style.width = pct + '%';
+  }
+
+  function openAt(i) {
+    if (i < 0 || i >= n) return;
+    var w = window.open(links[i], '_blank', 'noopener,noreferrer');
+    if (!w && hintEl) hintEl.hidden = false;
+  }
+
+  startBtn.addEventListener('click', function () {
+    if (n < 1) return;
+    openAt(0);
+    nextToOpen = 1;
+    startBtn.hidden = true;
+    nextBtn.hidden = n <= 1;
+    if (n <= 1) {
+      statusEl.textContent = 'Chat 1 dari 1 dibuka. Selesai.';
+    } else {
+      statusEl.textContent =
+        'Chat 1 dari ' + n + ' dibuka. Kirim pesan di WhatsApp, lalu klik "Nomor berikutnya".';
+    }
+    setProgress(1);
+  });
+
+  nextBtn.addEventListener('click', function () {
+    if (nextToOpen >= n) return;
+    openAt(nextToOpen);
+    var openedNow = nextToOpen + 1;
+    nextToOpen += 1;
+    setProgress(openedNow);
+
+    if (nextToOpen >= n) {
+      statusEl.textContent = 'Chat terakhir (' + n + ' dari ' + n + ') dibuka. Antrian selesai.';
+      nextBtn.hidden = true;
+      return;
+    }
+
+    statusEl.textContent =
+      'Chat ' + openedNow + ' dari ' + n + ' dibuka. Setelah kirim, klik "Nomor berikutnya" lagi.';
+  });
+})();
+</script>

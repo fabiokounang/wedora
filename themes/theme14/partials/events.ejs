@@ -1,0 +1,43 @@
+<%
+  const defaultEvents = [
+    { title: 'Pemberkatan / sakramen', icon: 'heart', datetime: content.wedding_date, venue_name: 'Gedung pernikahan', address: '' },
+    { title: 'Resepsi', icon: 'music', datetime: content.wedding_date, venue_name: 'Ballroom', address: '' },
+  ];
+  const evRows = (eventRows && eventRows.length) ? eventRows : defaultEvents;
+  const icons = ['heart', 'music', 'sparkles', 'star'];
+-%>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-serif-elegant text-4xl text-center text-amber-900/80 italic mb-12">Rangkaian acara</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <% evRows.forEach(function (ev, idx) {
+           const iconName = icons[idx % icons.length];
+           const dt = helpers.toDate(ev.datetime || content.wedding_date);
+           let timeStr = '';
+           if (dt) {
+             timeStr = String(dt.getHours()).padStart(2, '0') + ':' + String(dt.getMinutes()).padStart(2, '0');
+           }
+      %>
+        <div class="card-romantic rounded-2xl p-8 text-center">
+          <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-amber-50 flex items-center justify-center">
+            <i data-lucide="<%= iconName %>" class="w-5 h-5 text-amber-600/60"></i>
+          </div>
+          <h3 class="font-serif-elegant text-2xl text-amber-900/80 mb-1"><%= ev.title %></h3>
+          <div class="ornament-line mx-auto my-3"></div>
+          <% if (ev.datetime || content.wedding_date) { %>
+            <p class="text-sm text-amber-700/60"><%= helpers.formatDate(ev.datetime || content.wedding_date) %></p>
+          <% } %>
+          <% if (timeStr) { %>
+            <p class="text-sm text-amber-700/60"><%= timeStr %> WIB</p>
+          <% } %>
+          <% if (ev.venue_name) { %>
+            <p class="text-sm text-amber-700/50 mt-3"><%= ev.venue_name %></p>
+          <% } %>
+          <% if (ev.address) { %>
+            <p class="text-xs text-amber-700/40 mt-1"><%= ev.address %></p>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

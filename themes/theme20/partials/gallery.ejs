@@ -1,0 +1,18 @@
+<section class="t20-reveal t20-section-pad">
+  <h2 class="t20-cinzel t20-section-heading">Gallery</h2>
+  <div id="t20-gallery" class="t20-gallery-grid">
+    <% if (gallery && gallery.length > 0) { %>
+      <% for (const img of gallery) { %>
+      <div class="t20-gallery-item">
+        <img src="<%= img.url || img.image_url %>" alt="<%= img.caption || 'Gallery' %>" class="t20-gallery-img">
+      </div>
+      <% } %>
+    <% } else { %>
+      <% for (let i = 0; i < 6; i++) { %>
+      <div class="t20-gallery-item t20-gallery-empty">
+        <i data-lucide="image" style="width:2.5rem;height:2.5rem;color:#e87030;opacity:0.3;"></i>
+      </div>
+      <% } %>
+    <% } %>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<section id="wishes" class="scene" style="background:linear-gradient(180deg,var(--ivory),var(--surface))">
+  <div class="w-full max-w-3xl mx-auto px-6 py-24 text-center">
+    <div class="stagger-1">
+      <svg class="mx-auto mb-8 hero-ornament" width="60" height="60" viewBox="0 0 60 60">
+        <path d="M30 10 Q35 25 50 30 Q35 35 30 50 Q25 35 10 30 Q25 25 30 10Z" fill="none" stroke="var(--gold)" stroke-width=".8" />
+      </svg>
+    </div>
+    <div class="stagger-2">
+      <h2 class="font-story text-4xl md:text-5xl font-light" style="color:var(--deep)">
+        <%= content.partner_one %> &amp; <%= content.partner_two %>
+      </h2>
+    </div>
+    <div class="stagger-3 gold-line"></div>
+    <% if (content.closing_message) { %>
+    <p class="stagger-3 font-story text-xl md:text-2xl italic mt-6" style="color:var(--taupe)"><%= content.closing_message %></p>
+    <% } %>
+    <div class="stagger-4 mt-12">
+      <p class="font-story text-base" style="color:var(--dusty-pink)"><%= helpers.formatDate(content.wedding_date) %></p>
+    </div>
+
+    <%# Guest Wishes Form & List %>
+    <div class="mt-16 text-left stagger-4">
+      <h3 class="font-story text-2xl text-center mb-6" style="color:var(--deep)">Leave a Wish</h3>
+      <form id="wishForm" class="flex flex-col sm:flex-row gap-3 mb-8">
+        <input id="wishName" type="text" class="form-input flex-shrink-0 sm:w-36" placeholder="Your name" required />
+        <input id="wishText" type="text" class="form-input flex-1" placeholder="Write a warm wish..." required />
+        <button id="wishBtn" type="submit" class="btn-rsvp" style="padding:12px 24px">Send</button>
+      </form>
+      <div id="wishesList" class="space-y-4"></div>
+      <p id="noWishes" class="text-center font-story text-sm mt-4" style="color:var(--taupe);opacity:.5;display:none">Be the first to leave a wish ♥</p>
+    </div>
+
+    <div class="mt-16 opacity-30">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <path d="M20 8 C20 8 8 16 8 24 C8 30 14 34 20 28 C26 34 32 30 32 24 C32 16 20 8 20 8Z" fill="none" stroke="var(--gold)" stroke-width=".8" />
+      </svg>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" role="img" aria-label="Envelope Bloom preview">
+  <defs>
+    <linearGradient id="t13bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fdf8f3"/>
+      <stop offset="50%" style="stop-color:#faf0e6"/>
+      <stop offset="100%" style="stop-color:#f5e6d8"/>
+    </linearGradient>
+    <linearGradient id="t13gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d4a574"/>
+      <stop offset="100%" style="stop-color:#c9956b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#t13bg)"/>
+  <rect x="120" y="100" width="160" height="100" rx="6" fill="#f5e6d3" stroke="rgba(212,165,116,0.35)" stroke-width="1"/>
+  <path d="M120 100 L280 100 L200 160 Z" fill="url(#t13gold)" opacity="0.35"/>
+  <text x="200" y="235" text-anchor="middle" fill="#6b5240" font-family="Georgia,serif" font-size="18" font-weight="300">A &amp; B</text>
+  <text x="200" y="258" text-anchor="middle" fill="#9a7b5b" font-family="sans-serif" font-size="9" letter-spacing="0.25em">ENVELOPE BLOOM</text>
+</svg>

@@ -1,0 +1,44 @@
+<%
+  const storyTitle = content.story_title || 'Love Story';
+  const defaultMilestones = [
+    { date_label: '2020', title: 'First Meeting', description: 'A chance encounter at a coffee shop that changed everything forever.' },
+    { date_label: '2022', title: 'The Proposal', description: 'Under a sky full of stars, one question changed our lives forever.' },
+    { date_label: '2025', title: 'Forever Begins', description: "We're ready to write the next chapter — together, always." },
+  ];
+  const rows = (storiesArray && storiesArray.length)
+    ? storiesArray.map((s) => ({
+        date_label: s.date_label || '',
+        title: s.title || '',
+        description: s.description || '',
+      }))
+    : defaultMilestones;
+-%>
+<section class="py-20 px-6 max-w-2xl mx-auto">
+  <div class="section-fade text-center mb-12">
+    <p class="font-sans-clean text-xs tracking-[4px] uppercase mb-3 opacity-50" style="color: #9a7b5b;">Our Journey</p>
+    <h2 class="font-serif-elegant text-3xl md:text-4xl" style="color: #5a4030;"><%= storyTitle %></h2>
+  </div>
+  <div class="relative">
+    <div class="timeline-line absolute left-4 md:left-1/2 top-0 bottom-0 transform md:-translate-x-1/2"></div>
+    <div class="space-y-12">
+      <% rows.forEach(function (item, idx) {
+           const isLeft = idx % 2 === 0;
+           const rowClass = isLeft
+             ? 'section-fade relative pl-12 md:pl-0 md:w-1/2 md:pr-12'
+             : 'section-fade relative pl-12 md:pl-0 md:w-1/2 md:ml-auto md:pl-12';
+           const dotClass = isLeft
+             ? 'absolute left-2 md:left-auto md:right-[-8px] top-2 w-4 h-4 rounded-full border-2'
+             : 'absolute left-2 md:left-[-8px] top-2 w-4 h-4 rounded-full border-2';
+      %>
+      <div class="<%= rowClass %>">
+        <div class="<%= dotClass %>" style="border-color: #d4a574; background: #fdf8f3;"></div>
+        <div class="glass rounded-2xl p-5">
+          <% if (item.date_label) { %><p class="text-xs tracking-[2px] uppercase opacity-50 mb-1" style="color: #d4a574;"><%= item.date_label %></p><% } %>
+          <% if (item.title) { %><h3 class="font-serif-elegant text-lg mb-1" style="color: #5a4030;"><%= item.title %></h3><% } %>
+          <% if (item.description) { %><div class="text-sm opacity-60" style="color: #7a6050;"><%- item.description %></div><% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

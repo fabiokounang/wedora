@@ -1,0 +1,829 @@
+  <!-- script add robot field -->
+ <script>
+        var stepper_id = 16514
+var guest_type = "regular"
+var invitation_lang = "en"
+    </script>
+  <script src="https://themes.viding.co/admin-front-end/js/add_robot_field.js?v=08dd267ed2ef8e26aad5b79685c9afa9c7777357"></script>
+    <!-- script libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js" integrity="sha512-pax4MlgXjHEPfCwcJLQhigY7+N8rt6bVvWLFyUMuxShv170X53TRzGPmPkZmGBhk+jikR8WBM4yl7A9WMHHqvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/splidejs/3.6.11/js/splide.js" integrity="sha512-w59vitZ7hVdBIw8eTlp69j02OB/eo6cyyuvnMH1HzQYmMbrJWB5moOAsghwrAsN5KJEu4N9BZTDg4cOy54or+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/Flip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" integrity="sha512-q583ppKrCRc7N5O0n2nzUiJ+suUv7Et1JGels4bXOaMFQcamPk9HjdUknZuuFjBNs7tsMuadge5k9RzdmO+1GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+    input.error,
+    select.error {
+        margin-bottom: 0px !important;
+    }
+
+    label.error {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<script>
+    if ($('#formGift').length) {
+    $("#formGift").validate({
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
+    // Add hidden input for saving previous url
+    $('<input>', {
+        type: 'hidden',
+        id: 'previous_url_input',
+        name: 'previous_url',
+        value: window.location.href
+    }).prependTo('#formGift');
+    }
+</script>
+
+
+<script>
+    const showBackground = {"main":1,"cover":1,"egift":1,"story":1,"venue":1,"couple":1,"wishes":1,"gallery":1,"thankyou":1,"additional":1,"livestream":1};
+    const themeMeta = document.querySelector("meta[name='theme_id']");
+    const themeId = themeMeta ? themeMeta.getAttribute('content') : null;
+
+    if (showBackground) {
+        if (parseInt(showBackground.cover) === 0) {
+            const coverBg = document.querySelector('.cover-section .image-wrapper');
+            if (coverBg) {
+                coverBg.remove();
+                document.querySelector(".cover-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.main) === 0) {
+            const mainBg = document.querySelector('.header-section .image-wrapper .image-element');
+            if (mainBg) {
+                mainBg.remove();
+                document.querySelector(".header-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.couple) === 0) {
+            const coupleBg = document.querySelector('.couple-section .image-wrapper');
+            if (coupleBg) {
+                coupleBg.remove();
+                document.querySelector(".couple-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.story) === 0) {
+            const storyBg = document.querySelector('.story-section .image-wrapper');
+            if (storyBg) {
+                storyBg.remove();
+                document.querySelector(".story-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.venue) === 0) {
+            const venueBg = document.querySelector('.venue-section .image-wrapper') ?? document.querySelector('.rsvp-section .image-wrapper');  
+            if (venueBg) {
+                venueBg.remove();
+                document.querySelector(".venue-section").classList.add("without-bg");
+                document.querySelector(".rsvp-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.gallery) === 0) {
+            const galleryBg = document.querySelector('.gallery-section .image-wrapper');
+            if (galleryBg) {
+                galleryBg.remove();
+                document.querySelector(".gallery-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.wishes) === 0) {
+            const wishesBg = document.querySelector('.wishes-section .image-wrapper');
+            if (wishesBg) {
+                wishesBg.remove();
+                document.querySelector(".wishes-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.egift) === 0) {
+            const egiftBg = document.querySelector('.egift-section .image-wrapper');
+            if (egiftBg) {
+                egiftBg.remove();
+                document.querySelector(".egift-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.additional) === 0) {
+            const additionalBg = document.querySelector('.apology-section .image-wrapper');
+            if (additionalBg) {
+                additionalBg.remove();
+                document.querySelector(".apology-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.livestream) === 0) {
+            const livestreamBg = document.querySelector('.stream-section .image-wrapper');
+            if (livestreamBg) {
+                livestreamBg.remove();
+                document.querySelector(".stream-section").classList.add("without-bg");
+            }
+        }
+        if (parseInt(showBackground.thankyou) === 0) {
+            const thankyouBg = document.querySelector('.thank-section .image-wrapper');
+            if (thankyouBg) {
+                thankyouBg.remove();
+                document.querySelector(".thank-section").classList.add("without-bg");
+            }
+        }
+    }
+</script>
+    <script>
+    var player;
+    var player2;
+    var gallery_player = document.getElementById('gallery_player');
+    var livestream_player = document.getElementById('livestream_player');
+    var livestream_player_sm = document.getElementById('livestream_player_small');
+    var audio = document.getElementById("audio_file");
+    var play_pause_btn = document.getElementById("musicControl");
+    var wasPlayingBeforeTabSwitch = false;
+    var userInitiatedPlayback = false;
+    var isGalleryMuted = true;
+
+    // Check if current domain is alexsita.viding.co
+    const isAlexsitaDomain = false;
+
+    function onYouTubeIframeAPIReady() {
+        if (gallery_player) {
+            player = new YT.Player('gallery_player', {
+                height: '390',
+                width: '640',
+                videoId: '',
+                playerVars: {
+                    'autoplay': isAlexsitaDomain ? 1 : 0,
+                    'controls': 1,
+                    'mute': isAlexsitaDomain ? 1 : 0,
+                    'loop': isAlexsitaDomain ? 1 : 0,
+                    'playlist': isAlexsitaDomain ? '' : undefined,
+                    'rel': 0
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange,
+                    'onReady': onGalleryPlayerReady
+                }
+            });
+        }
+
+        if (livestream_player) {
+            player2 = new YT.Player('livestream_player', {
+                height: '390',
+                width: '640',
+                videoId: '<%= typeof streamVid !== "undefined" ? streamVid : "lC7SI0CpeSI" %>',
+                playerVars: {
+                    'mute': 0,
+                    'controls': 1,
+                    'rel': 0
+                },
+                events: {
+                    'onStateChange': onLivestreamStateChange
+                }
+            });
+        }
+
+        if (livestream_player_sm) {
+            player2 = new YT.Player('livestream_player_small', {
+                height: '390',
+                width: '640',
+                videoId: '<%= typeof streamVid !== "undefined" ? streamVid : "lC7SI0CpeSI" %>',
+                playerVars: {
+                    'mute': 0,
+                    'controls': 1,
+                    'rel': 0
+                },
+                events: {
+                    'onStateChange': onLivestreamStateChange
+                }
+            });
+        }
+    }
+
+    function onGalleryPlayerReady(event) {
+        if (!isAlexsitaDomain) {
+            isGalleryMuted = false;
+            event.target.unMute();
+        }
+
+        setInterval(function () {
+            var currentMuteState = event.target.isMuted();
+            if (currentMuteState !== isGalleryMuted) {
+                isGalleryMuted = currentMuteState;
+                handleGalleryMuteChange();
+            }
+        }, 500);
+    }
+
+    function onPlayerStateChange(event) {
+        if (!isAlexsitaDomain) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                if (audio && !audio.paused) {
+                    audio.pause();
+                    if (play_pause_btn) {
+                        play_pause_btn.querySelector('i').classList.replace("icofont-ui-pause", "icofont-music-alt");
+                    }
+                }
+            } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                if (audio && audio.paused && userInitiatedPlayback) {
+                    audio.play().catch(e => console.log('Audio play failed:', e));
+                    if (play_pause_btn) {
+                        play_pause_btn.querySelector('i').classList.replace("icofont-music-alt", "icofont-ui-pause");
+                    }
+                }
+            }
+        }
+    }
+
+    function handleGalleryMuteChange() {
+        if (isAlexsitaDomain) {
+            if (isGalleryMuted) {
+                if (audio && audio.paused && userInitiatedPlayback) {
+                    audio.play().catch(e => console.log('Audio resume failed:', e));
+                    if (play_pause_btn) {
+                        play_pause_btn.querySelector('i').classList.replace("icofont-music-alt", "icofont-ui-pause");
+                    }
+                }
+            } else {
+                if (audio && !audio.paused) {
+                    audio.pause();
+                    if (play_pause_btn) {
+                        play_pause_btn.querySelector('i').classList.replace("icofont-ui-pause", "icofont-music-alt");
+                    }
+                }
+            }
+        }
+    }
+
+    function onLivestreamStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            if (audio && !audio.paused) {
+                audio.pause();
+                if (play_pause_btn) {
+                    play_pause_btn.querySelector('i').classList.replace("icofont-ui-pause", "icofont-music-alt");
+                }
+            }
+        } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+            if (audio && audio.paused && userInitiatedPlayback) {
+                audio.play().catch(e => console.log('Audio play failed:', e));
+                if (play_pause_btn) {
+                    play_pause_btn.querySelector('i').classList.replace("icofont-music-alt", "icofont-ui-pause");
+                }
+            }
+        }
+    }
+
+    function loadYT() {
+        if (window.YT) return;
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    document.querySelectorAll('#closeEnvelope, #btn-envelope, #btn-cover').forEach(el => {
+        el.addEventListener('click', function () {
+            loadYT();
+            if (el.id === 'btn-envelope' && audio) {
+                audio.play().catch(e => console.log('Audio play failed:', e));
+                userInitiatedPlayback = true;
+                wasPlayingBeforeTabSwitch = true;
+                if (play_pause_btn) {
+                    play_pause_btn.querySelector('i').classList.replace("icofont-music-alt", "icofont-ui-pause");
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const bgMusic = document.getElementById("audio_file");
+        const playPauseIcon = document.querySelector(".playPauseIcon");
+
+        document.addEventListener("visibilitychange", () => {
+            if (!bgMusic) return;
+
+            if (document.visibilityState === "hidden") {
+                wasPlayingBeforeTabSwitch = !bgMusic.paused;
+                bgMusic.pause();
+                if (playPauseIcon) {
+                    playPauseIcon.classList.replace("icofont-ui-pause", "icofont-music-alt");
+                }
+            } else if (document.visibilityState === "visible") {
+                // Unified check for both domain types
+                const isAnyVideoPlaying =
+                    (player && player.getPlayerState && player.getPlayerState() === YT.PlayerState.PLAYING) ||
+                    (player2 && player2.getPlayerState && player2.getPlayerState() === YT.PlayerState.PLAYING);
+
+                const shouldResume = isAlexsitaDomain ?
+                    (wasPlayingBeforeTabSwitch && !isAnyVideoPlaying && userInitiatedPlayback && isGalleryMuted) :
+                    (wasPlayingBeforeTabSwitch && !isAnyVideoPlaying && userInitiatedPlayback);
+
+                if (shouldResume) {
+                    bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
+                    if (playPauseIcon) {
+                        playPauseIcon.classList.replace("icofont-music-alt", "icofont-ui-pause");
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    if (!document.querySelector('style[data-font-style]')) {
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.dataset.fontStyle = true;
+
+        style.textContent = `
+            .font-custom {
+                display: block;
+                line-height: 2 !important;
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                padding-top: 0.25rem !important;
+                padding-bottom: 0.25rem !important;
+                margin-left: -0.5rem;
+                margin-right: -0.5rem;
+                margin-top: -0.25rem !important;
+                margin-bottom: -0.25rem !important;
+            }
+            .font-custom-2 {
+                display: block;
+                line-height: 1.6 !important;
+                padding: 0 0.5rem;
+                margin-left: -0.5rem;
+                margin-right: -0.5rem;
+            }
+        `;
+
+        document.head.appendChild(style);
+    }
+
+    const fontFamilies = [
+        "BrittanySignature",
+        "hearth stone",
+        '"hearth stone"',
+        "Le Major"
+    ];
+
+    document.querySelectorAll('[style]').forEach(el => {
+        const styleText = el.style.cssText;
+        if (fontFamilies.some(font => styleText.includes(`font-family: ${font}`))) {
+            el.classList.add("font-custom");
+        }
+    });
+</script>        
+    <!-- scripts plugins -->
+    <script src="https://themes.viding.co/theme_96/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="https://themes.viding.co/assets/js/colorpicker.min.js?v=26bc57f192bd00155449d8d201ec0af7ab8547b1"></script>
+    <script src="https://themes.viding.co/assets/js/gift_registry_script.js?v=f899cd77f0c9eebc1836f86933f46163f63004c8"></script>
+
+    <!-- scripts custom -->
+    <script src="https://themes.viding.co/theme_96/assets/js/countdown.js"></script>
+    <script src="https://themes.viding.co/theme_96/assets/js/app.js?v=ecba12324a9103c5930acd1209e0ad44604c8735"></script>
+
+    <script>
+        if (document.querySelector("#gallery-default")) {
+            const gallery = new Splide("#gallery-default", {
+                pagination: true,
+                type: 'loop',
+                perPage: 3,
+                perMove: 1,
+                breakpoints: {
+                    567: {
+                        perPage: 1
+                    }
+                }
+            });
+
+
+            gallery.mount();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const btnOpenAngpao = document.querySelector("#openAngpao");
+            const formAngpao = document.querySelector("#formGift");
+
+            if (btnOpenAngpao) {
+                btnOpenAngpao.addEventListener('click', () => {
+                    formAngpao.classList.remove("d-none");
+                    btnOpenAngpao.classList.add("d-none");
+                    ScrollTrigger.refresh();
+                });
+            }
+        });
+
+        $("#anonymous_angpao").click(function() {
+            if ($(this).is(':checked')) {
+                $('.angpao-field-hideable').prop('required', false);
+                $('.angpao-field-hideable').hide('500');
+            } else {
+                $('.angpao-field-hideable').prop('required', true);
+                $('.angpao-field-hideable').show('500');
+            }
+
+            setTimeout(function() {
+                ScrollTrigger.refresh();
+            }, 1000);
+        });
+
+        $(document).ready(function() {
+
+            // fonts
+            $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />');
+
+
+            $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/splidejs/3.6.11/css/splide.min.css" integrity="sha512-hGONuXHBHHk8XNhp8rFRsrsal02f/gSfBHz7BkpfkIA5LoL34oywr3l0V/zBt0b2/cFtcPTJDmaVpJmmpaI3dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />');
+            $('head').append('<link rel="stylesheet" href="https://themes.viding.co/theme_96/assets/css/magnific-popup.css">');
+            $('head').append('<link rel="stylesheet" href="https://themes.viding.co/frontend/libraries/icofont/icofont.css">');
+            $('head').append('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css" integrity="sha512-DIW4FkYTOxjCqRt7oS9BFO+nVOwDL4bzukDyDtMO7crjUZhwpyrWBFroq+IqRe6VnJkTpRAS6nhDvf0w+wHmxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />');
+
+            $.ajaxSetup({
+                headers: {
+                    // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    "X-Requested-With":'XMLHttpRequest'
+                }
+            });
+
+            // font family
+            let couple_name_on_main_font_family = "";
+            let couple_name_on_cover_font_family = "";
+            let couple_name_on_couple_font_family = "";
+            let parents_name_on_couple_font_family = "";
+
+            // font size
+            let couple_name_on_main_font_size = "";
+            let couple_name_on_cover_font_size = "";
+            let couple_name_on_couple_font_size = "";
+            let parents_name_on_couple_font_size = "";
+
+            // change font family and font size
+            $('.main_style').css({
+                'font-family': couple_name_on_main_font_family,
+                'font-size': couple_name_on_main_font_size + 'px'
+            });
+
+            $('.cover_style').css({
+                'font-family': couple_name_on_cover_font_family,
+                'font-size': couple_name_on_cover_font_size + 'px'
+            });
+
+            $('.bride_style').css({
+                'font-family': couple_name_on_couple_font_family,
+                'font-size': couple_name_on_couple_font_size + 'px'
+            });
+
+            $('.couple-parent-description p').css({
+                'margin-bottom': '0px'
+            });
+
+            $('.couple-parent-name p').css({
+                'font-family': parents_name_on_couple_font_family,
+                'font-size': parents_name_on_couple_font_size + 'px',
+                'margin-bottom': '0px'
+            });
+
+            reload_guestbook_data();
+        });
+
+        var section_order = [7,1,4,2,5,6,3,8,9];
+        var section_wrapper = $('.moveable_section_wrapper');
+
+        section_wrapper.append(
+            $.map(section_order, function(elm) {
+                return $(".moveable-section[data-id='" + elm + "']");
+            })
+        );
+
+        $("#tambahdata").validate({
+            submitHandler: function(form) {
+                var actionType = $('#tombolsimpan').val();
+                $('#tombolsimpan').prop('disabled', true);
+                $('#tombolsimpan').html('Sending..');
+                $.ajax({
+                    data: $('#tambahdata').serialize(),
+                    url: "https://viding.co/domain/theweddingofmikhaandgregoria.viding.co/generateVenueQr",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#tombolsimpan').html('Simpan');
+
+                        if (data.data.send_rsvp_qrcode == 0 || data.data.status == 0) {
+                            if (`en` == 'en') {
+                                $('#cardRSVP').html("<p class='mb-5'>Thank you for confirming your attendance.</p>");
+                            } else {
+                                $('#cardRSVP').html("<p class='mb-5'>Terima kasih telah mengkonfirmasi kehadiran Anda.</p>");
+                            }
+                        } else {
+                            if (data.data.whatsapp_rsvp == 1) {
+                                if (`en` == 'en') {
+                                    $('#cardRSVP').html("<p class='m-4 text-center'>Thank you for confirming your attendance. We have sent a QR Code to your WhatsApp number. Please save the QR Code for later scanning at the event venue</p>");
+                                } else {
+                                    $('#cardRSVP').html("<p class='m-4 text-center'>Terima kasih telah mengkonfirmasi kehadiran Anda. Kami telah mengirimkan QR Code ke nomor WhatsApp Anda. Silahkan simpan QR Code tersebut untuk nantinya discan pada saat di venue acara</p>");
+                                }
+                            } else {
+                                if (`en` == 'en') {
+                                    $('#cardRSVP').html("<p class='m-4 text-center'>Thank you for confirming your attendance. We have sent a QR Code to your email address. Please save the QR Code for later scanning at the event venue</p>");
+                                } else {
+                                    $('#cardRSVP').html("<p class='m-4 text-center'>Terima kasih telah mengkonfirmasi kehadiran Anda. Kami telah mengirimkan QR Code ke alamat email Anda. Silahkan simpan QR Code tersebut untuk nantinya discan pada saat di venue acara</p>");
+                                }
+                            }
+                        }
+
+                        ScrollTrigger.refresh();
+
+                        iziToast.success({
+                            title: 'Sukses',
+                            message: 'Terimakasih atas konfirmasi anda!',
+                            position: 'bottomRight'
+                        });
+                    },
+                    error: function(data) {
+                        $('#tombolsimpan').prop('disabled', false);
+                        $('#tombolsimpan').html('Simpan');
+                        iziToast.error({
+                            title: ' Gagal Terkirim',
+                            message: (data.responseJSON.message ?? 'Mohon coba lagi!'),
+                            position: 'bottomRight'
+                        });
+                    }
+                });
+            }
+        });
+
+        function reload_guestbook_data() {
+            if ($('#wishes_wrapper').length) {
+                $('#wishes_wrapper').html('<p class="mb-4"><b>Sedang Memuat Komentar..</b></p>');
+                var reload_url = $('#wishes_wrapper').data('url');
+                $('#wishes_wrapper').load(reload_url);
+            }
+        }
+
+        $("#guestbook_form").validate({
+            submitHandler: function(form) {
+                var actionType = $('#tombolsimpan').val();
+                $('#guestbook_submit_btn').prop('disabled', true);
+                $('#guestbook_submit_btn').html('Sending..');
+
+                $.ajax({
+                    data: $('#guestbook_form').serialize(),
+                    url: "https://viding.co/bookstore",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function(data) {
+                        if (`en` == 'en') {
+                            $('.guestbook_form_wrapper').html("<p class='text-center'>Thank you, you have left a comment</p>");
+                        } else {
+                            $('.guestbook_form_wrapper').html("<p class='text-center'>Terima Kasih, Anda telah memberikan komentar</p>");
+                        }
+
+                        $('#guestbook_submit_btn').prop('disabled', false);
+                        $('#guestbook_submit_btn').html('Send');
+
+                        reload_guestbook_data();
+                        ScrollTrigger.refresh();
+
+                        iziToast.success({
+                            title: 'Berhasil',
+                            message: 'Pesan anda telah ditambahkan. Terimakasih!',
+                            position: 'bottomRight'
+                        });
+                    },
+                    error: function(data) {
+                        $('#guestbook_submit_btn').prop('disabled', false);
+                        $('#guestbook_submit_btn').html('Send');
+
+                        iziToast.error({
+                            title: 'Gagal',
+                            message: 'Pesan anda gagal ditambahkan. Silahkan mencoba kembali beberapa saat! ' + (data.responseJSON.message ?? ''),
+                            position: 'bottomRight'
+                        });
+                    }
+                });
+            }
+        });
+
+        $('.translate-btn').on('click', function() {
+            lang = $(this).data('lang');
+            changeLanguageByButtonClick(lang);
+        });
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'viding'
+            }, 'google_translate_element');
+        }
+
+        function changeLanguageByButtonClick(lang) {
+            // var language = document.getElementById("language").value;
+            var selectField = document.querySelector("#google_translate_element select");
+            for (var i = 0; i < selectField.children.length; i++) {
+                var option = selectField.children[i];
+                // find desired langauge and change the former language of the hidden selection-field
+                if (option.value == lang) {
+                    selectField.selectedIndex = i;
+                    // trigger change event afterwards to make google-lib translate this side
+                    selectField.dispatchEvent(new Event('change'));
+                    break;
+                }
+            }
+        }
+
+        function reset_translation() {
+            $('.skiptranslate iframe').contents().find('#\\:1\\.restore').click();
+        }
+
+        /** Color Picker **/
+        const defaultColors = {
+            main: "#ffedd2",
+            primary: "#e9dac4",
+            secondary: "#a1855b",
+        }
+
+        const cp = colorpicker(document.querySelector('.colorpicker__wrapper'), defaultColors, '{"main":"rgba(55,52,52,1)","primary":"rgba(104,100,91,1)","secondary":"#a1855b"}');
+
+                /** End of Color Picker **/
+    </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <script>
+        // Clipboard
+        var clipboard = new ClipboardJS('.btn-copy-bank-acc');
+        console.log(clipboard);
+
+        clipboard.on('success', function(e) {
+        alert('Copied Successfully!');
+        });
+
+        clipboard.on('error', function(e) {
+        alert('Copy failed!');
+        });
+    </script>
+
+    <script>
+        /* $(document).ready(function() {
+                $("#toggleButton").click(function() {
+                    $("#hiddenElement").toggle(); // Toggle the visibility of the element
+                    $("#toggleButton").hide();
+                });
+            }); */
+            // Get all elements with class toggleButton
+            const toggleButtons = document.querySelectorAll('.toggleButton');
+
+            // Loop through each button and add a click event listener
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                // Find the corresponding hiddenElement for this button
+                const hiddenElement = this.parentNode.nextElementSibling;
+
+                // Toggle the display of the hiddenElement
+                if (hiddenElement.style.display === 'none' || hiddenElement.style.display === '') {
+                    hiddenElement.style.display = 'block';
+                } else {
+                    hiddenElement.style.display = 'none';
+                }
+                });
+            });
+    </script>
+
+        
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;9788b2a8af4d4335bde0fab3174b2eed&quot;,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+
+<script>
+    (function() {
+      try {
+        // Skip tracking on dashboard/admin domains
+        const host = window.location.hostname;
+        if (host.startsWith('prxy.')) return;
+
+        const sessionId = Math.random().toString(36).substring(7);
+        const track = (data) => {
+          fetch('/api/track', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  domain: window.location.hostname,
+                  path: window.location.pathname,
+                  sessionId,
+                  ...data
+              }),
+              keepalive: true
+          }).catch(e => { console.error('[Tracker] Failed to send event:', e.message); });
+        };
+
+        // Performance Reporting
+        if ('PerformanceObserver' in window) {
+          const reportMetric = ({ name, value, delta, id, rating }) => {
+            track({
+              type: 'vitals',
+              name,
+              value,
+              rating,
+              delta,
+              metricId: id
+            });
+          };
+
+          // Load web-vitals from CDN with SRI hash for supply-chain protection
+          const script = document.createElement('script');
+          script.src = 'https://unpkg.com/web-vitals@5.1.0/dist/web-vitals.attribution.iife.js';
+          script.integrity = 'sha384-VEZAi3JVXrI9mQcjBMy5c2Ur1vA9fBhMWO0HUJvCGwRbJk3LqICMuJiScBBqJ0k';
+          script.crossOrigin = 'anonymous';
+          script.onload = () => {
+            const { onCLS, onFCP, onINP, onLCP, onTTFB } = window.webVitals;
+            onCLS(reportMetric);
+            onFCP(reportMetric);
+            onINP(reportMetric);
+            onLCP(reportMetric);
+            onTTFB(reportMetric);
+          };
+          document.head.appendChild(script);
+        }
+
+        const trackEvent = (eventName, data) => {
+          track({
+            eventName,
+            data: data || {}
+          });
+        };
+
+        let scrolled = false;
+        if (50 > 0) {
+            window.addEventListener('scroll', () => {
+            if (!scrolled && (window.innerHeight + window.scrollY) >= document.body.offsetHeight * (50 / 100)) {
+                scrolled = true;
+                trackEvent('scroll_50');
+            }
+            }, { passive: true });
+        }
+
+        if (false) {
+             document.addEventListener('click', (e) => {
+                 trackEvent('heatmap_click', {
+                     x: e.pageX,
+                     y: e.pageY,
+                     vw: window.innerWidth,
+                     vh: window.innerHeight
+                 });
+             }, { passive: true });
+        }
+
+        document.addEventListener('click', (e) => {
+          const target = e.target.closest('a, button');
+          if (!target) return;
+
+          const text = (target.innerText || '').trim();
+          const textLower = text.toLowerCase();
+          const href = (target.href || '').toLowerCase();
+          const tagName = target.tagName.toLowerCase();
+          const id = target.id || '';
+          const className = (typeof target.className === 'string' ? target.className : '').substring(0, 200);
+
+          const keywords = ["rsvp","hadir","konfirmasi","Open the Invitation","Join Our Celebration!"];
+          const isMatch = keywords.some(k => textLower.includes(k) || href.includes(k));
+
+          if (isMatch) {
+             trackEvent('rsvp_click', { text: textLower, href });
+          } else if (href.includes('whatsapp') || href.includes('wa.me')) {
+             trackEvent('contact_wa', { href });
+          } else if (tagName === 'a' && target.href) {
+             trackEvent('link_click', {
+               text: text.substring(0, 200),
+               href: target.href,
+               tagName,
+               id: id || undefined,
+               className: className || undefined,
+               target: target.target || undefined
+             });
+          } else if (tagName === 'button' || target.type === 'submit') {
+             trackEvent('button_click', {
+               text: text.substring(0, 200),
+               tagName,
+               id: id || undefined,
+               className: className || undefined,
+               type: target.type || undefined
+             });
+          }
+        }, { passive: true });
+
+      } catch(e) { console.error('Tracking init error', e); }
+    })();
+  </script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"9788b2a8af4d4335bde0fab3174b2eed","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>

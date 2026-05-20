@@ -1,0 +1,116 @@
+<div class="page-header page-header--inner">
+  <div>
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Akun</p>
+    <h1 class="dash-title">Pengaturan akun</h1>
+    <p class="muted small">Profil, password, dan email. Lupa password juga bisa lewat <a href="/forgot-password">Lupa password</a>.</p>
+  </div>
+</div>
+
+<% if (typeof noticeMsg !== 'undefined' && noticeMsg) { %>
+  <div class="flash flash-success"><%= noticeMsg %></div>
+<% } %>
+<% if (typeof errMsg !== 'undefined' && errMsg) { %>
+  <div class="flash flash-error"><%= errMsg %></div>
+<% } %>
+
+<% if (typeof requireEmailVerifiedStrict !== 'undefined' && requireEmailVerifiedStrict && account && !account.email_verified_at) { %>
+  <div class="flash flash-warning">
+    Akun Anda harus verifikasi email sebelum bisa bayar paket atau membuat undangan baru. Periksa inbox / spam untuk tautan verifikasi.
+  </div>
+<% } %>
+
+<div class="co-panel" style="margin-bottom: 1.25rem">
+  <h2 class="co-panel__title">Email &amp; verifikasi</h2>
+  <p class="muted small" style="margin-bottom: 0.75rem">
+    Email saat ini: <strong><%= account.email %></strong>
+    <% if (account.email_verified_at) { %>
+      <span class="badge badge--success" style="margin-left: 0.5rem">Terverifikasi</span>
+    <% } else { %>
+      <span class="badge" style="margin-left: 0.5rem">Belum terverifikasi</span>
+      — cek inbox (dan spam) untuk tautan verifikasi.
+    <% } %>
+  </p>
+  <% if (!mailConfigured) { %>
+    <div class="flash flash-warning" style="margin-top: 0.5rem">
+      SMTP belum dikonfigurasi di server (<code>MAIL_SMTP_HOST</code> + <code>MAIL_FROM</code>). Email reset / verifikasi tidak akan terkirim sampai admin mengisi pengaturan mail.
+    </div>
+    <% } else { %>
+    <p class="muted small">Pengiriman email (reset password, verifikasi) aktif.</p>
+    <% if (!account.email_verified_at) { %>
+      <form method="POST" action="/settings/resend-verify-email" style="margin-top: 0.75rem">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <button type="submit" class="btn btn-soft btn-pill">Kirim ulang email verifikasi</button>
+      </form>
+    <% } %>
+  <% } %>
+</div>
+
+<div class="co-panel" style="margin-bottom: 1.25rem">
+  <h2 class="co-panel__title">Nama tampilan</h2>
+  <form method="POST" action="/settings/profile" class="form form-narrow" style="max-width: 420px; box-shadow: none; border: 0; padding: 0">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <div class="form-group">
+      <label class="form-group__label" for="acc-name">Nama</label>
+      <div class="form-group__control">
+        <input type="text" id="acc-name" name="name" class="form-group__control" required maxlength="120" value="<%= account.name %>" autocomplete="name" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-pill">Simpan nama</button>
+  </form>
+</div>
+
+<% if (account.hasLocalPassword) { %>
+<div class="co-panel" style="margin-bottom: 1.25rem">
+  <h2 class="co-panel__title">Ubah password</h2>
+  <form method="POST" action="/settings/password" class="form form-narrow" style="max-width: 420px; box-shadow: none; border: 0; padding: 0">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <div class="form-group">
+      <label class="form-group__label" for="acc-cpw">Password saat ini</label>
+      <div class="form-group__control">
+        <input type="password" id="acc-cpw" name="current_password" class="form-group__control" required autocomplete="current-password" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-group__label" for="acc-npw">Password baru</label>
+      <div class="form-group__control">
+        <input type="password" id="acc-npw" name="new_password" class="form-group__control" required minlength="6" autocomplete="new-password" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-group__label" for="acc-npw2">Ulangi password baru</label>
+      <div class="form-group__control">
+        <input type="password" id="acc-npw2" name="new_password_confirm" class="form-group__control" required minlength="6" autocomplete="new-password" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-pill">Ubah password</button>
+  </form>
+</div>
+
+<div class="co-panel" style="margin-bottom: 1.25rem">
+  <h2 class="co-panel__title">Ubah alamat email</h2>
+  <p class="muted small">Perlu password saat ini untuk konfirmasi. Setelah berhasil, email verifikasi dikirim ke alamat baru.</p>
+  <form method="POST" action="/settings/email" class="form form-narrow" style="max-width: 420px; box-shadow: none; border: 0; padding: 0">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <div class="form-group">
+      <label class="form-group__label" for="acc-ne">Email baru</label>
+      <div class="form-group__control">
+        <input type="email" id="acc-ne" name="new_email" class="form-group__control" required autocomplete="email" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-group__label" for="acc-epw">Password saat ini</label>
+      <div class="form-group__control">
+        <input type="password" id="acc-epw" name="password" class="form-group__control" required minlength="6" autocomplete="current-password" />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-pill">Ubah email</button>
+  </form>
+</div>
+<% } else { %>
+<div class="co-panel" style="margin-bottom: 1.25rem">
+  <h2 class="co-panel__title">Password &amp; email</h2>
+  <p class="muted small">Akun ini tidak memiliki password lokal di aplikasi (misalnya masuk dengan Google). Ubah password / email lewat penyedia tersebut, atau hubungi admin jika perlu akun email+password.</p>
+</div>
+<% } %>
+
+<p class="muted small"><a href="/dashboard">← Kembali ke undangan</a></p>

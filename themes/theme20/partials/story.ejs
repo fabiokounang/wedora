@@ -1,0 +1,18 @@
+<% const storyTitle = content.story_title || 'Our Story'; %>
+<% if (storiesArray && storiesArray.length > 0) { %>
+<section class="t20-reveal t20-section-pad">
+  <h2 class="t20-cinzel t20-section-heading"><%= storyTitle %></h2>
+  <div class="t20-timeline">
+    <% for (const item of storiesArray) { %>
+    <div class="t20-timeline-item">
+      <div class="t20-timeline-dot"></div>
+      <div class="t20-flame-card t20-timeline-card">
+        <% if (item.event_date || item.date_label) { %><p class="t20-sans t20-timeline-date"><%= item.event_date || item.date_label %></p><% } %>
+        <% if (item.title) { %><p class="t20-cinzel t20-timeline-title"><%= item.title %></p><% } %>
+        <% if (item.description) { %><p class="t20-timeline-desc"><%= item.description %></p><% } %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</section>
+<% } %>

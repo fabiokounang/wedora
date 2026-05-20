@@ -1,0 +1,25 @@
+<% const storyIcons = ['sparkles', 'heart', 'infinity', 'gem']; %>
+<section id="story" class="relative z-10 w-full px-4 py-24">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/60 section-reveal"><%= content.story_subtitle || 'How It All Began' %></p>
+    <h2 class="font-display text-4xl sm:text-5xl text-champagne mt-3 section-reveal"><%= content.story_title || 'Our Story' %></h2>
+    <div class="gold-divider section-reveal"></div>
+  </div>
+  <div class="max-w-2xl mx-auto mt-12 space-y-16">
+    <% (story || []).forEach(function (item, idx) {
+         const icon = storyIcons[idx % storyIcons.length];
+    %>
+    <div class="story-card text-center">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-burgundy/40 to-deep-red/40 border border-gold/20 flex items-center justify-center mb-6">
+        <i data-lucide="<%= icon %>" class="text-gold" style="width: 24px; height: 24px"></i>
+      </div>
+      <% if (item.date_label) { %><p class="font-ui text-xs tracking-[.2em] uppercase text-gold/50 mb-2"><%= item.date_label %></p><% } %>
+      <h3 class="font-display text-2xl text-champagne mb-4"><%= item.title %></h3>
+      <% if (item.description) { %><p class="text-champagne/60 text-lg leading-relaxed"><%= item.description %></p><% } %>
+    </div>
+    <% }) %>
+    <% if (!story || story.length === 0) { %>
+      <p class="text-center text-champagne/50">Our story will appear here soon…</p>
+    <% } %>
+  </div>
+</section>

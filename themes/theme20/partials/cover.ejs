@@ -1,0 +1,33 @@
+<div id="t20-cover">
+  <canvas id="t20-ember-canvas" class="t20-ember-canvas"></canvas>
+  <!-- Floating lanterns -->
+  <div class="t20-lanterns" aria-hidden="true">
+    <svg class="t20-lantern t20-lantern--1" viewBox="0 0 30 50" fill="none">
+      <rect x="5" y="10" width="20" height="28" rx="4" fill="#e8a030" opacity="0.8"/>
+      <rect x="11" y="6" width="8" height="6" rx="2" fill="#d44000"/>
+      <line x1="15" y1="0" x2="15" y2="6" stroke="#d44000" stroke-width="1.5"/>
+      <ellipse cx="15" cy="20" rx="6" ry="8" fill="#f4c860" opacity="0.5"/>
+    </svg>
+    <svg class="t20-lantern t20-lantern--2" viewBox="0 0 30 50" fill="none">
+      <rect x="5" y="10" width="20" height="28" rx="4" fill="#c43010" opacity="0.8"/>
+      <rect x="11" y="6" width="8" height="6" rx="2" fill="#a02000"/>
+      <line x1="15" y1="0" x2="15" y2="6" stroke="#a02000" stroke-width="1.5"/>
+      <ellipse cx="15" cy="20" rx="6" ry="8" fill="#e87030" opacity="0.4"/>
+    </svg>
+    <svg class="t20-lantern t20-lantern--3" viewBox="0 0 30 50" fill="none">
+      <rect x="5" y="10" width="20" height="28" rx="4" fill="#e8a030" opacity="0.7"/>
+      <rect x="11" y="6" width="8" height="6" rx="2" fill="#d44000"/>
+      <line x1="15" y1="0" x2="15" y2="6" stroke="#d44000" stroke-width="1.5"/>
+      <ellipse cx="15" cy="20" rx="5" ry="7" fill="#f4c860" opacity="0.4"/>
+    </svg>
+  </div>
+  <!-- Flame border -->
+  <div class="t20-flame-border"></div>
+  <div class="t20-cover-content">
+    <p class="t20-sans t20-cover-eyebrow"><%= coverSubtitle %></p>
+    <h1 class="t20-cinzel t20-cover-names"><%= p1f %> <span class="t20-amp">&amp;</span> <%= p2f %></h1>
+    <p class="t20-cover-date"><%= heroDateLabel %></p>
+    <div class="t20-ember-divider"></div>
+    <button id="t20-open-btn" class="t20-open-btn">Open Invitation</button>
+  </div>
+</div>

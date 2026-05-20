@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en" class="h-full" style="scroll-behavior:smooth">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:'Jost',sans-serif;color:#4a3728;background:#faf6f1}
+.font-serif-elegant{font-family:'Cormorant Garamond',serif}
+@keyframes kenburns{0%{transform:scale(1)}100%{transform:scale(1.15)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floatDown{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+.anim-kenburns{animation:kenburns 25s ease-in-out infinite alternate}
+.anim-fade-in{animation:fadeIn 2s ease forwards}
+.anim-fade-up{animation:fadeInUp 1.2s ease forwards}
+.anim-float{animation:floatDown 2s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.nav-solid{background:rgba(250,246,241,.95);backdrop-filter:blur(12px);box-shadow:0 1px 20px rgba(74,55,40,.08)}
+.glass{background:rgba(255,255,255,.2);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.3);border-radius:16px}
+.gallery-item img{transition:transform .6s ease}
+.gallery-item:hover img{transform:scale(1.08)}
+.hero-bg-wrap{position:absolute;inset:0;overflow:hidden}
+.hero-bg{width:100%;height:100%;object-fit:cover}
+.gold-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,#c9a96e,transparent);margin:0 auto}
+input,textarea,select{font-family:'Jost',sans-serif}
+.btn-primary{background:#c9a96e;color:#fff;transition:all .3s ease}
+.btn-primary:hover{background:#b8944f;transform:translateY(-1px)}
+.wishes-card{background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border:1px solid rgba(201,169,110,.15)}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#faf6f1}
+::-webkit-scrollbar-thumb{background:#c9a96e;border-radius:3px}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full">
+  <div id="app" class="w-full h-full overflow-auto"><!-- Navigation -->
+   <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4 px-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between"><a href="#home" class="font-serif-elegant text-xl font-semibold nav-text-el" style="color:#fff">I &amp; A</a>
+     <div class="hidden md:flex gap-8 text-sm tracking-widest uppercase"><a href="#home" class="nav-link transition-colors duration-300" style="color:rgba(255,255,255,.85)">Home</a> <a href="#story" class="nav-link transition-colors duration-300" style="color:rgba(255,255,255,.85)">Our Story</a> <a href="#event" class="nav-link transition-colors duration-300" style="color:rgba(255,255,255,.85)">The Day</a> <a href="#rsvp" class="nav-link transition-colors duration-300" style="color:rgba(255,255,255,.85)">RSVP</a> <a href="#gallery" class="nav-link transition-colors duration-300" style="color:rgba(255,255,255,.85)">Gallery</a> <a href="#wishes" class="nav-link transition-colors duration-300" style="color:rgba(255,255,255,.85)">Wishes</a>
+     </div><button id="mobile-menu-btn" class="md:hidden" style="color:#fff"><i data-lucide="menu" style="width:24px;height:24px"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 flex flex-col gap-3 text-center text-sm tracking-widest uppercase"><a href="#home" class="nav-link-mobile py-2" style="color:rgba(255,255,255,.85)">Home</a> <a href="#story" class="nav-link-mobile py-2" style="color:rgba(255,255,255,.85)">Our Story</a> <a href="#event" class="nav-link-mobile py-2" style="color:rgba(255,255,255,.85)">The Day</a> <a href="#rsvp" class="nav-link-mobile py-2" style="color:rgba(255,255,255,.85)">RSVP</a> <a href="#gallery" class="nav-link-mobile py-2" style="color:rgba(255,255,255,.85)">Gallery</a> <a href="#wishes" class="nav-link-mobile py-2" style="color:rgba(255,255,255,.85)">Wishes</a>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="home" class="relative w-full" style="height:100%">
+    <div class="hero-bg-wrap">
+     <svg class="hero-bg anim-kenburns" viewbox="0 0 1200 800" preserveaspectratio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs>
+       <radialgradient id="sun" cx="70%" cy="30%" r="50%">
+        <stop offset="0%" stop-color="#fde68a" />
+        <stop offset="100%" stop-color="#f59e0b" stop-opacity=".3" />
+       </radialgradient>
+       <lineargradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fbbf24" stop-opacity=".4" />
+        <stop offset="40%" stop-color="#f97316" stop-opacity=".25" />
+        <stop offset="100%" stop-color="#7c2d12" stop-opacity=".15" />
+       </lineargradient>
+      </defs> <rect width="1200" height="800" fill="#92400e" opacity=".18" /> <rect width="1200" height="800" fill="url(#sky)" /> <circle cx="840" cy="200" r="120" fill="url(#sun)" opacity=".7" /> <ellipse cx="600" cy="620" rx="700" ry="220" fill="#365314" opacity=".35" /> <ellipse cx="600" cy="660" rx="750" ry="200" fill="#3f6212" opacity=".25" /> <!-- Couple silhouette --> <g transform="translate(520,280)" opacity=".85"><!-- Person 1 -->
+       <ellipse cx="40" cy="20" rx="22" ry="26" fill="#1c1917" />
+       <path d="M15,50 Q20,45 40,46 Q60,45 65,50 L70,180 Q55,185 40,186 Q25,185 10,180 Z" fill="#1c1917" />
+       <path d="M10,180 Q10,260 15,300 L30,300 Q28,260 30,180" fill="#1c1917" />
+       <path d="M50,180 Q52,260 50,300 L65,300 Q68,260 70,180" fill="#1c1917" /> <!-- Person 2 -->
+       <ellipse cx="130" cy="15" rx="22" ry="26" fill="#1c1917" />
+       <path d="M100,45 Q110,40 130,42 Q150,40 155,45 L165,120 Q170,180 160,300 L145,300 Q148,200 145,120 L130,90 L115,120 Q112,200 115,300 L100,300 Q90,180 95,120 Z" fill="#1c1917" /> <!-- Flowing dress detail -->
+       <path d="M95,120 Q80,200 75,300 L165,300 Q170,200 165,120 Q150,130 130,132 Q110,130 95,120" fill="#1c1917" opacity=".6" /> <!-- Hands touching -->
+       <circle cx="80" cy="140" r="6" fill="#1c1917" />
+       <circle cx="90" cy="138" r="6" fill="#1c1917" />
+      </g> <!-- Trees silhouettes --> <path d="M50,800 L50,500 Q30,480 10,450 Q40,430 30,380 Q60,370 50,340 Q75,360 70,380 Q90,370 80,400 Q100,420 80,450 Q100,470 50,500" fill="#1c1917" opacity=".2" /> <path d="M1100,800 L1100,480 Q1080,460 1060,430 Q1090,410 1080,360 Q1110,350 1100,320 Q1125,340 1120,360 Q1140,350 1130,380 Q1150,400 1130,430 Q1150,460 1100,480" fill="#1c1917" opacity=".2" /> <!-- Flowers at bottom --> <g opacity=".3">
+       <circle cx="100" cy="750" r="8" fill="#fbbf24" />
+       <circle cx="130" cy="740" r="6" fill="#fb923c" />
+       <circle cx="1050" cy="745" r="7" fill="#fbbf24" />
+       <circle cx="1080" cy="755" r="9" fill="#fb923c" />
+       <circle cx="300" cy="760" r="5" fill="#fde68a" />
+       <circle cx="900" cy="758" r="6" fill="#fde68a" />
+      </g>
+     </svg>
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50"></div>
+    <div class="relative h-full flex flex-col items-center justify-center text-center px-4 anim-fade-in">
+     <p class="text-white/70 tracking-[.4em] uppercase text-xs mb-6 font-light">We're getting married</p>
+     <h1 class="font-serif-elegant text-white anim-fade-up" style="animation-delay:.3s"><span id="hero-bride" class="block text-5xl sm:text-7xl lg:text-8xl font-light italic">Isabella</span> <span class="block text-2xl sm:text-3xl font-light my-2 text-white/60">&amp;</span> <span id="hero-groom" class="block text-5xl sm:text-7xl lg:text-8xl font-light italic">Alexander</span></h1>
+     <div class="gold-line my-6" style="animation-delay:.6s"></div>
+     <p id="hero-date" class="text-white/80 tracking-[.35em] uppercase text-sm anim-fade-up" style="animation-delay:.8s">Saturday, June 14th, 2025</p>
+     <p id="hero-tagline" class="font-serif-elegant text-white/70 text-lg mt-4 italic anim-fade-up" style="animation-delay:1s">Two souls, one beautiful journey</p>
+     <div class="absolute bottom-10 anim-float"><i data-lucide="chevron-down" class="text-white/50" style="width:28px;height:28px"></i>
+     </div>
+    </div>
+   </section><!-- Countdown -->
+   <section class="py-20 px-4" style="background:linear-gradient(180deg,#faf6f1,#f5ede3)">
+    <div class="max-w-3xl mx-auto text-center reveal">
+     <p class="tracking-[.3em] uppercase text-xs mb-3" style="color:#c9a96e">Counting Down To</p>
+     <h2 class="font-serif-elegant text-3xl sm:text-4xl font-light mb-10" style="color:#4a3728">Our Special Day</h2>
+     <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-lg mx-auto">
+      <div class="glass p-4 sm:p-6 text-center" style="background:rgba(255,255,255,.45)"><span id="cd-days" class="font-serif-elegant text-3xl sm:text-5xl font-light block" style="color:#4a3728">00</span> <span class="text-xs tracking-widest uppercase mt-1 block" style="color:#8b7355">Days</span>
+      </div>
+      <div class="glass p-4 sm:p-6 text-center" style="background:rgba(255,255,255,.45)"><span id="cd-hours" class="font-serif-elegant text-3xl sm:text-5xl font-light block" style="color:#4a3728">00</span> <span class="text-xs tracking-widest uppercase mt-1 block" style="color:#8b7355">Hours</span>
+      </div>
+      <div class="glass p-4 sm:p-6 text-center" style="background:rgba(255,255,255,.45)"><span id="cd-mins" class="font-serif-elegant text-3xl sm:text-5xl font-light block" style="color:#4a3728">00</span> <span class="text-xs tracking-widest uppercase mt-1 block" style="color:#8b7355">Mins</span>
+      </div>
+      <div class="glass p-4 sm:p-6 text-center" style="background:rgba(255,255,255,.45)"><span id="cd-secs" class="font-serif-elegant text-3xl sm:text-5xl font-light block" style="color:#4a3728">00</span> <span class="text-xs tracking-widest uppercase mt-1 block" style="color:#8b7355">Secs</span>
+      </div>
+     </div>
+    </div>
+   </section><!-- Our Story -->
+   <section id="story" class="py-24 px-4" style="background:#faf6f1">
+    <div class="max-w-3xl mx-auto text-center reveal">
+     <p class="tracking-[.3em] uppercase text-xs mb-3" style="color:#c9a96e">How It All Began</p>
+     <h2 id="story-title" class="font-serif-elegant text-3xl sm:text-5xl font-light mb-8" style="color:#4a3728">Our Love Story</h2>
+     <div class="gold-line mb-10"></div>
+     <div class="space-y-8 text-left sm:text-center">
+      <div class="flex flex-col sm:flex-row items-center gap-6 reveal">
+       <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background:#c9a96e20"><i data-lucide="heart" style="color:#c9a96e;width:24px;height:24px"></i>
+       </div>
+       <div>
+        <h3 class="font-serif-elegant text-xl mb-2" style="color:#4a3728">First Meeting — Summer 2019</h3>
+        <p class="text-sm leading-relaxed" style="color:#8b7355">A chance encounter at a friend's garden party. Their eyes met across a candlelit terrace and everything changed in an instant.</p>
+       </div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center gap-6 reveal">
+       <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background:#c9a96e20"><i data-lucide="coffee" style="color:#c9a96e;width:24px;height:24px"></i>
+       </div>
+       <div>
+        <h3 class="font-serif-elegant text-xl mb-2" style="color:#4a3728">First Date — Autumn 2019</h3>
+        <p class="text-sm leading-relaxed" style="color:#8b7355">A cozy afternoon at a little café tucked away on a rainy street. They talked for hours, completely losing track of time.</p>
+       </div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-center gap-6 reveal">
+       <div class="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0" style="background:#c9a96e20"><i data-lucide="sparkles" style="color:#c9a96e;width:24px;height:24px"></i>
+       </div>
+       <div>
+        <h3 class="font-serif-elegant text-xl mb-2" style="color:#4a3728">The Proposal — Winter 2024</h3>
+        <p id="story-text" class="text-sm leading-relaxed" style="color:#8b7355">Under a sky full of stars, with the snow falling gently around them, he knelt down and asked the question that would begin their forever.</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Event Details -->
+   <section id="event" class="py-24 px-4" style="background:linear-gradient(180deg,#f5ede3,#faf6f1)">
+    <div class="max-w-4xl mx-auto text-center">
+     <p class="tracking-[.3em] uppercase text-xs mb-3 reveal" style="color:#c9a96e">Join Us On</p>
+     <h2 class="font-serif-elegant text-3xl sm:text-5xl font-light mb-4 reveal" style="color:#4a3728">The Day</h2>
+     <div class="gold-line mb-14 reveal"></div>
+     <div class="grid sm:grid-cols-2 gap-8">
+      <div class="rounded-2xl p-8 sm:p-10 reveal" style="background:rgba(255,255,255,.6);border:1px solid rgba(201,169,110,.15)">
+       <div class="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-5" style="background:#c9a96e20"><i data-lucide="church" style="color:#c9a96e;width:24px;height:24px"></i>
+       </div>
+       <h3 class="font-serif-elegant text-2xl mb-2" style="color:#4a3728">The Ceremony</h3>
+       <p id="ceremony-time" class="text-sm mb-1" style="color:#c9a96e">3:00 PM</p>
+       <p id="ceremony-venue" class="text-sm mb-4" style="color:#8b7355">The Garden Chapel</p>
+       <p class="text-xs" style="color:#a89279">123 Blossom Lane, Meadowville</p>
+      </div>
+      <div class="rounded-2xl p-8 sm:p-10 reveal" style="background:rgba(255,255,255,.6);border:1px solid rgba(201,169,110,.15)">
+       <div class="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-5" style="background:#c9a96e20"><i data-lucide="wine" style="color:#c9a96e;width:24px;height:24px"></i>
+       </div>
+       <h3 class="font-serif-elegant text-2xl mb-2" style="color:#4a3728">The Reception</h3>
+       <p id="reception-time" class="text-sm mb-1" style="color:#c9a96e">6:00 PM</p>
+       <p id="reception-venue" class="text-sm mb-4" style="color:#8b7355">Rosewood Grand Ballroom</p>
+       <p class="text-xs" style="color:#a89279">456 Rosewood Avenue, Meadowville</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- RSVP -->
+   <section id="rsvp" class="py-24 px-4" style="background:#faf6f1">
+    <div class="max-w-xl mx-auto text-center">
+     <p class="tracking-[.3em] uppercase text-xs mb-3 reveal" style="color:#c9a96e">We'd Love To Hear From You</p>
+     <h2 class="font-serif-elegant text-3xl sm:text-5xl font-light mb-4 reveal" style="color:#4a3728">RSVP</h2>
+     <div class="gold-line mb-10 reveal"></div>
+     <form id="rsvp-form" class="space-y-5 text-left reveal">
+      <div><label for="rsvp-name" class="block text-xs tracking-widest uppercase mb-2" style="color:#8b7355">Your Name</label> <input id="rsvp-name" type="text" required class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40">
+      </div>
+      <div><label for="rsvp-email" class="block text-xs tracking-widest uppercase mb-2" style="color:#8b7355">Email</label> <input id="rsvp-email" type="email" required class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40">
+      </div>
+      <div><label for="rsvp-attend" class="block text-xs tracking-widest uppercase mb-2" style="color:#8b7355">Will You Attend?</label> <select id="rsvp-attend" required class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40"> <option value="">Please select</option> <option value="yes">Joyfully Accept</option> <option value="no">Regretfully Decline</option> </select>
+      </div>
+      <div><label for="rsvp-guests" class="block text-xs tracking-widest uppercase mb-2" style="color:#8b7355">Number of Guests</label> <input id="rsvp-guests" type="number" min="1" max="10" value="1" class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40">
+      </div>
+      <div><label for="rsvp-message" class="block text-xs tracking-widest uppercase mb-2" style="color:#8b7355">Message for the Couple</label> <textarea id="rsvp-message" rows="3" class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40"></textarea>
+      </div><button type="submit" id="rsvp-btn" class="w-full py-3 rounded-xl text-sm tracking-widest uppercase btn-primary font-medium">Send RSVP</button>
+      <div id="rsvp-status" class="text-center text-sm hidden"></div>
+     </form>
+    </div>
+   </section><!-- Gallery -->
+   <section id="gallery" class="py-24 px-4" style="background:linear-gradient(180deg,#f5ede3,#faf6f1)">
+    <div class="max-w-5xl mx-auto text-center">
+     <p class="tracking-[.3em] uppercase text-xs mb-3 reveal" style="color:#c9a96e">Moments Together</p>
+     <h2 class="font-serif-elegant text-3xl sm:text-5xl font-light mb-4 reveal" style="color:#4a3728">Gallery</h2>
+     <div class="gold-line mb-14 reveal"></div>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-4"><!-- SVG gallery placeholders with romantic scenes -->
+      <div class="gallery-item rounded-xl overflow-hidden reveal" style="aspect-ratio:1">
+       <svg viewbox="0 0 300 300" class="w-full h-full">
+        <rect width="300" height="300" fill="#e8ddd0" /><circle cx="150" cy="120" r="50" fill="#c9a96e" opacity=".2" /><path d="M120,200 Q150,170 180,200 Q150,230 120,200" fill="#c9a96e" opacity=".4" /><text x="150" y="270" text-anchor="middle" font-size="11" fill="#a89279" font-family="Jost">
+         Sunset Walk
+        </text>
+       </svg>
+      </div>
+      <div class="gallery-item rounded-xl overflow-hidden reveal" style="aspect-ratio:1">
+       <svg viewbox="0 0 300 300" class="w-full h-full">
+        <rect width="300" height="300" fill="#ddd5c8" /><circle cx="130" cy="150" r="30" fill="#c9a96e" opacity=".15" /><circle cx="170" cy="150" r="30" fill="#c9a96e" opacity=".15" /><path d="M100,150 Q150,100 200,150 Q150,200 100,150" fill="#c9a96e" opacity=".3" /><text x="150" y="270" text-anchor="middle" font-size="11" fill="#a89279" font-family="Jost">
+         Garden Date
+        </text>
+       </svg>
+      </div>
+      <div class="gallery-item rounded-xl overflow-hidden reveal" style="aspect-ratio:1">
+       <svg viewbox="0 0 300 300" class="w-full h-full">
+        <rect width="300" height="300" fill="#e2d8ca" /><circle cx="150" cy="100" r="40" fill="#fde68a" opacity=".3" /><path d="M80,200 L150,140 L220,200 Z" fill="#c9a96e" opacity=".2" /><text x="150" y="270" text-anchor="middle" font-size="11" fill="#a89279" font-family="Jost">
+         Mountain Trip
+        </text>
+       </svg>
+      </div>
+      <div class="gallery-item rounded-xl overflow-hidden reveal" style="aspect-ratio:1">
+       <svg viewbox="0 0 300 300" class="w-full h-full">
+        <rect width="300" height="300" fill="#d8cfc2" /><rect x="100" y="80" width="100" height="140" rx="50" fill="#c9a96e" opacity=".15" /><circle cx="150" cy="140" r="20" fill="#c9a96e" opacity=".25" /><text x="150" y="270" text-anchor="middle" font-size="11" fill="#a89279" font-family="Jost">
+         Ring Day
+        </text>
+       </svg>
+      </div>
+      <div class="gallery-item rounded-xl overflow-hidden reveal" style="aspect-ratio:1">
+       <svg viewbox="0 0 300 300" class="w-full h-full">
+        <rect width="300" height="300" fill="#e5dcd0" /><path d="M50,250 Q100,180 150,200 Q200,220 250,150" stroke="#c9a96e" stroke-width="2" fill="none" opacity=".4" /><circle cx="80" cy="100" r="4" fill="#c9a96e" opacity=".3" /><circle cx="200" cy="80" r="3" fill="#c9a96e" opacity=".3" /><circle cx="250" cy="120" r="5" fill="#c9a96e" opacity=".3" /><text x="150" y="270" text-anchor="middle" font-size="11" fill="#a89279" font-family="Jost">
+         Starry Night
+        </text>
+       </svg>
+      </div>
+      <div class="gallery-item rounded-xl overflow-hidden reveal" style="aspect-ratio:1">
+       <svg viewbox="0 0 300 300" class="w-full h-full">
+        <rect width="300" height="300" fill="#dbd3c6" /><circle cx="120" cy="130" r="35" fill="#c9a96e" opacity=".12" /><circle cx="180" cy="130" r="35" fill="#c9a96e" opacity=".12" /><path d="M120,165 Q150,200 180,165" stroke="#c9a96e" stroke-width="1.5" fill="none" opacity=".3" /><text x="150" y="270" text-anchor="middle" font-size="11" fill="#a89279" font-family="Jost">
+         Together
+        </text>
+       </svg>
+      </div>
+     </div>
+    </div>
+   </section><!-- Wishes -->
+   <section id="wishes" class="py-24 px-4" style="background:#faf6f1">
+    <div class="max-w-3xl mx-auto text-center">
+     <p class="tracking-[.3em] uppercase text-xs mb-3 reveal" style="color:#c9a96e">Share Your Love</p>
+     <h2 class="font-serif-elegant text-3xl sm:text-5xl font-light mb-4 reveal" style="color:#4a3728">Guest Wishes</h2>
+     <div class="gold-line mb-10 reveal"></div>
+     <form id="wish-form" class="flex flex-col sm:flex-row gap-3 mb-10 reveal"><input id="wish-name" type="text" placeholder="Your name" required class="flex-1 px-4 py-3 rounded-xl text-sm outline-none focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40"> <input id="wish-text" type="text" placeholder="Write a wish..." required class="flex-[2] px-4 py-3 rounded-xl text-sm outline-none focus:ring-2" style="background:rgba(255,255,255,.7);border:1px solid rgba(201,169,110,.2);color:#4a3728;--tw-ring-color:#c9a96e40"> <button type="submit" id="wish-btn" class="px-6 py-3 rounded-xl text-sm tracking-widest uppercase btn-primary font-medium whitespace-nowrap">Send</button>
+     </form>
+     <div id="wish-list" class="space-y-4 text-left"></div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="py-16 px-4 text-center" style="background:#4a3728">
+    <div class="max-w-2xl mx-auto">
+     <h3 class="font-serif-elegant text-3xl sm:text-4xl font-light italic mb-3" style="color:#f5ede3"><span id="footer-bride">Isabella</span> &amp; <span id="footer-groom">Alexander</span></h3>
+     <div class="gold-line mb-5"></div>
+     <p id="footer-msg" class="text-sm mb-6" style="color:#c9a96e">We can't wait to celebrate with you</p>
+     <p class="text-xs" style="color:#8b7355">Made with <i data-lucide="heart" style="width:12px;height:12px;display:inline;color:#c9a96e"></i> for our special day</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+// ===== CONFIG & SDK =====
+const defaultConfig = {
+  bride_name: 'Isabella',
+  groom_name: 'Alexander',
+  wedding_date_text: 'Saturday, June 14th, 2025',
+  hero_tagline: 'Two souls, one beautiful journey',
+  story_title: 'Our Love Story',
+  story_text: 'Under a sky full of stars, with the snow falling gently around them, he knelt down and asked the question that would begin their forever.',
+  ceremony_time: '3:00 PM',
+  ceremony_venue: 'The Garden Chapel',
+  reception_time: '6:00 PM',
+  reception_venue: 'Rosewood Grand Ballroom',
+  footer_text: "We can't wait to celebrate with you",
+  background_color: '#faf6f1',
+  surface_color: '#ffffff',
+  text_color: '#4a3728',
+  accent_color: '#c9a96e',
+  secondary_action_color: '#8b7355',
+  font_family: 'Cormorant Garamond',
+  font_size: 16
+};
+
+function applyConfig(c) {
+  const g = (k) => c[k] || defaultConfig[k];
+  document.getElementById('hero-bride').textContent = g('bride_name');
+  document.getElementById('hero-groom').textContent = g('groom_name');
+  document.getElementById('hero-date').textContent = g('wedding_date_text');
+  document.getElementById('hero-tagline').textContent = g('hero_tagline');
+  document.getElementById('story-title').textContent = g('story_title');
+  document.getElementById('story-text').textContent = g('story_text');
+  document.getElementById('ceremony-time').textContent = g('ceremony_time');
+  document.getElementById('ceremony-venue').textContent = g('ceremony_venue');
+  document.getElementById('reception-time').textContent = g('reception_time');
+  document.getElementById('reception-venue').textContent = g('reception_venue');
+  document.getElementById('footer-msg').textContent = g('footer_text');
+  document.getElementById('footer-bride').textContent = g('bride_name');
+  document.getElementById('footer-groom').textContent = g('groom_name');
+  // Nav logo
+  document.querySelector('.nav-text-el').textContent = g('bride_name').charAt(0) + ' & ' + g('groom_name').charAt(0);
+  // Colors
+  const bg = g('background_color'), txt = g('text_color'), acc = g('accent_color'), sec = g('secondary_action_color');
+  document.body.style.background = bg;
+  document.querySelectorAll('.font-serif-elegant').forEach(el => {
+    if (!el.closest('footer')) el.style.color = txt;
+  });
+  document.querySelectorAll('.btn-primary').forEach(el => el.style.background = acc);
+  // Font
+  const ff = g('font_family');
+  document.querySelectorAll('.font-serif-elegant').forEach(el => el.style.fontFamily = `${ff}, serif`);
+  const bs = g('font_size');
+  document.body.style.fontSize = bs + 'px';
+}
+
+window.elementSdk.init({
+  defaultConfig,
+  onConfigChange: async (c) => applyConfig(c),
+  mapToCapabilities: (c) => {
+    const g = (k) => c[k] || defaultConfig[k];
+    const mut = (k) => ({
+      get: () => g(k),
+      set: (v) => { c[k] = v; window.elementSdk.setConfig({[k]: v}); }
+    });
+    return {
+      recolorables: [mut('background_color'), mut('surface_color'), mut('text_color'), mut('accent_color'), mut('secondary_action_color')],
+      borderables: [],
+      fontEditable: mut('font_family'),
+      fontSizeable: mut('font_size')
+    };
+  },
+  mapToEditPanelValues: (c) => {
+    const g = (k) => c[k] || defaultConfig[k];
+    return new Map([
+      ['bride_name', g('bride_name')],['groom_name', g('groom_name')],['wedding_date_text', g('wedding_date_text')],
+      ['hero_tagline', g('hero_tagline')],['story_title', g('story_title')],['story_text', g('story_text')],
+      ['ceremony_time', g('ceremony_time')],['ceremony_venue', g('ceremony_venue')],
+      ['reception_time', g('reception_time')],['reception_venue', g('reception_venue')],['footer_text', g('footer_text')]
+    ]);
+  }
+});
+
+// ===== DATA SDK =====
+let allData = [];
+const dataHandler = {
+  onDataChanged(data) {
+    allData = data;
+    renderWishes(data.filter(d => d.type === 'wish'));
+  }
+};
+(async () => {
+  const r = await window.dataSdk.init(dataHandler);
+  if (!r.isOk) console.error('Data SDK init failed');
+})();
+
+// ===== RSVP FORM =====
+document.getElementById('rsvp-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('rsvp-btn');
+  const status = document.getElementById('rsvp-status');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  if (allData.length >= 999) {
+    status.className = 'text-center text-sm'; status.style.color = '#b91c1c';
+    status.textContent = 'Maximum entries reached.'; btn.disabled = false; btn.textContent = 'Send RSVP'; return;
+  }
+  const res = await window.dataSdk.create({
+    type: 'rsvp',
+    name: document.getElementById('rsvp-name').value,
+    email: document.getElementById('rsvp-email').value,
+    attendance: document.getElementById('rsvp-attend').value,
+    guests: parseInt(document.getElementById('rsvp-guests').value) || 1,
+    message: document.getElementById('rsvp-message').value,
+    created_at: new Date().toISOString()
+  });
+  btn.disabled = false; btn.textContent = 'Send RSVP';
+  status.className = 'text-center text-sm';
+  if (res.isOk) {
+    status.style.color = '#c9a96e'; status.textContent = 'Thank you! Your RSVP has been received 💛';
+    e.target.reset();
+  } else {
+    status.style.color = '#b91c1c'; status.textContent = 'Something went wrong. Please try again.';
+  }
+  status.classList.remove('hidden');
+});
+
+// ===== WISH FORM =====
+document.getElementById('wish-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('wish-btn');
+  btn.disabled = true; btn.textContent = '...';
+  if (allData.length >= 999) {
+    btn.disabled = false; btn.textContent = 'Send'; return;
+  }
+  const res = await window.dataSdk.create({
+    type: 'wish',
+    name: document.getElementById('wish-name').value,
+    email: '',
+    attendance: '',
+    guests: 0,
+    message: document.getElementById('wish-text').value,
+    created_at: new Date().toISOString()
+  });
+  btn.disabled = false; btn.textContent = 'Send';
+  if (res.isOk) { e.target.reset(); }
+});
+
+function renderWishes(wishes) {
+  const list = document.getElementById('wish-list');
+  const existing = new Map([...list.children].map(el => [el.dataset.id, el]));
+  wishes.sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+  wishes.forEach(w => {
+    const id = w.__backendId;
+    if (existing.has(id)) {
+      const el = existing.get(id);
+      el.querySelector('.wish-msg').textContent = `"${w.message}"`;
+      el.querySelector('.wish-name').textContent = '— ' + w.name;
+      existing.delete(id);
+    } else {
+      const card = document.createElement('div');
+      card.dataset.id = id;
+      card.className = 'wishes-card rounded-xl p-5';
+      card.innerHTML = `<p class="wish-msg font-serif-elegant text-lg italic mb-2" style="color:#4a3728">"${w.message}"</p><p class="wish-name text-xs tracking-widest uppercase" style="color:#c9a96e">— ${w.name}</p>`;
+      list.appendChild(card);
+    }
+  });
+  existing.forEach(el => el.remove());
+}
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+  const wedding = new Date('2025-06-14T15:00:00');
+  const now = new Date();
+  const diff = Math.max(0, wedding - now);
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ===== SCROLL EFFECTS =====
+const appEl = document.getElementById('app');
+const navbar = document.getElementById('navbar');
+appEl.addEventListener('scroll', () => {
+  // Navbar
+  if (appEl.scrollTop > 80) {
+    navbar.classList.add('nav-solid');
+    navbar.querySelectorAll('.nav-link,.nav-link-mobile').forEach(l => l.style.color = '#4a3728');
+    navbar.querySelector('.nav-text-el').style.color = '#4a3728';
+    document.getElementById('mobile-menu-btn').style.color = '#4a3728';
+  } else {
+    navbar.classList.remove('nav-solid');
+    navbar.querySelectorAll('.nav-link,.nav-link-mobile').forEach(l => l.style.color = 'rgba(255,255,255,.85)');
+    navbar.querySelector('.nav-text-el').style.color = '#fff';
+    document.getElementById('mobile-menu-btn').style.color = '#fff';
+  }
+  // Reveal
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * .88) el.classList.add('visible');
+  });
+});
+
+// Mobile menu
+document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+document.querySelectorAll('.nav-link-mobile').forEach(l => l.addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.add('hidden');
+}));
+
+// Init reveals
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * .88) el.classList.add('visible');
+  });
+}, 100);
+
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f670ee6965403d4',t:'MTc3Nzg5MzAxOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,33 @@
+<section class="t12-section">
+  <div class="section-reveal" data-reveal style="text-align:center;margin-bottom:1.75rem">
+    <p class="t12-kicker">FROM OUR GUESTS</p>
+    <h2 class="t12-heading">Ucapan &amp; doa</h2>
+  </div>
+  <div id="wishesList" class="section-zoom wishes-stack" data-reveal>
+    <% (wishes || []).forEach(function (w) { %>
+    <div class="wish-card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Great Vibes',cursive;font-size:18px"><%= String(w.guest_name || '?').charAt(0).toUpperCase() %></div>
+        <div>
+          <p style="margin:0;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600"><%= w.guest_name %></p>
+        </div>
+      </div>
+      <% if (w.message) { %><p style="margin:0;font-size:14px;line-height:1.65;opacity:0.75;font-style:italic">&ldquo;<%= w.message %>&rdquo;</p><% } %>
+    </div>
+    <% }); %>
+    <% if (!wishes || !wishes.length) { %>
+    <p id="noWishes" style="text-align:center;opacity:0.45;font-size:14px;font-style:italic;margin:0">Jadilah yang pertama meninggalkan ucapan hangat 💕</p>
+    <% } %>
+  </div>
+  <form id="wishForm" class="section-zoom rsvp-card" data-reveal style="margin-top:1.75rem">
+    <div class="rsvp-field">
+      <label for="wishName" class="t12-kicker" style="display:block;text-align:left;margin-bottom:0.35rem">Nama</label>
+      <input id="wishName" type="text" class="rsvp-input" required autocomplete="name" placeholder="Nama Anda">
+    </div>
+    <div class="rsvp-field">
+      <label for="wishMsg" class="t12-kicker" style="display:block;text-align:left;margin-bottom:0.35rem">Ucapan</label>
+      <textarea id="wishMsg" class="rsvp-input" rows="3" required placeholder="Tuliskan ucapan atau doa…" style="resize:vertical;min-height:4.5rem;border-radius:8px;border:1px solid rgba(196,150,122,0.25);padding:10px"></textarea>
+    </div>
+    <button type="submit" class="rsvp-submit" id="wishBtn">Kirim ucapan</button>
+  </form>
+</section>

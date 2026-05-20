@@ -1,0 +1,79 @@
+html, body { height: 100%; margin: 0; overflow: hidden; }
+* { box-sizing: border-box; }
+.font-serif-elegant { font-family: 'Cormorant Garamond', serif; }
+.font-sans-clean { font-family: 'Quicksand', sans-serif; }
+
+/* Envelope */
+.envelope-wrapper { perspective: 1000px; }
+.envelope { width: 320px; height: 220px; position: relative; transform-style: preserve-3d; }
+.envelope-body { width: 100%; height: 100%; background: linear-gradient(135deg, #fdf6ee, #f5e6d3); border-radius: 8px; box-shadow: 0 20px 60px rgba(180,140,100,0.3); position: relative; overflow: hidden; }
+.envelope-body::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, #f0dcc8, transparent); }
+.envelope-flap { position: absolute; top: 0; left: 0; width: 100%; height: 55%; background: linear-gradient(180deg, #e8d4be, #f5e6d3); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top center; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 2; }
+.envelope-flap.open { transform: rotateX(180deg); }
+.envelope-heart { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); z-index: 3; font-size: 28px; opacity: 0.9; }
+.envelope-letter { position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%); width: 80%; height: 60%; background: white; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s, opacity 0.8s ease 0.4s; opacity: 0; }
+.envelope-letter.rise { transform: translateX(-50%) translateY(-80px); opacity: 1; }
+
+/* Particles */
+.particle { position: absolute; border-radius: 50%; pointer-events: none; animation: float-particle linear infinite; }
+@keyframes float-particle { 0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 0.6; } 100% { transform: translateY(-400px) translateX(30px) scale(0.3); opacity: 0; } }
+
+/* Petal */
+.petal { position: fixed; pointer-events: none; animation: petal-fall linear infinite; opacity: 0.6; z-index: 1; }
+@keyframes petal-fall { 0% { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; } 10% { opacity: 0.6; } 100% { transform: translateY(800px) rotate(360deg) translateX(100px); opacity: 0; } }
+
+/* Sections */
+.section-fade { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.section-fade.visible { opacity: 1; transform: translateY(0); }
+
+/* Glassmorphism */
+.glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.5); }
+
+/* Scrollbar */
+.invitation-scroll::-webkit-scrollbar { width: 4px; }
+.invitation-scroll::-webkit-scrollbar-thumb { background: #d4a574; border-radius: 2px; }
+
+/* Open button */
+.btn-open { background: linear-gradient(135deg, #d4a574, #c9956b); color: white; padding: 14px 40px; border-radius: 50px; font-family: 'Quicksand', sans-serif; font-weight: 500; letter-spacing: 1px; border: none; cursor: pointer; box-shadow: 0 8px 30px rgba(200,140,90,0.4); transition: all 0.3s ease; }
+.btn-open:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,140,90,0.5); }
+
+/* Screen transitions */
+#cover-screen { transition: opacity 1.5s ease, transform 1.5s ease; }
+#cover-screen.hide { opacity: 0; transform: scale(1.05); pointer-events: none; }
+
+/* Timeline */
+.timeline-line { width: 2px; background: linear-gradient(to bottom, #d4a574, #f0dcc8); }
+
+/* Glow */
+.glow-soft { box-shadow: 0 0 60px rgba(212,165,116,0.15), 0 0 120px rgba(212,165,116,0.05); }
+
+/* Gallery */
+.gallery-item { aspect-ratio: 3/4; background: linear-gradient(135deg, #f5e6d3, #fdf6ee); border-radius: 16px; overflow: hidden; position: relative; background-size: cover; background-position: center; }
+.gallery-item::after { content: '💐'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 2rem; opacity: 0.4; }
+.gallery-item.has-image::after { display: none; }
+
+body { box-sizing: border-box; }
+
+/* Toast (RSVP / errors) */
+.t13-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13px;
+  background: rgba(255,255,255,0.92);
+  color: #5a4030;
+  box-shadow: 0 8px 24px rgba(90,64,48,0.15);
+  border: 1px solid rgba(212,165,116,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.t13-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

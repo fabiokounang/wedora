@@ -1,0 +1,51 @@
+<div class="catalog-page">
+  <div class="co-panel page-header page-header--catalog">
+    <div>
+      <p class="catalog-eyebrow">Pilih template</p>
+      <h1>Katalog tema</h1>
+      <p class="muted dash-sub">Satu halaman untuk <strong>membandingkan tampilan</strong> (bukan mengelola undangan). Demo live tanpa login. Bagikan link ini ke klien supaya mereka pilih look—lalu Anda atau mereka buat situs undangan dari menu <strong>Buat undangan baru</strong>.</p>
+    </div>
+    <% if (!(typeof user !== 'undefined' && user)) { %>
+      <a href="/login" class="btn btn-soft btn-pill">Sign in</a>
+    <% } %>
+  </div>
+
+  <div class="callout callout--hint">
+    <span class="callout__icon" aria-hidden="true">ⓘ</span>
+    <div>
+      <strong class="callout__title">Perbedaan dengan halaman Undangan</strong>
+      <p class="callout__text muted small" style="margin:0 0 10px">
+        <strong>Katalog</strong> = daftar template produk. <strong>Undangan</strong> (menu Semua undangan) = proyek pernikahan Anda/klien (slug, konten, RSVP). Situs demo sistem tidak tercampur di daftar undangan.
+      </p>
+      <strong class="callout__title">URL demo per tema</strong>
+      <p class="callout__text muted small" style="margin:0">
+        <code class="callout-code"><%= publicBase %>/?site=preview-<strong>themeKey</strong></code>
+        — pertama kali dibuka, server otomatis membuat situs demo di database jika belum ada (mis. tema baru seperti theme13).
+      </p>
+    </div>
+  </div>
+
+  <h2 class="visually-hidden">Daftar tema</h2>
+  <div class="cards cards--dashboard cards--cozy theme-catalog">
+    <% themes.forEach(function(t) { %>
+      <article class="card card--with-thumb card--lift">
+        <div class="card-thumb card-thumb--static">
+          <img src="<%= t.theme_preview_url %>" alt="" width="640" height="400" loading="lazy" decoding="async" />
+        </div>
+        <div class="card-body">
+          <div class="card-head">
+            <h3><%= t.name %></h3>
+            <span class="badge badge-key"><%= t.key %></span>
+          </div>
+          <p class="muted small card-version">v<%= t.version || '1.0.0' %></p>
+          <div class="theme-catalog-actions">
+            <a class="btn btn-primary btn-pill" href="<%= t.demoUrl %>" target="_blank" rel="noopener">Open live demo</a>
+            <% if (typeof user !== 'undefined' && user && user.role === 'super_admin') { %>
+              <a class="btn btn-soft btn-pill" href="/sites/new?theme_key=<%= encodeURIComponent(t.key) %>">Create new site</a>
+            <% } %>
+          </div>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</div>

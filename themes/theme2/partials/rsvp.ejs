@@ -1,0 +1,21 @@
+<section id="rsvp" class="py-24 px-6" style="background:linear-gradient(180deg,#e8ede5,#f0ede6)">
+  <div class="max-w-lg mx-auto">
+    <div class="text-center mb-12 fade-up">
+      <p class="text-xs tracking-[.3em] uppercase text-dusty-500 mb-3">We hope you can join</p>
+      <h2 class="font-serif text-sage-800 text-4xl sm:text-5xl" style="font-weight:300">RSVP</h2>
+    </div>
+    <form id="rsvp-form" class="space-y-5 fade-up">
+      <input id="rsvp-name" name="guest_name" type="text" required placeholder="Your name" class="w-full rounded-xl px-4 py-3 text-sm text-sage-800" style="background:rgba(255,255,255,.6);border:1px solid rgba(184,197,176,.3)" />
+      <input id="rsvpPhone" name="guest_phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="WhatsApp / phone (08…)" class="w-full rounded-xl px-4 py-3 text-sm text-sage-800" style="background:rgba(255,255,255,.6);border:1px solid rgba(184,197,176,.3)" />
+      <select id="rsvp-attend" name="attendance" required class="w-full rounded-xl px-4 py-3 text-sm text-sage-800" style="background:rgba(255,255,255,.6);border:1px solid rgba(184,197,176,.3)">
+        <option value="">Will you attend?</option>
+        <option value="yes">Joyfully Accept</option>
+        <option value="no">Regretfully Decline</option>
+      </select>
+      <input id="rsvp-guests" name="guests_count" type="number" min="1" max="10" value="1" class="w-full rounded-xl px-4 py-3 text-sm text-sage-800" style="background:rgba(255,255,255,.6);border:1px solid rgba(184,197,176,.3)" />
+      <textarea id="rsvp-notes" name="notes" rows="3" placeholder="Notes..." class="w-full rounded-xl px-4 py-3 text-sm text-sage-800 resize-none" style="background:rgba(255,255,255,.6);border:1px solid rgba(184,197,176,.3)"></textarea>
+      <button type="submit" id="rsvp-btn" class="w-full py-3 rounded-full text-xs tracking-widest uppercase text-ivory-100" style="background:#8a9e82">Send RSVP</button>
+    </form>
+    <div id="rsvp-toast" class="hidden mt-4 p-4 rounded-xl text-center text-sm" style="background:rgba(184,197,176,.2);color:#576857"></div>
+  </div>
+</section>

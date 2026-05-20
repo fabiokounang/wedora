@@ -1,0 +1,36 @@
+<section id="gift" class="section-pad">
+
+  <div class="max-w-md mx-auto text-center">
+
+    <div class="reveal">
+
+      <p class="uppercase tracking-[5px] text-xs mb-3" style="color: var(--secondary);">With Love</p>
+
+      <h2 class="font-serif-display text-3xl md:text-4xl font-light mb-4" style="color: var(--text);">Wedding Gift</h2>
+
+      <p class="text-sm leading-relaxed mb-8" style="color: rgba(245, 230, 216, 0.6);">
+
+        <%= content.gift_message || 'Your presence is the greatest gift we could ever ask for.' %>
+
+      </p>
+
+    </div>
+
+    <div class="reveal">
+
+      <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+
+      <% if (!gifts || gifts.length === 0) { %>
+
+        <p class="text-sm mt-6" style="color: rgba(245, 230, 216, 0.45);">Informasi gift akan ditambahkan.</p>
+
+      <% } %>
+
+    </div>
+
+    <div id="copy-toast" class="hidden mt-3 text-xs" style="color: var(--secondary);">Disalin!</div>
+
+  </div>
+
+</section>
+

@@ -1,0 +1,20 @@
+<section id="gift" class="py-20 px-4" style="background: linear-gradient(180deg, #FFFAF7 0%, #FFF0F0 100%);">
+
+  <div class="max-w-md mx-auto text-center fade-in">
+
+    <h2 class="font-serif text-3xl text-gray-800 mb-4">Gift Registry</h2>
+
+    <p class="text-gray-500 mb-8 font-light"><%= content.gift_message || 'Your presence is our greatest gift.' %></p>
+
+    <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+
+    <% if (!gifts || gifts.length === 0) { %>
+
+      <p class="text-gray-400 text-sm mt-6">Informasi rekening dapat ditambahkan di admin.</p>
+
+    <% } %>
+
+  </div>
+
+</section>
+

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" role="img" aria-label="Wine and Gold theme preview">
+  <defs>
+    <linearGradient id="t4bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a0a0f"/>
+      <stop offset="1" stop-color="#1a0508"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#t4bg)"/>
+  <text x="320" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="28" fill="#c9a87c">Wine &amp; Gold</text>
+  <text x="320" y="236" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" letter-spacing="0.2em" fill="#f5e6d8" opacity="0.6">WEDDING</text>
+</svg>

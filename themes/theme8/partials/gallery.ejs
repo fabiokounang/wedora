@@ -1,0 +1,38 @@
+<section id="gallery" class="scene" style="background:var(--ivory)">
+  <div class="w-full max-w-6xl mx-auto px-6 py-24">
+    <div class="text-center stagger-1 mb-16">
+      <div class="chapter-num">Moments</div>
+      <h2 class="font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--deep)">Our Story in Frames</h2>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 stagger-2">
+      <% (gallery || []).forEach(function(item, idx) { %>
+      <div class="gallery-item<%= idx === 2 ? ' md:row-span-2' : '' %>">
+        <div class="gallery-bg" style="background-image:url('<%= item.thumbnail_url || item.image_url %>');background-size:cover;background-position:center;height:100%"></div>
+        <div class="absolute inset-0 flex items-end p-4">
+          <% if (item.caption) { %>
+          <span class="font-story text-sm italic" style="color:rgba(61,50,41,.6)"><%= item.caption %></span>
+          <% } %>
+        </div>
+      </div>
+      <% }) %>
+      <% if (!gallery || gallery.length === 0) { %>
+      <div class="gallery-item">
+        <div class="gallery-bg" style="background:linear-gradient(135deg,#E8D5C4,#D4A0A0)"></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-bg" style="background:linear-gradient(135deg,#D4C5A9,#C4A96A)"></div>
+      </div>
+      <div class="gallery-item md:row-span-2">
+        <div class="gallery-bg" style="background:linear-gradient(180deg,#F3EDE2,#D4A0A0);height:100%"></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-bg" style="background:linear-gradient(135deg,#B8AFA6,#E8D5C4)"></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-bg" style="background:linear-gradient(135deg,#D4A0A0,#C4A96A)"></div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,197 @@
+<!-- Shared gift / QR cards (included from each theme partials/gift.ejs) -->
+<div class="gift-registry-shared">
+  <style>
+    .gift-registry-shared {
+      --gift-card-bg: rgba(255, 255, 255, 0.78);
+      --gift-card-border: rgba(0, 0, 0, 0.06);
+      --gift-card-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+      --gift-qr-frame: #ffffff;
+      --gift-qr-border: rgba(0, 0, 0, 0.08);
+      --gift-muted: rgba(0, 0, 0, 0.45);
+      --gift-text: rgba(0, 0, 0, 0.88);
+      --gift-accent: #b8556a;
+      --gift-number-bg: rgba(0, 0, 0, 0.04);
+      max-width: 22rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .gift-registry-shared__list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .gift-card {
+      text-align: left;
+      background: var(--gift-card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--gift-card-border);
+      border-radius: 1.25rem;
+      box-shadow: var(--gift-card-shadow);
+      padding: 1.35rem 1.35rem 1.25rem;
+    }
+    .gift-card__qr {
+      width: 100%;
+      max-width: 11rem;
+      aspect-ratio: 1;
+      margin: 0 auto 1.15rem;
+      padding: 0.65rem;
+      background: var(--gift-qr-frame);
+      border: 1px solid var(--gift-qr-border);
+      border-radius: 1rem;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gift-card__qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 0.35rem;
+    }
+    .gift-card__qr--empty {
+      flex-direction: column;
+      gap: 0.35rem;
+      color: var(--gift-muted);
+      font-size: 0.7rem;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .gift-card__qr--empty svg {
+      width: 2.5rem;
+      height: 2.5rem;
+      opacity: 0.35;
+    }
+    .gift-card__bank {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gift-muted);
+      margin: 0 0 0.35rem;
+    }
+    .gift-card__holder {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gift-text);
+      margin: 0 0 0.65rem;
+      line-height: 1.35;
+    }
+    .gift-card__number {
+      font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.06em;
+      color: var(--gift-text);
+      margin: 0;
+      padding: 0.75rem 1rem;
+      background: var(--gift-number-bg);
+      border-radius: 0.65rem;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      line-height: 1.45;
+      word-break: break-all;
+    }
+    .gift-card__copy {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #fff;
+      background: linear-gradient(135deg, var(--gift-accent), #8e3d52);
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(184, 85, 106, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .gift-card__copy:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(184, 85, 106, 0.45);
+    }
+    .gift-card__copy:active {
+      transform: translateY(0);
+    }
+  </style>
+  <div class="gift-registry-shared__list">
+    <% (gifts || []).forEach(function (g) { %>
+    <article class="gift-card">
+      <% if (g.qr_image_url) { %>
+      <div class="gift-card__qr">
+        <img src="<%= g.qr_image_url %>" alt="QR <%= g.bank_name %>" loading="lazy" decoding="async" />
+      </div>
+      <% } else { %>
+      <div class="gift-card__qr gift-card__qr--empty" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" />
+          <rect x="14" y="3" width="7" height="7" rx="1.5" />
+          <rect x="3" y="14" width="7" height="7" rx="1.5" />
+          <path fill="currentColor" stroke="none" d="M14 14h2v2h-2v-2zm3 0h2v2h-2v-2zm-3 3h2v2h-2v-2zm3 0h2v2h-2v-2zm3-3h2v2h-2v-2zm0 3h2v2h-2v-2z" opacity=".5" />
+        </svg>
+        <span>QR dapat ditambahkan<br />di panel admin</span>
+      </div>
+      <% } %>
+      <p class="gift-card__bank"><%= g.bank_name %></p>
+      <p class="gift-card__holder"><%= g.account_name %></p>
+      <p class="gift-card__number"><%= g.account_number %></p>
+      <button type="button" class="gift-card__copy" data-copy="<%= g.account_number %>">Salin nomor rekening</button>
+    </article>
+    <% }) %>
+  </div>
+</div>
+<script>
+(function () {
+  if (window.__giftRegistryCopyBound) return;
+  window.__giftRegistryCopyBound = true;
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest && e.target.closest('.gift-card__copy');
+    if (!btn) return;
+    var v = btn.getAttribute('data-copy') || '';
+    if (!v) return;
+    e.preventDefault();
+    var label = btn.textContent;
+    function done() {
+      btn.textContent = 'Disalin ✓';
+      var t = document.createElement('div');
+      t.setAttribute('role', 'status');
+      t.style.cssText =
+        'position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%);background:rgba(25,25,28,.92);color:#fff;padding:.55rem 1.1rem;border-radius:999px;font-size:.8125rem;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,.2)';
+      t.textContent = 'Nomor rekening disalin';
+      document.body.appendChild(t);
+      setTimeout(function () {
+        btn.textContent = label;
+        t.remove();
+      }, 2000);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(v).then(done).catch(function () {
+        fallback();
+      });
+    } else {
+      fallback();
+    }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = v;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        done();
+      } finally {
+        ta.remove();
+      }
+    }
+  });
+})();
+</script>

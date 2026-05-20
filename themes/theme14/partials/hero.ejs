@@ -1,0 +1,13 @@
+<section class="min-h-screen flex items-center justify-center px-6 py-20 section-hidden" data-section>
+  <div class="text-center max-w-lg">
+    <p class="text-xs tracking-[0.4em] text-amber-700/50 uppercase mb-6"><%= heroIntro %></p>
+    <h1 class="font-serif-elegant text-6xl md:text-7xl text-amber-900/80 font-light italic leading-tight">
+      <%= partnerOne %><br><span class="text-3xl">&amp;</span><br><%= partnerTwo %>
+    </h1>
+    <div class="ornament-line mx-auto my-6"></div>
+    <p class="text-sm tracking-widest text-amber-700/60"><%= heroDateLabel %></p>
+    <% if (heroVenueLine) { %>
+      <p class="text-xs text-amber-700/40 mt-2"><%= heroVenueLine %></p>
+    <% } %>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+<section id="rsvp" class="scene" style="background:var(--deep)">
+  <div class="w-full max-w-xl mx-auto px-6 py-24">
+    <div class="text-center stagger-1">
+      <div class="chapter-num" style="color:rgba(196,169,106,.7)">Kindly Respond</div>
+      <h2 class="font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--ivory)">RSVP</h2>
+      <div class="gold-line" style="opacity:.4"></div>
+    </div>
+    <form id="rsvpForm" class="mt-12 stagger-2 space-y-8">
+      <div>
+        <input type="text" class="form-input" style="color:var(--ivory);border-color:rgba(184,175,166,.3)" placeholder="Your Full Name" id="rsvpName" name="guest_name" required />
+      </div>
+      <div>
+        <input type="tel" class="form-input" style="color:var(--ivory);border-color:rgba(184,175,166,.3)" placeholder="WhatsApp / phone" id="rsvpPhone" name="guest_phone" inputmode="tel" autocomplete="tel" />
+      </div>
+      <div class="flex gap-6">
+        <label class="flex items-center gap-2 cursor-pointer font-story" style="color:var(--taupe)">
+          <input type="radio" name="attendance" value="yes" style="accent-color:var(--gold)" required /> Joyfully Accept
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer font-story" style="color:var(--taupe)">
+          <input type="radio" name="attendance" value="no" style="accent-color:var(--gold)" /> Regretfully Decline
+        </label>
+      </div>
+      <div>
+        <input type="number" class="form-input" style="color:var(--ivory);border-color:rgba(184,175,166,.3)" placeholder="Number of Guests" id="rsvpGuests" name="guests_count" min="1" max="20" value="1" />
+      </div>
+      <div>
+        <textarea class="form-input" style="color:var(--ivory);border-color:rgba(184,175,166,.3);resize:none" rows="3" placeholder="A message for the couple (optional)" id="rsvpNotes" name="notes"></textarea>
+      </div>
+      <div class="text-center pt-4">
+        <button type="submit" class="btn-rsvp" id="rsvpBtn">Send With Love</button>
+      </div>
+    </form>
+  </div>
+</section>

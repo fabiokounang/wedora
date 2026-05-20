@@ -1,0 +1,22 @@
+<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background:rgba(26,23,20,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(196,168,116,0.08);">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="#hero" class="font-serif-display text-lg tracking-wider" style="color:#c4a874;"><%= brand %></a>
+    <div class="hidden md:flex items-center gap-6 text-xs tracking-widest uppercase" style="color:rgba(196,168,116,0.6);">
+      <% if (hasSection('story')) { %><a href="#story" class="nav-link hover:text-[#c4a874] transition-colors">Story</a><% } %>
+      <% if (hasSection('events')) { %><a href="#events" class="nav-link hover:text-[#c4a874] transition-colors">Events</a><% } %>
+      <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link hover:text-[#c4a874] transition-colors">Gallery</a><% } %>
+      <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link hover:text-[#c4a874] transition-colors">RSVP</a><% } %>
+      <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link hover:text-[#c4a874] transition-colors">Wishes</a><% } %>
+    </div>
+    <button id="mobileMenuBtn" class="md:hidden" style="color:#c4a874;" aria-label="Menu">
+      <img src="https://img.icons8.com/?size=96&id=36389&format=png&color=C4A874" alt="Menu icon" class="icon icon-sm" />
+    </button>
+  </div>
+  <div id="mobileMenu" class="md:hidden hidden px-4 pb-4 flex flex-col gap-3 text-xs tracking-widest uppercase text-center" style="color:rgba(196,168,116,0.6);">
+    <% if (hasSection('story')) { %><a href="#story" class="py-2 hover:text-[#c4a874]">Story</a><% } %>
+    <% if (hasSection('events')) { %><a href="#events" class="py-2 hover:text-[#c4a874]">Events</a><% } %>
+    <% if (hasSection('gallery')) { %><a href="#gallery" class="py-2 hover:text-[#c4a874]">Gallery</a><% } %>
+    <% if (hasSection('rsvp')) { %><a href="#rsvp" class="py-2 hover:text-[#c4a874]">RSVP</a><% } %>
+    <% if (hasSection('wishes')) { %><a href="#wishes" class="py-2 hover:text-[#c4a874]">Wishes</a><% } %>
+  </div>
+</nav>

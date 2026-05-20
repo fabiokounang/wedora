@@ -1,0 +1,48 @@
+<section id="story" class="py-24 px-6 relative" style="background:linear-gradient(180deg,#f0ede6,#e8ede5)">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-16 fade-up">
+      <p class="text-xs tracking-[.3em] uppercase text-dusty-500 mb-3">
+        <%= content.story_subtitle || 'Our Journey' %>
+      </p>
+      <h2 class="font-serif text-sage-800 text-4xl sm:text-5xl" style="font-weight:300">Love Story</h2>
+    </div>
+    <div class="relative">
+      <div class="timeline-line"></div>
+      <div class="space-y-16">
+        <% (story || []).forEach(function(item, idx) {
+             const leftSide = idx % 2 === 0;
+             const dotColor = idx % 2 === 0 ? 'bg-sage-300' : 'bg-dusty-300';
+        %>
+        <div class="fade-up relative flex flex-col md:flex-row items-start md:items-center">
+          <% if (leftSide) { %>
+            <div class="md:w-1/2 md:text-right md:pr-12 pl-12 md:pl-0">
+              <% if (item.date_label) { %>
+                <p class="text-xs tracking-[.2em] uppercase text-dusty-500 mb-1"><%= item.date_label %></p>
+              <% } %>
+              <h3 class="font-serif text-sage-700 text-xl mb-2" style="font-weight:500"><%= item.title %></h3>
+              <% if (item.description) { %>
+                <p class="text-sage-500 text-sm leading-relaxed"><%= item.description %></p>
+              <% } %>
+            </div>
+          <% } else { %>
+            <div class="md:w-1/2"></div>
+            <div class="md:w-1/2 md:pl-12 pl-12">
+              <% if (item.date_label) { %>
+                <p class="text-xs tracking-[.2em] uppercase text-dusty-500 mb-1"><%= item.date_label %></p>
+              <% } %>
+              <h3 class="font-serif text-sage-700 text-xl mb-2" style="font-weight:500"><%= item.title %></h3>
+              <% if (item.description) { %>
+                <p class="text-sage-500 text-sm leading-relaxed"><%= item.description %></p>
+              <% } %>
+            </div>
+          <% } %>
+          <div class="absolute w-4 h-4 rounded-full <%= dotColor %> border-4 border-ivory-100" style="left:20px;top:4px;transform:translateX(-50%)"></div>
+        </div>
+        <% }) %>
+        <% if (!story || story.length === 0) { %>
+          <p class="text-center text-sage-500">Our story will appear here soon...</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

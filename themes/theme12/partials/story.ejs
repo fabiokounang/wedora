@@ -1,0 +1,47 @@
+<%
+  const firstStory = (story && story[0]) ? story[0] : null;
+  const quoteText = (content.couple_quote && String(content.couple_quote).trim())
+    ? content.couple_quote
+    : (firstStory && firstStory.description ? firstStory.description : '');
+%>
+<% if (quoteText) { %>
+<section class="t12-section" style="text-align:center">
+  <div class="ornament float-1" style="top:10px;right:10%;opacity:0.1">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 0c0 20-15 15-15 20s15 15 15 20c0-20 15-15 15-20S20 0 20 0z" fill="var(--primary)" /></svg>
+  </div>
+  <div class="section-reveal t12-inner" data-reveal>
+    <svg class="quote-mark" width="40" height="2" aria-hidden="true"><line x1="0" y1="1" x2="40" y2="1" stroke="var(--primary)" stroke-width="1" /></svg>
+    <p class="t12-quote" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3.2vw,1.45rem);font-style:italic;line-height:1.85;max-width:32rem;margin:0 auto;font-weight:300">&ldquo;<%- quoteText %>&rdquo;</p>
+    <svg class="quote-mark" width="40" height="2" style="margin-top:1.1rem" aria-hidden="true"><line x1="0" y1="1" x2="40" y2="1" stroke="var(--primary)" stroke-width="1" /></svg>
+  </div>
+</section>
+<% } %>
+<section class="t12-section t12-section--tight-top" style="text-align:center">
+  <div class="section-reveal" data-reveal>
+    <p class="t12-kicker">INTRODUCING</p>
+    <h2 class="t12-heading">The happy couple</h2>
+  </div>
+  <div class="couple-grid" style="margin-top:2rem">
+    <div class="section-zoom couple-card" data-reveal>
+      <div class="avatar-ring">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" aria-hidden="true"><circle cx="25" cy="18" r="10" fill="var(--primary)" opacity="0.4" /><ellipse cx="25" cy="42" rx="16" ry="12" fill="var(--primary)" opacity="0.3" /></svg>
+      </div>
+      <h3 style="font-family:'Great Vibes',cursive;font-size:1.85rem;margin:0 0 0.25rem"><%= content.partner_one || '' %></h3>
+      <p class="t12-kicker" style="margin-bottom:0.75rem">MEMPELAI 1</p>
+      <% if (content.partner_one_bio) { %>
+      <p style="font-size:14px;line-height:1.75;opacity:0.72;margin:0"><%= content.partner_one_bio %></p>
+      <% } %>
+    </div>
+    <div class="section-zoom couple-card" data-reveal>
+      <div class="avatar-ring avatar-ring--groom">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" aria-hidden="true"><circle cx="25" cy="18" r="10" fill="var(--secondary)" opacity="0.5" /><ellipse cx="25" cy="42" rx="16" ry="12" fill="var(--secondary)" opacity="0.3" /></svg>
+      </div>
+      <h3 style="font-family:'Great Vibes',cursive;font-size:1.85rem;margin:0 0 0.25rem"><%= content.partner_two || '' %></h3>
+      <p class="t12-kicker" style="margin-bottom:0.75rem">MEMPELAI 2</p>
+      <% if (content.partner_two_bio) { %>
+      <p style="font-size:14px;line-height:1.75;opacity:0.72;margin:0"><%= content.partner_two_bio %></p>
+      <% } %>
+    </div>
+  </div>
+</section>
+<%- include('section-divider', { tone: 'primary' }) %>

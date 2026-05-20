@@ -1,0 +1,58 @@
+<% const ev = (events && events[0]) ? events[0] : null; %>
+<section class="t12-section" style="text-align:center">
+  <div class="ornament float-3" style="bottom:20px;left:5%;opacity:0.08">
+    <svg width="80" height="100" viewBox="0 0 80 100" fill="var(--secondary)" aria-hidden="true"><path d="M40 0C40 0 0 30 0 60c0 22 18 40 40 40s40-18 40-40C80 30 40 0 40 0zM40 10v80M20 40c10 5 20 5 20 5M60 55c-10 5-20 5-20 5" /></svg>
+  </div>
+  <div class="section-reveal" data-reveal>
+    <p class="t12-kicker">SAVE THE DATE</p>
+    <h2 class="t12-heading" style="margin-bottom:1.75rem">Wedding celebration</h2>
+  </div>
+  <% if (ev) { %>
+  <% const fdt = ev.datetime ? helpers.formatDateTime(ev.datetime) : ''; const parts = fdt ? fdt.split(' · ') : []; const dateLine = parts[0] || helpers.formatDate(ev.datetime) || ''; const timeLine = parts[1] || ''; %>
+  <div class="section-zoom event-card" data-reveal>
+    <div class="event-card__row">
+      <div class="event-card__block">
+        <i data-lucide="calendar" style="width:24px;height:24px;color:var(--primary);margin-bottom:0.5rem"></i>
+        <p class="t12-kicker" style="margin-bottom:0.25rem">DATE</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin:0;font-weight:500"><%= dateLine %></p>
+      </div>
+      <% if (timeLine) { %>
+      <div class="event-card__sep" aria-hidden="true"></div>
+      <div class="event-card__block">
+        <i data-lucide="clock" style="width:24px;height:24px;color:var(--primary);margin-bottom:0.5rem"></i>
+        <p class="t12-kicker" style="margin-bottom:0.25rem">TIME</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin:0;font-weight:500"><%= timeLine %></p>
+      </div>
+      <% } %>
+    </div>
+    <% if (ev.venue_name || ev.address) { %>
+    <div class="event-card__venue">
+      <i data-lucide="map-pin" style="width:24px;height:24px;color:var(--primary);margin-bottom:0.5rem"></i>
+      <p class="t12-kicker" style="margin-bottom:0.25rem">VENUE</p>
+      <% if (ev.venue_name) { %><p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin:0 0 0.25rem;font-weight:500"><%= ev.venue_name %></p><% } %>
+      <% if (ev.address) { %><p style="font-size:13px;opacity:0.65;margin:0;line-height:1.5"><%= ev.address %></p><% } %>
+    </div>
+    <% } %>
+  </div>
+  <% } else { %>
+  <% const fdt2 = helpers.formatDateTime(content.wedding_date); const parts2 = fdt2.split(' · '); %>
+  <div class="section-zoom event-card" data-reveal>
+    <div class="event-card__row">
+      <div class="event-card__block">
+        <i data-lucide="calendar" style="width:24px;height:24px;color:var(--primary);margin-bottom:0.5rem"></i>
+        <p class="t12-kicker" style="margin-bottom:0.25rem">DATE</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin:0;font-weight:500"><%= parts2[0] || helpers.formatDate(content.wedding_date) %></p>
+      </div>
+      <% if (parts2[1]) { %>
+      <div class="event-card__sep" aria-hidden="true"></div>
+      <div class="event-card__block">
+        <i data-lucide="clock" style="width:24px;height:24px;color:var(--primary);margin-bottom:0.5rem"></i>
+        <p class="t12-kicker" style="margin-bottom:0.25rem">TIME</p>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin:0;font-weight:500"><%= parts2[1] %></p>
+      </div>
+      <% } %>
+    </div>
+    <p class="t12-kicker" style="margin-top:1.25rem;opacity:0.65">Tambahkan acara di admin untuk detail venue.</p>
+  </div>
+  <% } %>
+</section>

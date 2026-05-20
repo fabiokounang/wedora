@@ -1,0 +1,22 @@
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500" style="background:transparent">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="#hero" class="font-serif text-xl font-semibold text-deep"><%= brand %></a>
+    <div class="hidden md:flex gap-8 text-sm tracking-wide text-brown">
+      <% if (hasSection('story')) { %><a href="#story" class="nav-link hover:text-deep">Our Story</a><% } %>
+      <% if (hasSection('events')) { %><a href="#details" class="nav-link hover:text-deep">Details</a><% } %>
+      <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link hover:text-deep">RSVP</a><% } %>
+      <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link hover:text-deep">Gallery</a><% } %>
+      <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link hover:text-deep">Wishes</a><% } %>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden text-brown" aria-label="Menu">
+      <img src="https://img.icons8.com/?size=96&id=36389&format=png&color=8B7E6A" alt="Menu" class="icon icon-menu" />
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-cream/95 backdrop-blur px-4 pb-4 flex flex-col gap-3 text-sm tracking-wide text-brown">
+    <% if (hasSection('story')) { %><a href="#story" class="py-2 border-b border-sand">Our Story</a><% } %>
+    <% if (hasSection('events')) { %><a href="#details" class="py-2 border-b border-sand">Details</a><% } %>
+    <% if (hasSection('rsvp')) { %><a href="#rsvp" class="py-2 border-b border-sand">RSVP</a><% } %>
+    <% if (hasSection('gallery')) { %><a href="#gallery" class="py-2 border-b border-sand">Gallery</a><% } %>
+    <% if (hasSection('wishes')) { %><a href="#wishes" class="py-2 border-b border-sand">Wishes</a><% } %>
+  </div>
+</nav>

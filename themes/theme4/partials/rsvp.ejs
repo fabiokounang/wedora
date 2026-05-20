@@ -1,0 +1,38 @@
+<section id="rsvp" class="section-pad">
+  <div class="max-w-lg mx-auto text-center">
+    <div class="reveal">
+      <p class="uppercase tracking-[5px] text-xs mb-3" style="color: var(--secondary);"><%= content.rsvp_deadline || "We'd Love to Have You" %></p>
+      <h2 class="font-serif-display text-3xl md:text-4xl font-light mb-8" style="color: var(--text);">RSVP</h2>
+    </div>
+    <form id="rsvpForm" class="reveal card-warm p-8 space-y-5 text-left">
+      <div>
+        <label for="rsvpName" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">Your Name</label>
+        <input type="text" id="rsvpName" name="guest_name" required placeholder="Full name" class="w-full text-sm" />
+      </div>
+      <div>
+        <label for="rsvpPhone" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">WhatsApp / Phone</label>
+        <input type="tel" id="rsvpPhone" name="guest_phone" inputmode="tel" autocomplete="tel" placeholder="08… / 628…" class="w-full text-sm" />
+      </div>
+      <div>
+        <label for="rsvpAttend" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">Will You Attend?</label>
+        <select id="rsvpAttend" name="attendance" required class="w-full text-sm">
+          <option value="">Please select</option>
+          <option value="yes">Joyfully Accepts</option>
+          <option value="no">Regretfully Declines</option>
+        </select>
+      </div>
+      <div>
+        <label for="rsvpGuests" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">Number of Guests</label>
+        <select id="rsvpGuests" name="guests_count" class="w-full text-sm">
+          <% for (let g = 1; g <= 10; g++) { %><option value="<%= g %>"><%= g %></option><% } %>
+        </select>
+      </div>
+      <div>
+        <label for="rsvpNotes" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">Notes / Dietary Needs</label>
+        <textarea id="rsvpNotes" name="notes" rows="3" placeholder="Any message for the couple..." class="w-full text-sm"></textarea>
+      </div>
+      <button type="submit" id="rsvpBtn" class="w-full py-3 rounded-full text-xs uppercase tracking-[3px] transition-all duration-300 hover:scale-[1.02]" style="background: var(--primary); color: var(--text); border: 1px solid rgba(201, 168, 124, 0.3);">Send RSVP</button>
+      <div id="rsvpStatus" class="text-center text-sm mt-2 hidden" style="color: var(--secondary);"></div>
+    </form>
+  </div>
+</section>

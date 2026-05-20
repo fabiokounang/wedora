@@ -1,0 +1,27 @@
+<section class="py-20 px-6 t16-gallery-bg section-hidden" data-section>
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-center text-[#3d3128] mb-16">Galeri</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <% if (gallery && gallery.length) { %>
+        <% gallery.forEach(function (img, idx) {
+             const gu = img.thumbnail_url || img.image_url;
+             const tall = idx % 3 === 1;
+        %>
+          <div class="gallery-item rounded-2xl overflow-hidden <%= tall ? 'h-64 md:row-span-2' : 'h-48' %>">
+            <img src="<%= gu %>" alt="" class="w-full h-full object-cover" loading="lazy" decoding="async" />
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="gallery-item rounded-2xl h-48 bg-gradient-to-br from-[#f4e4c1] to-[#e8d5b7] flex items-center justify-center">
+          <i data-lucide="image" class="w-8 h-8 text-[#8b7355]/40"></i>
+        </div>
+        <div class="gallery-item rounded-2xl h-64 bg-gradient-to-br from-[#fce4ec] to-[#f8d0d8] flex items-center justify-center">
+          <i data-lucide="image" class="w-8 h-8 text-[#a0616a]/40"></i>
+        </div>
+        <div class="gallery-item rounded-2xl h-48 bg-gradient-to-br from-[#e8ddd1] to-[#d4c5b5] flex items-center justify-center">
+          <i data-lucide="image" class="w-8 h-8 text-[#8b7355]/40"></i>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>

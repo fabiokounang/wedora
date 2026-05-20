@@ -1,0 +1,29 @@
+<nav id="mainNav" class="nav-glass fixed top-0 left-0 w-full z-50 px-4 md:px-8">
+  <div class="max-w-6xl mx-auto flex items-center justify-between h-14">
+    <a href="#home" class="font-serif-display text-lg tracking-wide" style="color: var(--secondary);" id="navLogo"><%= brand %></a>
+    <div class="hidden md:flex items-center gap-6 text-sm tracking-wider uppercase" style="font-size: 11px; letter-spacing: 2px;">
+      <a href="#home" class="nav-link" style="color: var(--text);">Home</a>
+      <% if (hasSection('story')) { %><a href="#story" class="nav-link" style="color: var(--text);">Our Story</a><% } %>
+      <% if (hasSection('events')) { %><a href="#event" class="nav-link" style="color: var(--text);">Event</a><% } %>
+      <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link" style="color: var(--text);">RSVP</a><% } %>
+      <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link" style="color: var(--text);">Gallery</a><% } %>
+      <% if (hasSection('gift')) { %><a href="#gift" class="nav-link" style="color: var(--text);">Gift</a><% } %>
+      <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link" style="color: var(--text);">Send Love</a><% } %>
+    </div>
+    <button id="mobileToggle" type="button" class="md:hidden" style="color: var(--text);" aria-label="Menu">
+      <i data-lucide="menu" style="width: 22px; height: 22px;"></i>
+    </button>
+  </div>
+</nav>
+<div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full z-[60] flex flex-col pt-16 px-8 gap-6" style="background: rgba(42, 10, 15, 0.97); backdrop-filter: blur(20px);">
+  <button id="mobileClose" type="button" class="absolute top-4 right-4" style="color: var(--text);" aria-label="Close">
+    <i data-lucide="x" style="width: 22px; height: 22px;"></i>
+  </button>
+  <a href="#home" class="mob-link font-serif-display text-lg" style="color: var(--text);">Home</a>
+  <% if (hasSection('story')) { %><a href="#story" class="mob-link font-serif-display text-lg" style="color: var(--text);">Our Story</a><% } %>
+  <% if (hasSection('events')) { %><a href="#event" class="mob-link font-serif-display text-lg" style="color: var(--text);">Event</a><% } %>
+  <% if (hasSection('rsvp')) { %><a href="#rsvp" class="mob-link font-serif-display text-lg" style="color: var(--text);">RSVP</a><% } %>
+  <% if (hasSection('gallery')) { %><a href="#gallery" class="mob-link font-serif-display text-lg" style="color: var(--text);">Gallery</a><% } %>
+  <% if (hasSection('gift')) { %><a href="#gift" class="mob-link font-serif-display text-lg" style="color: var(--text);">Gift</a><% } %>
+  <% if (hasSection('wishes')) { %><a href="#wishes" class="mob-link font-serif-display text-lg" style="color: var(--text);">Send Love</a><% } %>
+</div>

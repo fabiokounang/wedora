@@ -1,0 +1,55 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const s = sectionMap[key];
+    return !s || s.enabled === 1 || s.enabled === true;
+  }
+  const storiesArray = typeof story !== 'undefined' && story ? story : [];
+  const eventRows = (events || []).slice().sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
+  const rawKeepHero = content.keep_hero_visible_after_open;
+  const keepHeroVisibleAfterOpen = !!(rawKeepHero != null && String(rawKeepHero).trim().match(/^(ya|yes|1|true|on)$/i));
+-%>
+<!DOCTYPE html>
+<html lang="id">
+<%- include('partials/head', { content, site }) %>
+<body>
+<div id="scroll-progress"></div>
+<div id="flowers-container" aria-hidden="true"></div>
+<% if (site.music_enabled && site.music_url) { %>
+<button type="button" class="music-btn" id="musicBtn" aria-label="Putar musik latar">
+  <i data-lucide="music" style="width:20px;height:20px;"></i>
+</button>
+<% } %>
+<div class="app-wrapper" id="appWrapper">
+<% if (hasSection('hero')) { %>
+<%- include('partials/cover', { content, helpers }) %>
+<% } %>
+<div id="contentSections" class="<%= hasSection('hero') ? 'content-sections-hidden' : 'content-sections-open' %>"<% if (hasSection('hero')) { %> style="display:none"<% } %>>
+<% if (hasSection('story')) { %><%- include('partials/story', { content, story: storiesArray, helpers }) %><% } %>
+<% if (hasSection('countdown')) { %><%- include('partials/countdown', { content, helpers }) %><% } %>
+<% if (hasSection('events')) { %><%- include('partials/events', { events: eventRows, helpers }) %><% } %>
+<% if (hasSection('gallery')) { %><%- include('partials/gallery', { gallery }) %><% } %>
+<% if (hasSection('rsvp')) { %><%- include('partials/rsvp') %><% } %>
+<% if (hasSection('wishes')) { %><%- include('partials/wishes', { wishes }) %><% } %>
+<% if (hasSection('gift')) { %><%- include('partials/gift', { gifts, content }) %><% } %>
+<% if (hasSection('location')) { %><%- include('partials/location', { events: eventRows, content }) %><% } %>
+<%- include('partials/footer', { content }) %>
+</div>
+</div>
+<script>
+  window.__SITE__ = {
+    siteId: <%= site.id %>,
+    slug: <%- JSON.stringify(site.slug) %>,
+    apiBase: <%- JSON.stringify(apiBase) %>,
+    weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    musicUrl: <%- JSON.stringify(site.music_url || null) %>,
+    musicAutoplay: <%= site.music_autoplay ? 1 : 0 %>,
+    keepHeroVisibleAfterOpen: <%- JSON.stringify(keepHeroVisibleAfterOpen) %>,
+  };
+  window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+<script src="/themes/theme11/public/script.js"></script>
+</body>
+</html>

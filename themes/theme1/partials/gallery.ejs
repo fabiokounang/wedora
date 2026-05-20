@@ -1,0 +1,22 @@
+<section id="gallery" class="w-full py-24 px-6 bg-beige">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="font-serif text-4xl md:text-5xl text-center text-deep mb-4 fade-up">Gallery</h2>
+    <p class="text-center text-brown text-sm tracking-wide mb-12 fade-up">Moments we treasure</p>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <% (gallery || []).forEach(function(item, idx) {
+           const aspectClass = idx % 3 === 1 ? 'aspect-[3/4]' : 'aspect-square';
+           const delay = (idx * 0.05).toFixed(2);
+      %>
+        <a href="<%= item.image_url %>" data-lightbox="theme1-gallery" <% if (item.caption) { %>data-title="<%= item.caption %>"<% } %> class="photo-card rounded-2xl overflow-hidden <%= aspectClass %> fade-up block" style="transition-delay:<%= delay %>s">
+          <img src="<%= item.thumbnail_url || item.image_url %>" alt="<%= item.caption || 'Gallery photo' %>" class="gallery-image" />
+        </a>
+      <% }) %>
+      <% if (!gallery || gallery.length === 0) { %>
+        <p class="col-span-full text-center text-brown">Gallery will be available soon.</p>
+      <% } %>
+    </div>
+    <% if (gallery && gallery.length > 0) { %>
+      <p class="text-center text-warm text-xs tracking-wide mt-6 italic">Klik foto untuk lihat versi besar</p>
+    <% } %>
+  </div>
+</section>

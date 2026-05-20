@@ -1,0 +1,138 @@
+<%
+  var totalSites = sites.length;
+  var publishedCount = sites.filter(function(s) { return s.status === 'published'; }).length;
+  var draftCount = sites.filter(function(s) { return s.status === 'draft'; }).length;
+%>
+
+<div class="dash-page">
+
+  <% if (user.role === 'client' && (!credits || credits.available <= 0)) { %>
+    <div class="flash flash-warning">
+      Slot undangan Anda habis. Silakan lanjutkan pembayaran di <a href="/billing">Billing</a> untuk menambah slot acara.
+    </div>
+  <% } %>
+
+  <% if (typeof flash !== 'undefined' && flash) { %>
+    <% if (flash.success) { %><div class="flash flash-success"><%= flash.success %></div><% } %>
+    <% if (flash.error) { %><div class="flash flash-error"><%= flash.error %></div><% } %>
+  <% } %>
+  <% if (typeof themeSyncOk !== 'undefined' && themeSyncOk) { %>
+    <div class="flash flash-success">
+      <% if (user.role === 'super_admin') { %>
+        Tema disinkronkan: cache dimuat ulang, dan situs demo untuk tema baru (mis. <code>theme13</code> / <code>preview-theme13</code>) dibuat di database jika belum ada — sama seperti <code>npm run sync-themes</code>.
+      <% } else { %>
+        Tema disinkronkan: daftar tema dan template dimuat ulang dari disk. Untuk menambahkan situs demo tema baru ke sistem, minta super admin menjalankan <strong>Sinkron tema</strong> sekali.
+      <% } %>
+    </div>
+  <% } %>
+
+  <div class="page-header">
+    <div>
+      <p class="catalog-eyebrow" style="margin-bottom: 4px">Situs pernikahan</p>
+      <h1 class="dash-title">Undangan</h1>
+      <p class="muted small">Daftar <strong>situs undangan</strong> — satu kartu = satu slug / satu pasangan. Bukan katalog tema; buka <a href="/theme-gallery">Katalog tema</a> untuk membandingkan template.</p>
+    </div>
+    <div class="page-header__actions">
+      <form method="POST" action="/themes/sync" class="dash-sync-form">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="hidden" name="return_to" value="/dashboard" />
+        <button type="submit" class="btn btn-soft btn-pill">Sinkron tema</button>
+      </form>
+      <a href="/theme-gallery" class="btn btn-soft btn-pill">Katalog tema</a>
+      <% if (user.role === 'super_admin' || user.role === 'client') { %>
+        <a href="/sites/new" class="btn btn-primary btn-pill">+ Buat undangan baru</a>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <span class="stat-card__val"><%= totalSites %></span>
+      <span class="stat-card__lab">Total situs</span>
+    </div>
+    <div class="stat-card stat-card--success">
+      <span class="stat-card__val"><%= publishedCount %></span>
+      <span class="stat-card__lab">Dipublikasikan</span>
+    </div>
+    <div class="stat-card stat-card--muted">
+      <span class="stat-card__val"><%= draftCount %></span>
+      <span class="stat-card__lab">Draft</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__val"><%= typeof totalRsvpGuests !== 'undefined' ? totalRsvpGuests : 0 %></span>
+      <span class="stat-card__lab">RSVP tamu (total)</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__val"><%= typeof totalWishes !== 'undefined' ? totalWishes : 0 %></span>
+      <span class="stat-card__lab">Ucapan (total)</span>
+    </div>
+  </div>
+
+  <% if (user.role === 'super_admin') { %>
+    <div class="filter-bar">
+      <span class="muted small filter-bar__label">Tampilkan:</span>
+      <div class="filter-bar__chips">
+        <a href="/dashboard" class="dash-filter-chip<%= typeof assignFilter !== 'undefined' && assignFilter === '' ? ' is-active' : '' %>">Semua</a>
+        <a href="/dashboard?assign=client" class="dash-filter-chip<%= typeof assignFilter !== 'undefined' && assignFilter === 'client' ? ' is-active' : '' %>">Punya klien</a>
+        <a href="/dashboard?assign=admin" class="dash-filter-chip<%= typeof assignFilter !== 'undefined' && assignFilter === 'admin' ? ' is-active' : '' %>">Tanpa klien (kamu kelola)</a>
+      </div>
+      <p class="muted small filter-bar__hint">Situs demo <code>?site=preview-theme1</code> tidak muncul di daftar ini. Tunjukkan pilihan tampilan ke klien via <a href="/theme-gallery">Katalog tema</a>.</p>
+    </div>
+  <% } %>
+
+  <% if (sites.length === 0) { %>
+    <div class="empty-state empty-state--cozy">
+      <p class="empty-state__title">Belum ada undangan</p>
+      <p class="muted">Buat satu situs undangan untuk mulai mengisi konten dan mempublikasikan.</p>
+      <% if (user.role === 'super_admin' || user.role === 'client') { %>
+        <p class="muted small">Pilih template di <a href="/theme-gallery">Katalog tema</a>, lalu klik <strong>+ Buat undangan baru</strong> di atas.</p>
+        <a href="/sites/new" class="btn btn-primary btn-pill empty-state__cta">+ Buat undangan baru</a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <p class="muted small dash-section-lead">Gambar di atas adalah <strong>cuplikan tampilan tema</strong> (bukan isi undangan asli). Pakai tombol <strong>Lihat</strong> untuk melihat situs sungguhan.</p>
+    <div class="cards cards--dashboard cards--cozy">
+      <% sites.forEach(function(s) { %>
+        <article class="card card--site card--with-thumb">
+          <div class="card-thumb card-thumb--site">
+            <img src="<%= s.theme_preview_url %>" alt="Cuplikan tampilan tema <%= s.theme_key %>" width="640" height="400" loading="lazy" decoding="async" />
+            <span class="card-thumb-badge badge badge-<%= s.status %>"><%= s.status %></span>
+          </div>
+          <div class="card-body">
+            <div class="card-head">
+              <h3 class="card-head__title"><%= s.slug %></h3>
+              <% if (user.role === 'super_admin') { %>
+                <% if (s.owner_user_role === 'client') { %>
+                  <span class="badge badge-assign badge-assign--client" title="Pemilik situs adalah akun klien">Klien</span>
+                <% } else { %>
+                  <span class="badge badge-assign badge-assign--internal" title="Belum di-assign ke klien atau pemiliknya bukan role client">Internal</span>
+                <% } %>
+              <% } %>
+            </div>
+            <p class="muted small card-site-meta">
+              <span class="card-site-meta__label">RSVP</span>
+              <strong class="card-strong"><%= s.rsvp_count != null ? s.rsvp_count : 0 %></strong>
+              <span class="card-site-meta__sep">&middot;</span>
+              <span class="card-site-meta__label">Ucapan</span>
+              <strong class="card-strong"><%= s.wish_count != null ? s.wish_count : 0 %></strong>
+              <span class="card-site-meta__sep">&middot;</span>
+              <span class="card-site-meta__label">Tema</span>
+              <strong class="card-strong"><%= s.theme_key %></strong>
+              <span class="card-site-meta__sep">&middot;</span>
+              <span class="card-site-meta__label">Kelola</span>
+              <%= s.managed_by === 'self' ? 'klien (sendiri)' : 'admin' %>
+            </p>
+            <% if (s.custom_domain) { %>
+              <p class="small muted">Domain: <code><%= s.custom_domain %></code></p>
+            <% } %>
+            <div class="card-actions card-actions--split">
+              <a class="btn btn-primary btn-pill" href="/sites/<%= s.id %>">Kelola konten</a>
+              <a class="btn btn-soft btn-pill" href="/preview/<%= s.slug %>" target="_blank" rel="noopener">Lihat undangan</a>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+
+</div>

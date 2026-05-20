@@ -1,0 +1,22 @@
+<section class="py-20 px-6 t21-section-ivory reveal-section" data-section>
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-script text-center text-4xl mb-12" style="color:var(--gold)">Galeri</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <% if (gallery && gallery.length) { %>
+        <% gallery.forEach(function(img, idx) {
+             const gu = img.thumbnail_url || img.image_url;
+             const offset = idx % 2 === 1 ? 'md:mt-8' : '';
+        %>
+          <div class="rounded-2xl overflow-hidden shadow-lg reveal-section aspect-[3/4] <%= offset %>">
+            <img src="<%= gu %>" alt="" class="w-full h-full object-cover" loading="lazy" decoding="async">
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="rounded-2xl overflow-hidden shadow-lg reveal-section aspect-[3/4] t21-gallery-placeholder"></div>
+        <div class="rounded-2xl overflow-hidden shadow-lg reveal-section aspect-[3/4] md:mt-8 t21-gallery-placeholder"></div>
+        <div class="rounded-2xl overflow-hidden shadow-lg reveal-section aspect-[3/4] t21-gallery-placeholder"></div>
+        <div class="rounded-2xl overflow-hidden shadow-lg reveal-section aspect-[3/4] md:mt-8 t21-gallery-placeholder"></div>
+      <% } %>
+    </div>
+  </div>
+</section>

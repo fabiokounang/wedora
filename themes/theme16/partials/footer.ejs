@@ -1,0 +1,12 @@
+<section class="py-24 px-6 text-center t16-footer-bg section-hidden" data-section>
+  <div class="max-w-2xl mx-auto">
+    <div class="font-serif-elegant text-[#d4af37] text-3xl mb-6" aria-hidden="true">&#9829;</div>
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-[#3d3128] mb-6">Terima kasih</h2>
+    <% if (content.footer_text) { %>
+      <div class="text-[#6b5a4a] leading-relaxed mb-6"><%- content.footer_text %></div>
+    <% } else { %>
+      <p class="text-[#6b5a4a] leading-relaxed mb-6">Kami berterima kasih atas kasih dan dukungan Anda. Kehadiran Anda di hari istimewa kami sangat berarti.</p>
+    <% } %>
+    <p class="font-serif-elegant text-2xl text-[#3d3128] italic"><%= partnerOne %> &amp; <%= partnerTwo %></p>
+  </div>
+</section>

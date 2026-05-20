@@ -1,0 +1,36 @@
+{
+  "key": "theme10",
+  "name": "Viding Classic (Theme 96)",
+  "version": "1.0.0",
+  "preview": "/themes/theme10/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "events", "required": false, "collection": "events" },
+    { "key": "rsvp", "required": false },
+    { "key": "wishes", "required": false },
+    { "key": "apology", "required": false },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "stream", "required": false },
+    { "key": "thank", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama panggilan mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama panggilan mempelai 2", "required": true, "section": "hero" },
+    { "key": "partner_one_full", "type": "text", "label": "Nama lengkap mempelai 1", "required": false, "section": "story" },
+    { "key": "partner_two_full", "type": "text", "label": "Nama lengkap mempelai 2", "required": false, "section": "story" },
+    { "key": "groom_parents_html", "type": "textarea", "label": "Orang tua mempelai laki-laki (HTML)", "required": false, "section": "story" },
+    { "key": "bride_parents_html", "type": "textarea", "label": "Orang tua mempelai perempuan (HTML)", "required": false, "section": "story" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & waktu acara (countdown)", "required": true, "section": "hero" },
+    { "key": "cover_hashtag", "type": "text", "label": "Hashtag / tagline sampul", "required": false, "section": "hero" },
+    { "key": "cover_image_url", "type": "text", "label": "URL gambar sampul (opsional)", "required": false, "section": "hero" },
+    { "key": "hero_message", "type": "textarea", "label": "Teks pembuka header (HTML)", "required": false, "section": "hero" },
+    { "key": "events_intro_html", "type": "textarea", "label": "Teks pengantar venue (HTML, boleh tag)", "required": false, "section": "events" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan bagian gift", "required": false, "section": "gift" },
+    { "key": "stream_youtube_id", "type": "text", "label": "YouTube video ID livestream", "required": false, "section": "stream" },
+    { "key": "stream_copy_html", "type": "textarea", "label": "Teks blok streaming (HTML)", "required": false, "section": "stream" },
+    { "key": "thank_html", "type": "textarea", "label": "Teks thank you (HTML)", "required": false, "section": "thank" },
+    { "key": "apology_html", "type": "textarea", "label": "Teks apology / kutipan (HTML)", "required": false, "section": "apology" }
+  ]
+}

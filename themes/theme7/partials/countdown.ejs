@@ -1,0 +1,13 @@
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-serif text-3xl text-center text-gray-800 mb-10 fade-in">Counting Down to Forever</h2>
+    <div class="grid grid-cols-4 gap-3 md:gap-6 fade-in" id="countdown">
+      <% [['cd-days', 'Days'], ['cd-hours', 'Hours'], ['cd-mins', 'Minutes'], ['cd-secs', 'Seconds']].forEach(function (pair) { %>
+      <div class="countdown-card bg-gradient-to-br from-rose-pale to-blush rounded-2xl p-4 md:p-6 text-center shadow-sm">
+        <span class="font-serif text-3xl md:text-5xl text-gray-800 block" id="<%= pair[0] %>">00</span>
+        <span class="text-xs md:text-sm text-gray-500 mt-1 block"><%= pair[1] %></span>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>

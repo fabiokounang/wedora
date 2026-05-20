@@ -1,0 +1,18 @@
+<section class="t17-reveal-section t17-hero-section">
+  <div class="t17-hero-inner">
+    <p class="t17-eyebrow">The Wedding Celebration of</p>
+    <h1 class="t17-serif t17-hero-names t17-glow-text"><%= partnerOne %> <span class="italic" style="font-size:0.8em;">&</span> <%= partnerTwo %></h1>
+    <p class="t17-hero-date"><%= heroDateLabel %></p>
+    <div class="t17-divider-gold-center"></div>
+  </div>
+</section>
+<% if (coupleQuote) { %>
+<section class="t17-reveal-section t17-quote-section">
+  <svg class="mx-auto mb-6" style="width:4rem;" viewBox="0 0 60 40" fill="none">
+    <path d="M5 35 Q30 0 55 35" stroke="#b5c5a3" stroke-width="1.5" fill="none"/>
+    <circle cx="30" cy="15" r="4" fill="#e8b4b8"/>
+  </svg>
+  <h2 class="t17-serif t17-quote-title">With Joy in Our Hearts</h2>
+  <p class="t17-quote-text"><%= coupleQuote %></p>
+</section>
+<% } %>

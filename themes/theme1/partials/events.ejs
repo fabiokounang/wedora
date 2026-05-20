@@ -1,0 +1,37 @@
+<section id="details" class="w-full py-24 px-6 bg-beige">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-serif text-4xl md:text-5xl text-center text-deep mb-4 fade-up">Wedding Details</h2>
+    <p class="text-center text-brown text-sm tracking-wide mb-16 fade-up">
+      <%= content.events_subtitle || 'Join us for our special day' %>
+    </p>
+    <div class="grid md:grid-cols-2 gap-8">
+      <% (events || []).forEach(function(ev, idx) {
+           const iconId = idx === 0 ? 2737 : 61803;
+      %>
+      <div class="bg-cream rounded-2xl p-8 text-center fade-up" style="box-shadow:0 4px 24px rgba(139,126,106,.08); transition-delay:<%= 0.15 * idx %>s">
+        <div class="w-14 h-14 rounded-full bg-sand flex items-center justify-center mx-auto mb-5">
+          <img src="https://img.icons8.com/?size=96&id=<%= iconId %>&format=png&color=8B7E6A" alt="<%= ev.title %>" class="icon icon-md" />
+        </div>
+        <h3 class="font-serif text-2xl text-deep mb-2"><%= ev.title %></h3>
+        <% if (ev.venue_name) { %><p class="text-brown text-sm mb-1"><%= ev.venue_name %></p><% } %>
+        <% if (ev.address) { %><p class="text-warm text-xs tracking-wide mb-4"><%= ev.address %></p><% } %>
+        <% if (ev.datetime) {
+             const d = helpers.toDate(ev.datetime);
+             if (d) { %>
+          <div class="flex items-center justify-center gap-2 text-brown text-sm mb-1">
+            <img src="https://img.icons8.com/?size=96&id=85147&format=png&color=8B7E6A" alt="Calendar" class="icon icon-sm" />
+            <span><%= helpers.formatDate(d) %></span>
+          </div>
+          <div class="flex items-center justify-center gap-2 text-brown text-sm">
+            <img src="https://img.icons8.com/?size=96&id=70668&format=png&color=8B7E6A" alt="Clock" class="icon icon-sm" />
+            <span><%= String(d.getHours()).padStart(2,'0') %>:<%= String(d.getMinutes()).padStart(2,'0') %></span>
+          </div>
+        <% } } %>
+      </div>
+      <% }) %>
+      <% if (!events || events.length === 0) { %>
+        <p class="text-center col-span-full text-brown">Event details coming soon...</p>
+      <% } %>
+    </div>
+  </div>
+</section>

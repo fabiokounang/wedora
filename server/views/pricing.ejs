@@ -1,0 +1,158 @@
+<% var P = cms && cms.pricing ? cms.pricing : {}; %>
+<% var ph = P.hero || {}; %>
+<% var pt = P.toggle || {}; %>
+<% var Pl = P.plans || {}; %>
+<% var ctaP = cms && cms.cta && cms.cta.pricing ? cms.cta.pricing : {}; %>
+<% var planOrder = ['starter', 'standard', 'premium']; %>
+<% function money(n) { return Number(n || 0).toLocaleString('id-ID'); } %>
+
+<%/* ── Pricing Hero ─────────────────────────────────── */%>
+<div class="pub-pricing-hero">
+  <div class="pub-pricing-hero__grid">
+    <div class="pub-pricing-hero__left">
+      <div class="pub-pricing-hero__ornament" aria-hidden="true">
+        <span></span>
+        <i>❤</i>
+        <span></span>
+      </div>
+      <span class="pub-section__eyebrow"><%= ph.eyebrow %></span>
+      <h1 class="pub-section__title" style="margin-bottom:16px">
+        <% var htl = ph.titleLines || []; %>
+        <% htl.forEach(function(line, i) { %>
+          <%= line %><% if (i < htl.length - 1) { %><br /><% } %>
+        <% }); %>
+      </h1>
+      <p class="pub-section__subtitle" style="margin:0 0 28px"><%= ph.subtitle %></p>
+      <p class="pub-pricing-hero__promise"><%= ph.promise %></p>
+      <div class="pub-pricing-hero__actions">
+        <a href="/register" class="btn-pub"><%= ph.ctaPrimary %></a>
+        <a href="#paket-harga" class="btn-pub btn-pub-outline"><%= ph.ctaSecondary %></a>
+      </div>
+    </div>
+    <div class="pub-pricing-hero__right" aria-hidden="true">
+      <div class="pub-pricing-hero__photo-frame">
+        <% if (heroThemePreview) { %>
+          <img src="<%= heroThemePreview %>" alt="<%= ph.photoAlt || '' %>" class="pub-pricing-hero__photo" loading="eager" />
+        <% } else { %>
+          <div class="pub-pricing-hero__photo-fallback">❤</div>
+        <% } %>
+        <div class="pub-pricing-hero__photo-badge"><%= ph.photoBadge %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%/* ── Pricing Cards ────────────────────────────────── */%>
+<section class="pub-section" id="paket-harga">
+  <div class="pub-section__inner">
+    <div class="pub-pricing-toggle">
+      <button class="pub-pricing-toggle__btn is-active" type="button"><%= pt.primaryLabel %></button>
+      <button class="pub-pricing-toggle__btn" type="button" disabled title="Segera hadir" style="opacity:0.5;cursor:not-allowed">
+        <%= pt.secondaryLabel %> <span style="font-size:0.75rem;opacity:0.7"><%= pt.secondaryHint %></span>
+      </button>
+    </div>
+
+    <div class="pub-pricing-grid">
+      <% planOrder.forEach(function(code) { %>
+        <% var plan = (plans || []).find(function(p) { return p.code === code; }); %>
+        <% if (!plan) return; %>
+        <% var copy = Pl[code] || {}; %>
+        <% var lines = (copy.featureLines && copy.featureLines.length) ? copy.featureLines : plan.features; %>
+        <% var featured = code === 'standard'; %>
+        <% var yesClass = 'pub-plan__feat pub-plan__feat--yes'; %>
+        <% var noClass = 'pub-plan__feat pub-plan__feat--no'; %>
+        <div class="pub-plan<%= featured ? ' pub-plan--featured' : '' %>">
+          <div class="pub-plan__badge"><%= copy.badge || plan.name %></div>
+          <h2 class="pub-plan__name"><%= copy.displayName || plan.name %></h2>
+          <div class="pub-plan__price-row">
+            <span class="pub-plan__currency">Rp</span>
+            <span class="pub-plan__price"><%= money(plan.amount) %></span>
+          </div>
+          <p class="pub-plan__period">per acara · <%= plan.validity_label %></p>
+          <p class="pub-plan__subtitle"><%= copy.subtitle || '' %></p>
+          <ul class="pub-plan__features">
+            <% lines.forEach(function(line) { %>
+              <li class="<%= yesClass %>"><span class="pub-plan__feat-icon">✓</span> <%= line %></li>
+            <% }); %>
+          </ul>
+          <a href="/register" class="btn-pub<%= featured ? '' : ' btn-pub-outline' %> pub-plan__cta"><%= copy.ctaLabel || 'Pilih' %></a>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%/* ── Comparison Table ────────────────────────────── */%>
+<section class="pub-section pub-section--alt">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <h2 class="pub-section__title"><%= P.compareSectionTitle %></h2>
+    </div>
+    <div class="pub-compare-wrap">
+      <table class="pub-compare">
+        <thead>
+          <tr>
+            <th style="text-align:left"><%= P.compareTableHeaderFeature %></th>
+            <th><%= (Pl.starter && Pl.starter.badge) || 'Starter' %></th>
+            <th class="featured"><%= (Pl.standard && Pl.standard.badge) || 'Standar' %></th>
+            <th><%= (Pl.premium && Pl.premium.badge) || 'Premium' %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (P.compareRows || []).forEach(function(row) { %>
+            <tr>
+              <td><%= row.feature %></td>
+              <% ['starter', 'standard', 'premium'].forEach(function(col) { %>
+                <% var v = row[col]; %>
+                <td<% if (col === 'standard') { %> class="featured"<% } %>>
+                  <% if (row.isCheck && (v === '✓' || v === '✗')) { %>
+                    <span class="<%= v === '✓' ? 'check' : 'cross' %>"><%= v %></span>
+                  <% } else if (col === 'standard' && row.standardStrong) { %>
+                    <strong><%= v %></strong>
+                  <% } else { %>
+                    <%= v %>
+                  <% } %>
+                </td>
+              <% }); %>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<%/* ── FAQ ──────────────────────────────────────────── */%>
+<section class="pub-section">
+  <div class="pub-section__inner">
+    <div class="pub-section__head">
+      <span class="pub-section__eyebrow"><%= (P.faqSection && P.faqSection.eyebrow) || '' %></span>
+      <h2 class="pub-section__title"><%= (P.faqSection && P.faqSection.title) || '' %></h2>
+    </div>
+    <div class="pub-faq">
+      <% (P.faq || []).forEach(function(item) { %>
+        <details class="pub-faq__item">
+          <summary><%= item.q %></summary>
+          <div class="pub-faq__body"><%= item.a %></div>
+        </details>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
+<%/* ── CTA Banner ─────────────────────────────────── */%>
+<div class="pub-cta-banner">
+  <div class="pub-cta-banner__inner">
+    <h2 class="pub-cta-banner__title">
+      <% var ctls = ctaP.titleLines || []; %>
+      <% ctls.forEach(function(line, i) { %>
+        <%= line %><% if (i < ctls.length - 1) { %><br /><% } %>
+      <% }); %>
+    </h2>
+    <p class="pub-cta-banner__subtitle"><%= ctaP.subtitle || '' %></p>
+    <div class="pub-cta-banner__actions">
+      <a href="/register" class="btn-pub btn-pub-white"><%= ctaP.primaryLabel || 'Mulai Gratis' %></a>
+      <a href="/catalog" class="btn-pub btn-pub-ghost"><%= ctaP.secondaryLabel || 'Katalog' %></a>
+    </div>
+  </div>
+</div>

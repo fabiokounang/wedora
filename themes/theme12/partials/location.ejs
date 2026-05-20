@@ -1,0 +1,20 @@
+<% const withMap = (events || []).find(function (e) { return e.map_url && String(e.map_url).trim(); }); const ev0 = (events && events[0]) ? events[0] : null; const addr = (withMap && withMap.address) || (ev0 && ev0.address) || ''; const venue = (withMap && withMap.venue_name) || (ev0 && ev0.venue_name) || ''; const mapUrl = withMap && withMap.map_url ? String(withMap.map_url).trim() : ''; const mapsSearch = encodeURIComponent([venue, addr].filter(Boolean).join(' ')); %>
+<section class="t12-section t12-section--tight-top">
+  <% if (content.location_note) { %>
+  <p class="t12-inner t12-gift-lead" style="margin-bottom:1.25rem"><%= content.location_note %></p>
+  <% } %>
+  <div class="section-reveal map-wrap" data-reveal>
+    <% if (mapUrl) { %>
+    <iframe title="Peta lokasi" src="<%= mapUrl %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <% } else { %>
+    <div class="map-placeholder">
+      <i data-lucide="map" style="width:40px;height:40px;color:var(--primary);opacity:0.5"></i>
+      <p style="font-size:13px;opacity:0.55;margin:0;text-align:center">Tambahkan URL peta pada acara di admin untuk menampilkan peta.</p>
+      <% if (mapsSearch) { %>
+      <a href="https://www.google.com/maps/search/?api=1&query=<%= mapsSearch %>" target="_blank" rel="noopener noreferrer" style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--primary);border-radius:999px;color:var(--primary);text-decoration:none">Buka di Maps</a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+</section>
+<%- include('section-divider', { tone: 'secondary' }) %>

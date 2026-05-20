@@ -1,0 +1,13 @@
+<section class="wedding-section" style="text-align:center;">
+  <div class="reveal section-inner" style="max-width:520px;">
+    <h2 class="section-title">Amplop digital</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <p class="section-muted-lead"><%= content.gift_message || 'Kehadiran Anda adalah hadiah terindah. Jika berkenan mengirimkan tanda kasih, kami ucapkan terima kasih.' %></p>
+    <div class="gift-box-wrap gift-theme11">
+      <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+    </div>
+    <% if (!gifts || !gifts.length) { %>
+    <p class="section-muted-lead" style="font-size:0.8rem;">Rekening / e-wallet dapat diatur di admin.</p>
+    <% } %>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+<div class="page-header page-header--inner">
+  <div>
+    <p class="catalog-eyebrow">Akun pengguna</p>
+    <h1><%= mode === 'edit' ? 'Edit pengguna' : 'Tambah pengguna baru' %></h1>
+    <% if (mode === 'edit' && editUser) { %>
+      <p class="muted small">Mengedit akun <strong><%= editUser.email %></strong>.</p>
+    <% } else { %>
+      <p class="muted small">Buat akun admin atau klien baru untuk mengakses platform.</p>
+    <% } %>
+  </div>
+  <a href="/users" class="btn btn-ghost btn-pill">← Kembali ke daftar</a>
+</div>
+
+<% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+
+<div class="co-panel form-card form-card--narrow">
+  <form method="POST" action="<%= mode === 'edit' ? '/users/' + editUser.id : '/users' %>" class="form form-stacked">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <div class="form-field">
+      <label class="form-field__label" for="f-name">Nama lengkap <span class="req">*</span></label>
+      <input
+        type="text"
+        id="f-name"
+        name="name"
+        required
+        maxlength="120"
+        value="<%= mode === 'edit' && editUser ? editUser.name : '' %>"
+        placeholder="Nama lengkap pengguna"
+      />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="f-email">Email <span class="req">*</span></label>
+      <input
+        type="email"
+        id="f-email"
+        name="email"
+        required
+        value="<%= mode === 'edit' && editUser ? editUser.email : '' %>"
+        placeholder="pengguna@email.com"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="f-role">Role <span class="req">*</span></label>
+      <select id="f-role" name="role">
+        <option value="client" <%= mode === 'edit' && editUser && editUser.role === 'client' ? 'selected' : '' %>>Client — Pengelola undangan sendiri</option>
+        <option value="super_admin" <%= mode === 'edit' && editUser && editUser.role === 'super_admin' ? 'selected' : '' %>>Super Admin — Akses penuh platform</option>
+      </select>
+      <small class="muted">Client hanya bisa akses undangan miliknya. Super admin bisa akses semua.</small>
+    </div>
+
+    <div class="form-field">
+      <label class="form-field__label" for="f-password">
+        Password
+        <% if (mode === 'edit') { %>
+          <span class="form-field__opt">(kosongkan jika tidak ingin mengganti)</span>
+        <% } else { %>
+          <span class="req">*</span>
+        <% } %>
+      </label>
+      <input
+        type="password"
+        id="f-password"
+        name="password"
+        <%= mode === 'new' ? 'required minlength="6"' : 'minlength="6"' %>
+        autocomplete="new-password"
+        placeholder="<%= mode === 'edit' ? 'Biarkan kosong untuk tidak mengubah' : 'Min. 6 karakter' %>"
+      />
+      <small class="muted">Minimal 6 karakter.</small>
+    </div>
+
+    <div class="form-actions form-actions--row">
+      <button type="submit" class="btn btn-primary btn-pill">
+        <%= mode === 'edit' ? 'Simpan perubahan' : 'Buat pengguna' %>
+      </button>
+      <a href="/users" class="btn btn-ghost btn-pill">Batal</a>
+    </div>
+  </form>
+</div>

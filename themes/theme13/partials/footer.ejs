@@ -1,0 +1,10 @@
+<section class="py-16 text-center px-6">
+  <div class="section-fade">
+    <% if (content.footer_text) { %>
+    <div class="font-serif-elegant text-2xl md:text-3xl mb-3 opacity-90" style="color: #5a4030;"><%- content.footer_text %></div>
+    <% } else { %>
+    <p class="font-serif-elegant text-2xl md:text-3xl mb-3" style="color: #5a4030;">See you at our wedding!</p>
+    <p class="text-sm opacity-50" style="color: #9a7b5b;">With love, <%= partnerOne %> &amp; <%= partnerTwo %></p>
+    <% } %>
+  </div>
+</section>

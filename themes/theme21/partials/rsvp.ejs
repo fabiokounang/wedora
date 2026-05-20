@@ -1,0 +1,34 @@
+<section class="py-20 px-6 t21-section-beige reveal-section" data-section>
+  <div class="max-w-md mx-auto">
+    <div class="t21-card p-10 rounded-3xl">
+      <h2 class="font-script text-center text-3xl mb-6" style="color:var(--gold)">RSVP</h2>
+      <form id="rsvpForm" class="space-y-4" autocomplete="on">
+        <div>
+          <label for="rsvpName" class="font-sans-alt text-xs tracking-wider uppercase block mb-1" style="color:var(--taupe)">Nama lengkap</label>
+          <input id="rsvpName" name="guest_name" type="text" required class="t21-input w-full" placeholder="Nama Anda" autocomplete="name">
+        </div>
+        <div>
+          <label for="rsvpPhone" class="font-sans-alt text-xs tracking-wider uppercase block mb-1" style="color:var(--taupe)">WhatsApp (opsional)</label>
+          <input id="rsvpPhone" name="guest_phone" type="tel" class="t21-input w-full" inputmode="tel" autocomplete="tel" placeholder="08… / 628…">
+        </div>
+        <div>
+          <p class="font-sans-alt text-xs tracking-wider uppercase block mb-2" style="color:var(--taupe)">Kehadiran</p>
+          <div class="flex gap-3 flex-wrap">
+            <label class="t21-radio-pill"><input type="radio" name="attend" id="attendYes" class="sr-only" value="yes" checked><span>Hadir</span></label>
+            <label class="t21-radio-pill"><input type="radio" name="attend" id="attendNo" class="sr-only" value="no"><span>Berhalangan</span></label>
+          </div>
+        </div>
+        <div>
+          <label for="rsvpGuests" class="font-sans-alt text-xs tracking-wider uppercase block mb-1" style="color:var(--taupe)">Jumlah tamu</label>
+          <input id="rsvpGuests" name="guests_count" type="number" min="1" max="20" value="1" class="t21-input w-full" inputmode="numeric">
+        </div>
+        <div>
+          <label for="rsvpMsg" class="font-sans-alt text-xs tracking-wider uppercase block mb-1" style="color:var(--taupe)">Pesan (opsional)</label>
+          <textarea id="rsvpMsg" name="notes" rows="3" class="t21-input t21-textarea w-full" placeholder="Ucapan untuk mempelai…"></textarea>
+        </div>
+        <button type="submit" id="rsvpSubmitBtn" class="t21-btn-submit w-full py-3 rounded-xl font-sans-alt text-sm tracking-wider uppercase mt-4">Kirim RSVP</button>
+        <p id="rsvp-msg" class="hidden text-center mt-2 font-sans-alt text-sm" style="color:var(--gold)">Terima kasih atas konfirmasinya.</p>
+      </form>
+    </div>
+  </div>
+</section>

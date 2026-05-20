@@ -1,0 +1,25 @@
+<section class="py-20 px-6 max-w-2xl mx-auto">
+  <div class="section-fade text-center mb-10">
+    <p class="font-sans-clean text-xs tracking-[4px] uppercase mb-3 opacity-50" style="color: #9a7b5b;">Share Your Love</p>
+    <h2 class="font-serif-elegant text-3xl md:text-4xl" style="color: #5a4030;">Wishes</h2>
+  </div>
+  <div id="wishes-list" class="section-fade space-y-4">
+    <% if (wishes && wishes.length) { %>
+      <% wishes.forEach(function (w) { %>
+      <div class="glass rounded-2xl p-5">
+        <% if (w.message) { %><p class="font-serif-elegant text-base mb-2" style="color: #5a4030;">&ldquo;<%= w.message %>&rdquo;</p><% } %>
+        <p class="text-xs opacity-50" style="color: #9a7b5b;">— <%= w.guest_name %></p>
+      </div>
+      <% }); %>
+    <% } else { %>
+      <div class="glass rounded-2xl p-5">
+        <p class="font-serif-elegant text-base mb-2" style="color: #5a4030;">&ldquo;Wishing you a lifetime of love and happiness!&rdquo;</p>
+        <p class="text-xs opacity-50" style="color: #9a7b5b;">— Sarah &amp; James</p>
+      </div>
+      <div class="glass rounded-2xl p-5">
+        <p class="font-serif-elegant text-base mb-2" style="color: #5a4030;">&ldquo;So happy for you both. Here's to forever! 🥂&rdquo;</p>
+        <p class="text-xs opacity-50" style="color: #9a7b5b;">— Emily</p>
+      </div>
+    <% } %>
+  </div>
+</section>

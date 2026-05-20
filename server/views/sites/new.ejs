@@ -1,0 +1,90 @@
+<div class="site-form-page">
+  <div class="co-panel page-header page-header--siteform">
+    <div>
+      <p class="catalog-eyebrow">Undangan baru</p>
+      <h1>Buat undangan baru</h1>
+      <% if (user.role === 'super_admin') { %>
+        <p class="muted small">Alur disarankan: buka <a href="/theme-gallery" target="_blank" rel="noopener">Katalog tema</a> untuk pilih look → kembali ke form ini → isi slug &amp; tema → opsional <strong>assign ke klien</strong>.</p>
+      <% } else { %>
+        <p class="muted small">Pilih tema, isi slug undangan, lalu lanjut kelola konten. Undangan ini otomatis jadi milik akun Anda.</p>
+      <% } %>
+    </div>
+  </div>
+
+  <% if (error) { %><div class="flash flash-error"><%= error %></div><% } %>
+
+  <% if (typeof prefillTheme !== 'undefined' && prefillTheme) { %>
+    <div class="callout callout--info">
+      <span class="callout__icon" aria-hidden="true">✓</span>
+      <div>
+        <strong class="callout__title">Tema terpilih</strong>
+        <p class="callout__text muted small" style="margin:0">
+          <% if (user.role === 'super_admin') { %>
+            Tema <strong><%= prefillTheme %></strong> (dari katalog). Lengkapi slug &amp; assign client, lalu simpan.
+          <% } else { %>
+            Tema <strong><%= prefillTheme %></strong> dipilih dari katalog. Lengkapi slug lalu simpan.
+          <% } %>
+        </p>
+      </div>
+    </div>
+  <% } %>
+
+  <form method="POST" action="/sites/new" class="form form-narrow form-cozy" id="form-new-site">
+    <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <label class="form-field">
+      <span class="form-field__label">Slug <span class="req">*</span></span>
+      <input type="text" name="slug" pattern="[a-z0-9-]+" placeholder="elena-gabriel" required />
+      <small class="muted">Lowercase, angka, strip. Dipakai subdomain &amp; URL publik.</small>
+    </label>
+    <label class="form-field">
+      <span class="form-field__label">Theme <span class="req">*</span></span>
+      <select name="theme_key" required id="theme_key">
+        <% themes.forEach(function(t) { %>
+          <option value="<%= t.key %>" <%= (typeof prefillTheme !== 'undefined' && prefillTheme === t.key) ? 'selected' : '' %>><%= t.name %> (<%= t.key %>)</option>
+        <% }) %>
+      </select>
+    </label>
+    <% if (user.role === 'super_admin') { %>
+      <label class="form-field">
+        <span class="form-field__label">Assign to client <span class="form-field__opt">(opsional)</span></span>
+        <select name="owner_user_id" id="owner_user_id">
+          <option value="">— None —</option>
+          <% (clients || []).forEach(function(c) { %>
+            <option value="<%= c.id %>" <%= (typeof prefillOwnerId !== 'undefined' && prefillOwnerId && String(prefillOwnerId) === String(c.id)) ? 'selected' : '' %>><%= c.name %> &lt;<%= c.email %>&gt;</option>
+          <% }) %>
+        </select>
+        <small class="muted">Belum ada akun? <a href="/register" target="_blank" rel="noopener">Register client</a>.</small>
+      </label>
+      <label class="form-field">
+        <span class="form-field__label">Who edits content</span>
+        <select name="managed_by" id="managed_by">
+          <option value="admin">Super admin only</option>
+          <option value="self" <%= (typeof prefillOwnerId !== 'undefined' && prefillOwnerId) ? 'selected' : '' %>>Client (assigned above)</option>
+        </select>
+        <small class="muted">Jika client dipilih di atas, biasanya pilih <em>Client</em> agar mereka mengisi konten.</small>
+      </label>
+    <% } %>
+    <label class="form-field">
+      <span class="form-field__label">Custom domain <span class="form-field__opt">(opsional)</span></span>
+      <input type="text" name="custom_domain" placeholder="elena-gabriel.com" />
+    </label>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary btn-pill btn-lg">Create site</button>
+      <a href="/dashboard" class="btn btn-ghost btn-pill btn-lg">Cancel</a>
+    </div>
+  </form>
+</div>
+<script>
+(function () {
+  var owner = document.getElementById('owner_user_id');
+  var managed = document.getElementById('managed_by');
+  if (!owner || !managed) return;
+  function sync() {
+    var hasOwner = owner.value && owner.value.length > 0;
+    managed.disabled = !hasOwner;
+    if (!hasOwner) managed.value = 'admin';
+  }
+  owner.addEventListener('change', sync);
+  sync();
+})();
+</script>

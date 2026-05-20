@@ -1,0 +1,30 @@
+{
+  "key": "theme21",
+  "name": "Envelope Elegance",
+  "version": "1.0.0",
+  "preview": "/themes/theme21/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "events", "required": false, "collection": "events" },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "rsvp", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" },
+    { "key": "wishes", "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & waktu acara utama", "required": true, "section": "hero" },
+    { "key": "cover_subtitle", "type": "text", "label": "Teks di atas amplop (mis. You are invited to the wedding of)", "required": false, "section": "hero" },
+    { "key": "invitation_message", "type": "textarea", "label": "Pesan hero (baris undangan / bersama keluarga)", "required": false, "section": "hero" },
+    { "key": "hero_venue_line", "type": "text", "label": "Baris lokasi di bawah tanggal hero (opsional)", "required": false, "section": "hero" },
+    { "key": "keep_hero_visible_after_open", "type": "text", "label": "Sampul tetap bisa di-scroll setelah buka (ya / yes)", "required": false, "section": "hero" },
+    { "key": "couple_quote", "type": "textarea", "label": "Kutipan / sambutan (muncul di hero bawah nama)", "required": false, "section": "hero" },
+    { "key": "story_title", "type": "text", "label": "Judul timeline cerita", "required": false, "section": "story" },
+    { "key": "couple_story", "type": "textarea", "label": "Cerita singkat (jika tanpa item timeline)", "required": false, "section": "story" },
+    { "key": "footer_text", "type": "textarea", "label": "Pesan penutup (closing section)", "required": false, "section": "hero" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan amplop digital", "required": false, "section": "gift" },
+    { "key": "location_note", "type": "textarea", "label": "Catatan lokasi (opsional)", "required": false, "section": "hero" }
+  ]
+}

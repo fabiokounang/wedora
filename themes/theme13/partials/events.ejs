@@ -1,0 +1,38 @@
+<%
+  const defaultEvents = [
+    { title: 'Holy Matrimony', icon: '💍', datetime: content.wedding_date, venue_name: 'The Grand Rosewood Estate' },
+    { title: 'Reception', icon: '🥂', datetime: content.wedding_date, venue_name: 'The Grand Rosewood Estate' },
+  ];
+  const evRows = (eventRows && eventRows.length) ? eventRows : defaultEvents;
+  const emojis = ['💍', '🥂', '✨', '💐'];
+-%>
+<section class="py-20 px-6 max-w-3xl mx-auto">
+  <div class="section-fade text-center mb-12">
+    <p class="font-sans-clean text-xs tracking-[4px] uppercase mb-3 opacity-50" style="color: #9a7b5b;">Celebration</p>
+    <h2 class="font-serif-elegant text-3xl md:text-4xl" style="color: #5a4030;">Event Details</h2>
+  </div>
+  <div class="grid md:grid-cols-2 gap-6">
+    <% evRows.forEach(function (ev, idx) {
+         const ic = emojis[idx % emojis.length];
+         const dt = helpers.toDate(ev.datetime || content.wedding_date);
+         let timeStr = '';
+         if (dt) {
+           timeStr = String(dt.getHours()).padStart(2, '0') + ':' + String(dt.getMinutes()).padStart(2, '0');
+         }
+    %>
+    <div class="section-fade glass rounded-2xl p-8 text-center glow-soft">
+      <p class="text-2xl mb-3"><%= ic %></p>
+      <h3 class="font-serif-elegant text-xl mb-2" style="color: #5a4030;"><%= ev.title %></h3>
+      <% if (ev.datetime || content.wedding_date) { %>
+      <p class="text-sm opacity-60 mb-1" style="color: #7a6050;"><%= helpers.formatDate(ev.datetime || content.wedding_date) %></p>
+      <% } %>
+      <% if (timeStr) { %>
+      <p class="text-sm opacity-60 mb-1" style="color: #7a6050;"><%= timeStr %></p>
+      <% } %>
+      <% if (ev.venue_name) { %>
+      <p <% if (idx === 0) { %>id="event-venue" <% } %>class="text-sm font-medium mt-3" style="color: #9a7b5b;"><%= ev.venue_name %></p>
+      <% } %>
+    </div>
+    <% }); %>
+  </div>
+</section>

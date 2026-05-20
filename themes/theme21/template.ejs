@@ -1,0 +1,69 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const sec = sectionMap[key];
+    return !sec || sec.enabled === 1 || sec.enabled === true;
+  }
+  const storiesArray = typeof story !== 'undefined' && story ? story : [];
+  const eventRows = (events || []).slice().sort(function(a, b) { return (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0); });
+  const partnerOne = (content.partner_one || 'Mempelai 1').trim() || 'Mempelai 1';
+  const partnerTwo = (content.partner_two || 'Mempelai 2').trim() || 'Mempelai 2';
+  const heroDateLabel = (content.wedding_date && helpers.formatDate(content.wedding_date)) || 'Tanggal akan diumumkan';
+  const rawKeepHero = content.keep_hero_visible_after_open;
+  const keepHeroVisibleAfterOpen = !!(rawKeepHero != null && String(rawKeepHero).trim().match(/^(ya|yes|1|true|on)$/i));
+  const coverSubtitle = (content.cover_subtitle && String(content.cover_subtitle).trim()) || 'Anda diundang ke pernikahan';
+  const p1f = partnerOne.split(/\s+/).filter(Boolean)[0] || partnerOne;
+  const p2f = partnerTwo.split(/\s+/).filter(Boolean)[0] || partnerTwo;
+  const sealInitials = p1f.charAt(0).toUpperCase() + '&' + p2f.charAt(0).toUpperCase();
+  const heroIntro = (content.invitation_message && String(content.invitation_message).trim()) || 'Bersama keluarga kami mengundang Anda';
+  const heroVenueLine = (content.hero_venue_line && String(content.hero_venue_line).trim()) || '';
+  const coupleQuote = (content.couple_quote && String(content.couple_quote).trim()) || '';
+-%>
+<!doctype html>
+<html lang="id">
+<%- include('partials/head', { content }) %>
+<body class="t21-body">
+<% if (hasSection('hero')) { %>
+<%- include('partials/cover', { content, coverSubtitle, sealInitials, heroDateLabel }) %>
+<% } %>
+<div id="main" class="<%= hasSection('hero') ? 't21-main--hidden' : '' %>">
+  <% if (hasSection('hero')) { %>
+  <%- include('partials/hero', { content, partnerOne, partnerTwo, heroDateLabel, heroIntro, heroVenueLine, coupleQuote }) %>
+  <% } %>
+  <% if (hasSection('events')) { %>
+  <%- include('partials/events', { content, eventRows, helpers }) %>
+  <% } %>
+  <% if (hasSection('story')) { %>
+  <%- include('partials/story', { content, storiesArray }) %>
+  <% } %>
+  <% if (hasSection('gallery')) { %>
+  <%- include('partials/gallery', { gallery }) %>
+  <% } %>
+  <% if (hasSection('rsvp')) { %>
+  <%- include('partials/rsvp') %>
+  <% } %>
+  <% if (hasSection('gift')) { %>
+  <%- include('partials/gift', { gifts, content }) %>
+  <% } %>
+  <% if (hasSection('wishes')) { %>
+  <%- include('partials/wishes', { wishes }) %>
+  <% } %>
+  <%- include('partials/footer', { content, partnerOne, partnerTwo }) %>
+</div>
+<div id="t21-toast" class="t21-toast" role="status" aria-live="polite"></div>
+<script>
+  window.__SITE__ = {
+    siteId: <%= site.id %>,
+    slug: <%- JSON.stringify(site.slug) %>,
+    apiBase: <%- JSON.stringify(apiBase) %>,
+    weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    keepHeroVisibleAfterOpen: <%- JSON.stringify(keepHeroVisibleAfterOpen) %>,
+    hasCover: <%= hasSection('hero') ? 1 : 0 %>,
+  };
+  window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+</script>
+<script src="/themes/theme21/public/script.js"></script>
+<%- include('../shared/music.ejs', { site }) %>
+</body>
+</html>

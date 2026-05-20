@@ -1,0 +1,18 @@
+<section id="gallery" class="relative z-10 py-20 px-6">
+  <div class="max-w-4xl mx-auto text-center">
+    <p class="text-xs tracking-[0.4em] uppercase reveal" style="color:rgba(196,168,116,0.4);">Moments</p>
+    <h2 class="font-serif-display mt-3 reveal" style="font-size:clamp(2rem,5vw,3.2rem);color:#c4a874;font-weight:300;">Our Gallery</h2>
+    <div class="ornament-divider mt-4 mb-12 reveal" style="color:rgba(196,168,116,0.3);">&#10022;</div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 reveal">
+      <% (gallery || []).forEach(function(item) { %>
+        <a href="<%= item.image_url %>" data-lightbox="theme3-gallery" <% if (item.caption) { %>data-title="<%= item.caption %>"<% } %> class="gallery-item aspect-square block">
+          <img src="<%= item.thumbnail_url || item.image_url %>" alt="<%= item.caption || 'Gallery photo' %>" class="gallery-image" />
+          <div class="gallery-overlay"></div>
+        </a>
+      <% }) %>
+      <% if (!gallery || gallery.length === 0) { %>
+        <p class="col-span-full" style="color:rgba(196,168,116,0.4);">Gallery will be available soon.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,92 @@
+<%
+  const quote = (content.couple_quote && String(content.couple_quote).trim()) ? String(content.couple_quote).trim() : '';
+  const quoteSrc = (content.couple_quote_source && String(content.couple_quote_source).trim()) ? String(content.couple_quote_source).trim() : '';
+  const storyTitle = (content.story_title && String(content.story_title).trim()) ? String(content.story_title).trim() : 'Perjalanan cinta kami';
+  const p1Initial = (partnerOne.split(/\s+/).filter(Boolean)[0] || partnerOne).charAt(0).toUpperCase();
+  const p2Initial = (partnerTwo.split(/\s+/).filter(Boolean)[0] || partnerTwo).charAt(0).toUpperCase();
+  const defaultMilestones = [
+    { date_label: '2020', title: 'Pertama bertemu', description: 'Pertemuan yang mengubah segalanya.' },
+    { date_label: '2021', title: 'Kencan pertama', description: 'Awal perjalanan indah bersama.' },
+    { date_label: '2024', title: 'Lamaran', description: 'Janji setia di bawah langit berbintang.' },
+  ];
+  const rows = (storiesArray && storiesArray.length)
+    ? storiesArray.map((s) => ({
+        date_label: s.date_label || '',
+        title: s.title || '',
+        description: s.description || '',
+      }))
+    : (content.couple_story && String(content.couple_story).trim())
+      ? [{ date_label: '', title: storyTitle, description: String(content.couple_story).trim() }]
+      : defaultMilestones;
+-%>
+<% if (quote) { %>
+<section class="py-24 px-6 text-center section-hidden" data-section>
+  <div class="max-w-2xl mx-auto">
+    <div class="font-serif-elegant text-[#d4af37] text-3xl mb-6" aria-hidden="true">&#10022;</div>
+    <p class="font-serif-elegant text-xl md:text-2xl text-[#5a4a3a] leading-relaxed italic">&ldquo;<%- quote %>&rdquo;</p>
+    <% if (quoteSrc) { %>
+      <p class="text-xs text-[#8b7355] mt-4 tracking-widest"><%= quoteSrc %></p>
+    <% } %>
+  </div>
+</section>
+<% } %>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-center text-[#3d3128] mb-16">Mempelai</h2>
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="text-center">
+        <div class="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-[#f4e4c1] to-[#e8d5b7] flex items-center justify-center mb-6 shadow-lg">
+          <span class="font-serif-elegant text-5xl text-[#8b7355]"><%= p1Initial %></span>
+        </div>
+        <h3 class="font-serif-elegant text-2xl text-[#3d3128] mb-2"><%= partnerOne %></h3>
+        <p class="text-[#8b7355] text-sm">Mempelai pria</p>
+        <% if (content.partner_one_bio) { %>
+          <p class="text-sm text-[#6b5a4a] mt-2"><%= content.partner_one_bio %></p>
+        <% } %>
+      </div>
+      <div class="text-center">
+        <div class="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-[#fce4ec] to-[#f8d0d8] flex items-center justify-center mb-6 shadow-lg">
+          <span class="font-serif-elegant text-5xl text-[#a0616a]"><%= p2Initial %></span>
+        </div>
+        <h3 class="font-serif-elegant text-2xl text-[#3d3128] mb-2"><%= partnerTwo %></h3>
+        <p class="text-[#8b7355] text-sm">Mempelai wanita</p>
+        <% if (content.partner_two_bio) { %>
+          <p class="text-sm text-[#6b5a4a] mt-2"><%= content.partner_two_bio %></p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-20 px-6 t16-story-bg section-hidden" data-section>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-center text-[#3d3128] mb-16"><%= storyTitle %></h2>
+    <div class="relative">
+      <div class="t16-timeline-line absolute left-1/2 -translate-x-1/2 h-full" aria-hidden="true"></div>
+      <% rows.forEach(function (item, idx) {
+           const flip = idx % 2 === 1;
+      %>
+        <div class="relative flex items-center mb-16 last:mb-0">
+          <% if (!flip) { %>
+            <div class="w-1/2 pr-8 text-right">
+              <% if (item.title) { %><h4 class="font-serif-elegant text-xl text-[#3d3128]"><%= item.title %></h4><% } %>
+              <% if (item.date_label) { %><p class="text-[#8b7355] text-sm mt-1"><%= item.date_label %></p><% } %>
+            </div>
+            <span class="w-4 h-4 bg-[#d4af37] rounded-full border-4 border-[#fdf8f4] z-10 absolute left-1/2 -translate-x-1/2 shrink-0" aria-hidden="true"></span>
+            <div class="w-1/2 pl-8">
+              <% if (item.description) { %><p class="text-[#6b5a4a] text-sm"><%- item.description %></p><% } %>
+            </div>
+          <% } else { %>
+            <div class="w-1/2 pr-8 text-right">
+              <% if (item.description) { %><p class="text-[#6b5a4a] text-sm"><%- item.description %></p><% } %>
+            </div>
+            <span class="w-4 h-4 bg-[#d4af37] rounded-full border-4 border-[#fdf8f4] z-10 absolute left-1/2 -translate-x-1/2 shrink-0" aria-hidden="true"></span>
+            <div class="w-1/2 pl-8">
+              <% if (item.title) { %><h4 class="font-serif-elegant text-xl text-[#3d3128]"><%= item.title %></h4><% } %>
+              <% if (item.date_label) { %><p class="text-[#8b7355] text-sm mt-1"><%= item.date_label %></p><% } %>
+            </div>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

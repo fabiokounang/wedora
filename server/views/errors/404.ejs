@@ -1,0 +1,14 @@
+<div class="error-page">
+  <p class="error-page__code">404</p>
+  <h1 class="error-page__title">Halaman tidak ditemukan</h1>
+  <p class="error-page__desc">Maaf, halaman yang Anda cari tidak ada atau sudah dipindahkan. Periksa URL-nya atau kembali ke beranda.</p>
+  <div class="error-page__actions">
+    <a href="/" class="btn btn-primary btn-pill">Ke halaman utama</a>
+    <% if (typeof user !== 'undefined' && user) { %>
+      <a href="/dashboard" class="btn btn-soft btn-pill">Dashboard</a>
+    <% } else { %>
+      <a href="/login" class="btn btn-soft btn-pill">Masuk</a>
+    <% } %>
+  </div>
+  <div class="error-page__decor" aria-hidden="true">✦</div>
+</div>

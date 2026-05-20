@@ -1,0 +1,30 @@
+<section id="story" class="w-full py-24 px-6 bg-cream">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-serif text-4xl md:text-5xl text-center text-deep mb-4 fade-up">
+      <%= content.story_title || 'Our Love Story' %>
+    </h2>
+    <p class="text-center text-brown text-sm tracking-wide mb-16 fade-up">
+      <%= content.story_subtitle || 'How it all began…' %>
+    </p>
+    <div class="space-y-12">
+      <% (story || []).forEach(function(item, idx) {
+           const isLast = idx === (story.length - 1);
+      %>
+      <div class="relative pl-10 fade-up">
+        <% if (!isLast) { %><div class="timeline-line"></div><% } %>
+        <div class="timeline-dot absolute left-0 top-1"></div>
+        <% if (item.date_label) { %>
+          <p class="text-warm text-xs tracking-widest uppercase mb-1"><%= item.date_label %></p>
+        <% } %>
+        <h3 class="font-serif text-xl text-deep mb-2"><%= item.title %></h3>
+        <% if (item.description) { %>
+          <p class="text-brown text-sm leading-relaxed"><%= item.description %></p>
+        <% } %>
+      </div>
+      <% }) %>
+      <% if (!story || story.length === 0) { %>
+        <p class="text-center text-brown">Our story will appear here soon...</p>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<section id="events" class="py-24 px-6" style="background:#e8ede5">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 fade-up">
+      <p class="text-xs tracking-[.3em] uppercase text-dusty-500 mb-3">Celebration</p>
+      <h2 class="font-serif text-sage-800 text-4xl sm:text-5xl" style="font-weight:300">The Events</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <% (events || []).forEach(function(ev, idx) { %>
+      <div class="fade-up rounded-2xl p-8 text-center" style="background:rgba(255,255,255,.5);backdrop-filter:blur(6px);border:1px solid rgba(184,197,176,.2)">
+        <h3 class="font-serif text-sage-700 text-2xl mb-2"><%= ev.title %></h3>
+        <% if (ev.datetime) { %>
+          <p class="text-dusty-500 text-sm mt-2"><%= helpers.formatDateTime(ev.datetime) %></p>
+        <% } %>
+        <% if (ev.venue_name) { %>
+          <p class="font-serif text-sage-800 text-lg mt-4"><%= ev.venue_name %></p>
+        <% } %>
+        <% if (ev.address) { %>
+          <p class="text-sage-500 text-sm mt-1"><%= ev.address %></p>
+        <% } %>
+        <% if (ev.map_url) { %>
+          <a href="<%= ev.map_url %>" target="_blank" rel="noopener" class="inline-block mt-4 text-xs tracking-widest uppercase text-sage-600 hover:text-sage-800">View Map</a>
+        <% } %>
+      </div>
+      <% }) %>
+      <% if (!events || events.length === 0) { %>
+        <p class="col-span-full text-center text-sage-500">Events coming soon...</p>
+      <% } %>
+    </div>
+  </div>
+</section>

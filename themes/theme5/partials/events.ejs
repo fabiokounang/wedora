@@ -1,0 +1,34 @@
+<section id="events" class="relative z-10 w-full px-4 py-24">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/60 section-reveal">Join Our Celebration</p>
+    <h2 class="font-display text-4xl sm:text-5xl text-champagne mt-3 section-reveal">The Celebration</h2>
+    <p class="text-champagne/50 mt-4 section-reveal text-sm"><%= content.events_subtitle || '' %></p>
+    <div class="gold-divider section-reveal"></div>
+  </div>
+  <div class="max-w-4xl mx-auto mt-12 grid md:grid-cols-2 gap-8">
+    <% const icons = ['church', 'wine', 'music', 'heart']; %>
+    <% (events || []).forEach(function (ev, idx) {
+         const icon = icons[idx % icons.length];
+         const d = ev.datetime ? helpers.toDate(ev.datetime) : null;
+    %>
+    <div class="section-reveal rounded-xl p-8 text-center" style="background: linear-gradient(135deg, rgba(139, 32, 53, 0.12), rgba(26, 10, 10, 0.5)); border: 1px solid rgba(212, 165, 116, 0.12);">
+      <div class="w-14 h-14 mx-auto rounded-full bg-burgundy/20 border border-gold/20 flex items-center justify-center mb-5">
+        <i data-lucide="<%= icon %>" class="text-gold" style="width: 22px; height: 22px"></i>
+      </div>
+      <h3 class="font-display text-2xl text-champagne mb-1"><%= ev.title %></h3>
+      <div class="gold-divider" style="width: 40%;"></div>
+      <% if (d) { %>
+        <p class="font-ui text-sm tracking-wider text-gold mt-4"><%= String(d.getHours()).padStart(2, '0') %>:<%= String(d.getMinutes()).padStart(2, '0') %></p>
+      <% } %>
+      <% if (ev.venue_name) { %><p class="font-display text-xl text-champagne mt-2"><%= ev.venue_name %></p><% } %>
+      <% if (ev.address) { %><p class="text-champagne/50 mt-1 text-sm"><%= ev.address %></p><% } %>
+      <% if (ev.map_url) { %>
+        <a href="<%= ev.map_url %>" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 font-ui text-xs uppercase tracking-wider text-gold/80 hover:text-gold">Directions</a>
+      <% } %>
+    </div>
+    <% }) %>
+    <% if (!events || events.length === 0) { %>
+      <p class="col-span-full text-center text-champagne/40 text-sm">Event details coming soon…</p>
+    <% } %>
+  </div>
+</section>

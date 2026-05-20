@@ -1,0 +1,26 @@
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <span class="font-serif text-xl text-rose-soft italic"><%= brand %></span>
+    <button id="mobile-menu-btn" type="button" class="md:hidden p-2 rounded-full hover:bg-rose-pale transition-colors" aria-label="Menu">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+    <div class="hidden md:flex gap-6 text-sm font-medium">
+      <a href="#home" class="nav-link hover:text-rose-soft transition-colors py-1">Home</a>
+      <% if (hasSection('story')) { %><a href="#story" class="nav-link hover:text-rose-soft transition-colors py-1">Our Story</a><% } %>
+      <% if (hasSection('events')) { %><a href="#event" class="nav-link hover:text-rose-soft transition-colors py-1">The Day</a><% } %>
+      <% if (hasSection('rsvp')) { %><a href="#rsvp" class="nav-link hover:text-rose-soft transition-colors py-1">RSVP</a><% } %>
+      <% if (hasSection('gallery')) { %><a href="#gallery" class="nav-link hover:text-rose-soft transition-colors py-1">Gallery</a><% } %>
+      <% if (hasSection('gift')) { %><a href="#gift" class="nav-link hover:text-rose-soft transition-colors py-1">Gift</a><% } %>
+      <% if (hasSection('wishes')) { %><a href="#wishes" class="nav-link hover:text-rose-soft transition-colors py-1">Love Notes</a><% } %>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-t border-rose-light px-4 py-4 space-y-3">
+    <a href="#home" class="block text-sm font-medium hover:text-rose-soft">Home</a>
+    <% if (hasSection('story')) { %><a href="#story" class="block text-sm font-medium hover:text-rose-soft">Our Story</a><% } %>
+    <% if (hasSection('events')) { %><a href="#event" class="block text-sm font-medium hover:text-rose-soft">The Day</a><% } %>
+    <% if (hasSection('rsvp')) { %><a href="#rsvp" class="block text-sm font-medium hover:text-rose-soft">RSVP</a><% } %>
+    <% if (hasSection('gallery')) { %><a href="#gallery" class="block text-sm font-medium hover:text-rose-soft">Gallery</a><% } %>
+    <% if (hasSection('gift')) { %><a href="#gift" class="block text-sm font-medium hover:text-rose-soft">Gift</a><% } %>
+    <% if (hasSection('wishes')) { %><a href="#wishes" class="block text-sm font-medium hover:text-rose-soft">Love Notes</a><% } %>
+  </div>
+</nav>

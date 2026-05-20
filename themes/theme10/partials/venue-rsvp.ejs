@@ -1,0 +1,124 @@
+<section class="moveable-section" data-id="4">
+                    <% if (hasSection('events')) { %>
+                    <!-- Vanue & Event section -->
+                    <section class="venue-section color-primary">
+                        <div class="image-wrapper">
+                            <div class="background-element">
+                                <img data-src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly9wZXRyYS52aWRpbmcuY28vYmFja2dyb3VuZC82M0p2anBQalVFcUJwdXJxSjk1MUg5dFhTS1p0R291b2R5SlFpcGtZLmpwZw.webp" alt="background-3" class="venue-background lazyload">
+                            </div>
+                        </div>
+                        <div class="position-relative">
+                            <div class="elements-wrapper-absolute">
+                                <div class="background-element">
+                                    <img data-src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:1200:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvYmctdmVudWUucG5n.webp" alt="bg-venue" class="lazyload">
+                                </div>
+                                <div class="orn-1">
+                                    <div class="image-element" data-anim="fade-right">
+                                        <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvcm9zZS0xLnBuZw.webp" alt="rose-1" class="img-fluid animate-loop" data-anim="rotate-left" data-anim-duration="5000ms">
+                                    </div>
+                                </div>
+                                <div class="orn-2">
+                                    <div class="image-element" data-anim="fade-right">
+                                        <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvbGVhZi0xLnBuZw.webp" alt="leaf-1" class="img-fluid animate-loop" data-anim="rotate-right">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container position-relative">
+                                <div class="venue-wrapper">
+                                    <div class="col-md-8 col-xl-6 position-relative mx-auto" data-anim="slide-up">
+                                        <div class="venue-description">
+                                            <div class=" title-section" data-anim="rotate-left">
+                                                <h2><span style="color: #ffffff; font-size: 18pt;">Venue</span></h2>
+                                            </div>
+                                                                                            <div data-anim="zoom-in">
+                                                    <% if (content.events_intro_html) { %>
+<%- content.events_intro_html %>
+                                                    <% } else { %>
+                                                    <p><span style="font-family: Athelas;">Please RSVP down below if you are attending</span></p>
+                                                    <% } %>
+                                                </div>
+                                                                                    </div>
+                                    </div>
+                                    <div class="col-md-12 m-auto">
+                                        <div class="venue-content">
+                                            <div class="row justify-content-center row-venue">
+<% if (hasSection("events") && (events || []).length) { %>
+<% (events || []).forEach(function (ev) { %>
+<%- include("venue-event-card", { ev, helpers }) %>
+<% }); %>
+<% } else if (hasSection("events")) { %>
+<div class="col-12 text-center"><p class="text-white">Detail acara akan diumumkan.</p></div>
+<% } %>
+                                                                                                                                                </div>
+                                        </div>
+                                    </div>
+                                                                    </div>
+                            </div>
+                        </div>
+                    </section>
+                    <% } %>
+                                                                    <!-- rsvp section -->
+                        <% if (hasSection('rsvp')) { %>
+                        <section class="rsvp-section">
+                            <div class="orn-1">
+                                <div class="image-element" data-anim="fade-right">
+                                    <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvcm9zZS0xLnBuZw.webp" alt="rose-1" class="img-fluid animate-loop" data-anim="rotate-left" data-anim-duration="5000ms">
+                                </div>
+                            </div>
+                            <div class="orn-2">
+                                <div class="image-element" data-anim="fade-right">
+                                    <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvbGVhZi0xLnBuZw.webp" alt="leaf-1" class="img-fluid animate-loop" data-anim="rotate-right">
+                                </div>
+                            </div>
+                            <div class="container position-relative">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8 col-lg-6 col-xl-5 position-relative">
+                                        <div class="rsvp-wrapper color-primary">
+                                            <div class="elements-wrapper-absolute">
+                                                <div class="background-element">
+                                                    <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvYmctdmVudWUtY2FyZC5wbmc.webp" alt="bg-venue-card" style="object-position: 50% 0%;">
+                                                </div>
+                                                <div class="orn-3">
+                                                    <div class="image-element" data-anim="slide-rotate-up">
+                                                        <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvcGFya2V0LnBuZw.webp" alt="parket" class="img-fluid animate-loop" data-anim="rotate-left">
+                                                    </div>
+                                                </div>
+                                                <div class="orn-4">
+                                                    <div class="image-element" data-anim="slide-rotate-right">
+                                                        <img src="https://media.viding.co/dmlkaW5nIGNvIGltYWdlIHByb3h5IGJ5IGZseS5pbw/rs:auto:0:0:1/g:no/aHR0cHM6Ly90aGVtZXMudmlkaW5nLmNvL3RoZW1lXzk2L2Fzc2V0cy9pbWFnZXMvcm9zZS0xLnBuZw.webp" alt="rose-1" class="img-fluid animate-loop" data-anim="rotate-left">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rsvp-form">
+                                                <div class="title-section" data-anim="rotate-left">
+                                                    <h2><p><span style="color: #ffffff; font-size: 18pt;">RSVP</span></p></h2>
+                                                </div>
+                                                <div id="cardRSVP">
+                                                    <form action="#" method="post" data-anim="fade" data-anim-delay="500" id="tambahdata">
+                                                        <input required="" type="text" name="name" class="form-control mb-3" placeholder="Name" value="" data-anim="zoom-in-up" data-anim-delay="500">
+                                                                                                                                                                            <input required="" type="text" name="no_hp" class="form-control mb-3" placeholder="Phone Number" value="" data-anim="zoom-in-up" data-anim-delay="500">
+                                                                                                                                                                                                                                    <input required="" maxlength="3" max="100" type="number" name="jumlah" class="form-control mb-3" placeholder="Number of Guest" min="1" data-anim="zoom-in-up" data-anim-delay="500">
+                                                                                                                <select required="" name="status" class="form-select mb-3" data-anim="zoom-in-up" data-anim-delay="500">
+                                                            <option disabled="" selected="">Confirmation of Attendance</option>
+                                                            <option value="1">Attend</option>
+                                                            <option value="0">Not Attend</option>
+                                                        </select>
+                                                                                                                                                                        <input type="hidden" name="invitation_id" value="">
+                                                        <input type="hidden" name="stepper_id" value="16514">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-6">
+                                                                <button class="btn btn-custom color-secondary w-100" type="submit" id="tombolsimpan" data-anim="zoom-in-up" data-anim-delay="500">Send</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <% } %>
+                                                            </section>
+                            
+                        

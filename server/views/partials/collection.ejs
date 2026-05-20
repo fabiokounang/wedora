@@ -1,0 +1,136 @@
+<%
+  const COL_FIELDS = {
+    story_items: [
+      { key: 'date_label', label: 'Date label', type: 'text', placeholder: 'e.g. January 2020' },
+      { key: 'title', label: 'Title', type: 'text', required: true, placeholder: 'Milestone title' },
+      { key: 'description', label: 'Description', type: 'textarea', placeholder: 'Short story text…' },
+      { key: 'sort_order', label: 'Order', type: 'number' }
+    ],
+    events: [
+      { key: 'event_type', label: 'Type', type: 'text', placeholder: 'akad, reception…' },
+      { key: 'title', label: 'Title', type: 'text', required: true, placeholder: 'Event name' },
+      { key: 'venue_name', label: 'Venue', type: 'text', placeholder: 'Venue name' },
+      { key: 'address', label: 'Address', type: 'textarea', placeholder: 'Full address' },
+      { key: 'datetime', label: 'Date & time', type: 'datetime' },
+      { key: 'map_url', label: 'Map URL', type: 'text', placeholder: 'https://…' },
+      { key: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Optional notes' },
+      { key: 'sort_order', label: 'Order', type: 'number' }
+    ],
+    gallery_items: [
+      { key: 'image_url', label: 'Image URL', type: 'text', required: true, placeholder: 'https://…' },
+      { key: 'thumbnail_url', label: 'Thumbnail URL', type: 'text', placeholder: 'Optional smaller image' },
+      { key: 'caption', label: 'Caption', type: 'text', placeholder: 'Photo caption' },
+      { key: 'sort_order', label: 'Order', type: 'number' }
+    ],
+    gift_accounts: [
+      { key: 'bank_name', label: 'Bank', type: 'text', required: true, placeholder: 'Bank name' },
+      { key: 'account_name', label: 'Account name', type: 'text', required: true, placeholder: 'Account holder' },
+      { key: 'account_number', label: 'Account number', type: 'text', required: true, placeholder: 'Account / VA number' },
+      { key: 'qr_image_url', label: 'QR code (gambar)', type: 'image_upload', placeholder: 'https://… (opsional jika pakai unggah)' },
+      { key: 'sort_order', label: 'Order', type: 'number' }
+    ]
+  };
+  const fields = COL_FIELDS[collection] || [];
+%>
+<div class="collection collection--manage" data-site-id="<%= site.id %>" data-table="<%= collection %>">
+  <div class="collection-list">
+    <% if (items.length === 0) { %>
+      <div class="collection-empty muted small">No items yet. Add your first entry on the right →</div>
+    <% } else { %>
+      <% items.forEach(function(item) { %>
+        <form
+          class="collection-card"
+          method="POST"
+          action="/sites/<%= site.id %>/collections/<%= collection %>/<%= item.id %><%= collection === 'gift_accounts' ? '?_csrf=' + (typeof csrfToken !== 'undefined' ? csrfToken : '') : '' %>"
+          <% if (collection === 'gift_accounts') { %>enctype="multipart/form-data"<% } %>
+        >
+          <input type="hidden" name="_method" value="patch" />
+          <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+          <div class="collection-card__grid">
+            <% fields.forEach(function(f) {
+                 const v = item[f.key];
+                 const val = v == null ? '' : (f.type === 'datetime' ? String(v).replace(' ', 'T').slice(0,16) : v);
+                 const fid = 'col-' + collection + '-' + item.id + '-' + f.key;
+                 const full = f.type === 'textarea';
+            %>
+              <div class="collection-field<%= full ? ' collection-field--full' : '' %>">
+                <label class="collection-field__label" for="<%= fid %>">
+                  <%= f.label %><% if (f.required) { %> <span class="req">*</span><% } %>
+                </label>
+                <% if (f.type === 'textarea') { %>
+                  <textarea class="collection-input collection-input--textarea" id="<%= fid %>" name="<%= f.key %>" rows="3" placeholder="<%= f.placeholder || '' %>"><%= val %></textarea>
+                <% } else if (f.type === 'datetime') { %>
+                  <input class="collection-input" type="datetime-local" id="<%= fid %>" name="<%= f.key %>" value="<%= val %>" />
+                <% } else if (f.type === 'number') { %>
+                  <input class="collection-input collection-input--narrow" type="number" id="<%= fid %>" name="<%= f.key %>" value="<%= val === '' ? 0 : val %>" />
+                <% } else if (f.type === 'image_upload') { %>
+                  <% if (val) { %>
+                    <p class="collection-field__preview" style="margin:0 0 0.5rem"><img src="<%= val %>" alt="QR" style="max-height:96px;border-radius:6px;border:1px solid rgba(0,0,0,.08)" /></p>
+                  <% } %>
+                  <input class="collection-input" type="file" id="<%= fid %>-file" name="qr_image_file" accept="image/png,image/jpeg,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif" />
+                  <small class="muted" style="display:block;margin:0.25rem 0 0.5rem">Unggah gambar QR. Jika diisi, menggantikan URL di bawah. Pilih file di tab Gift ini, lalu langsung klik simpan (jangan pindah tab dulu).</small>
+                  <input class="collection-input" type="text" id="<%= fid %>" name="<%= f.key %>" value="<%= val %>" placeholder="<%= f.placeholder || '' %>" />
+                <% } else { %>
+                  <input class="collection-input" type="text" id="<%= fid %>" name="<%= f.key %>" value="<%= val %>" placeholder="<%= f.placeholder || '' %>" <%= f.required ? 'required' : '' %> />
+                <% } %>
+              </div>
+            <% }) %>
+          </div>
+          <div class="collection-card__actions">
+            <% if (collection === 'gift_accounts') { %>
+            <button type="submit" class="btn btn-soft btn-sm" formenctype="multipart/form-data">Save changes</button>
+            <% } else { %>
+            <button type="submit" class="btn btn-soft btn-sm">Save changes</button>
+            <% } %>
+            <button type="submit" formaction="/sites/<%= site.id %>/collections/<%= collection %>/<%= item.id %>?_method=delete<%= collection === 'gift_accounts' ? '&_csrf=' + (typeof csrfToken !== 'undefined' ? csrfToken : '') : '' %>" class="btn btn-danger-soft btn-sm" onclick="return confirm('Delete this item?')">Delete</button>
+          </div>
+        </form>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <aside class="collection-add">
+    <div class="collection-add__inner">
+      <p class="collection-add__eyebrow">New entry</p>
+      <h3 class="collection-add__title">Add item</h3>
+      <form
+        method="POST"
+        action="/sites/<%= site.id %>/collections/<%= collection %><%= collection === 'gift_accounts' ? '?_csrf=' + (typeof csrfToken !== 'undefined' ? csrfToken : '') : '' %>"
+        class="collection-add__form"
+        <% if (collection === 'gift_accounts') { %>enctype="multipart/form-data"<% } %>
+      >
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <div class="collection-card__grid collection-card__grid--compact">
+          <% fields.forEach(function(f) {
+               const nid = 'new-' + collection + '-' + f.key;
+               const full = f.type === 'textarea';
+          %>
+            <div class="collection-field<%= full ? ' collection-field--full' : '' %>">
+              <label class="collection-field__label" for="<%= nid %>">
+                <%= f.label %><% if (f.required) { %> <span class="req">*</span><% } %>
+              </label>
+              <% if (f.type === 'textarea') { %>
+                <textarea class="collection-input collection-input--textarea" id="<%= nid %>" name="<%= f.key %>" rows="3" placeholder="<%= f.placeholder || '' %>"></textarea>
+              <% } else if (f.type === 'datetime') { %>
+                <input class="collection-input" type="datetime-local" id="<%= nid %>" name="<%= f.key %>" />
+              <% } else if (f.type === 'number') { %>
+                <input class="collection-input collection-input--narrow" type="number" id="<%= nid %>" name="<%= f.key %>" value="0" />
+              <% } else if (f.type === 'image_upload') { %>
+                <input class="collection-input" type="file" id="<%= nid %>-file" name="qr_image_file" accept="image/png,image/jpeg,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif" />
+                <small class="muted" style="display:block;margin:0.25rem 0 0.5rem">Unggah gambar QR, atau isi URL di bawah. Setelah memilih file, klik Add item di tab ini (file tidak ikut jika tab Gift tidak aktif di beberapa perangkat).</small>
+                <input class="collection-input" type="text" id="<%= nid %>" name="<%= f.key %>" placeholder="<%= f.placeholder || '' %>" />
+              <% } else { %>
+                <input class="collection-input" type="text" id="<%= nid %>" name="<%= f.key %>" placeholder="<%= f.placeholder || '' %>" <%= f.required ? 'required' : '' %> />
+              <% } %>
+            </div>
+          <% }) %>
+        </div>
+        <% if (collection === 'gift_accounts') { %>
+        <button type="submit" class="btn btn-primary collection-add__submit" formenctype="multipart/form-data">Add item</button>
+        <% } else { %>
+        <button type="submit" class="btn btn-primary collection-add__submit">Add item</button>
+        <% } %>
+      </form>
+    </div>
+  </aside>
+</div>

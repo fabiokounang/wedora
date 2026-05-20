@@ -1,0 +1,33 @@
+<section class="wedding-section" style="text-align:center;">
+  <div class="reveal section-inner">
+    <h2 class="section-title">Rangkaian acara</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <% if (events && events.length) { %>
+    <div class="timeline-wrap">
+      <% events.forEach(function (ev, idx) { %>
+      <div class="timeline-item <%= idx % 2 === 0 ? 'reveal-left' : 'reveal-right' %>">
+        <div>
+          <% if (idx < events.length - 1) { %>
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+          <% } else { %>
+          <div class="timeline-dot"></div>
+          <% } %>
+        </div>
+        <div style="text-align:left;">
+          <p class="font-serif-elegant" style="font-size:1.3rem;color:var(--warm-gold);margin:0;"><%= ev.title || ev.event_type || 'Acara' %></p>
+          <% if (ev.datetime) { %>
+          <p style="color:var(--text-muted);font-size:0.85rem;"><%= helpers.formatDateTime(ev.datetime) %></p>
+          <% } %>
+          <% if (ev.venue_name || ev.address) { %>
+          <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.35rem;line-height:1.45;"><%= ev.venue_name ? ev.venue_name + (ev.address ? ' · ' : '') : '' %><%= ev.address || '' %></p>
+          <% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p class="section-muted-lead" style="margin-top:1.5rem;">Jadwal acara dapat ditambahkan di panel admin.</p>
+    <% } %>
+  </div>
+</section>

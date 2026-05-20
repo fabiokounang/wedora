@@ -1,0 +1,17 @@
+<section class="t19-reveal t19-section-pad">
+  <h2 class="t19-script t19-section-heading">Wedding Events</h2>
+  <div class="t19-events-grid">
+    <% for (const ev of eventRows) { %>
+    <div class="t19-glass-card t19-event-card">
+      <div class="t19-event-emoji" aria-hidden="true"><%= (ev.event_type && ev.event_type.toLowerCase().includes('resepsi')) ? '🥂' : '💍' %></div>
+      <h3 class="t19-serif t19-event-title"><%= ev.name || ev.title || 'Acara' %></h3>
+      <% if (ev.event_date) { %><p class="t19-event-detail"><%= helpers.formatDate(ev.event_date) %></p><% } %>
+      <% if (ev.venue || ev.venue_name) { %><p class="t19-event-venue"><%= ev.venue || ev.venue_name %></p><% } %>
+      <% if (ev.address) { %><p class="t19-event-address"><%= ev.address %></p><% } %>
+      <% if (ev.maps_url || ev.map_url) { %>
+      <a href="<%= ev.maps_url || ev.map_url %>" target="_blank" rel="noopener noreferrer" class="t19-map-link">Buka Maps</a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const s = sectionMap[key];
+    return !s || s.enabled === 1 || s.enabled === true;
+  }
+  const initials = (s) => (s || '').trim().charAt(0).toUpperCase();
+  const brand = `${initials(content.partner_one)} & ${initials(content.partner_two)}`;
+-%>
+<!doctype html>
+<html lang="id" class="h-full" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= content.partner_one %> &amp; <%= content.partner_two %> — Wedding</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" />
+  <link rel="stylesheet" href="/themes/theme4/public/style.css" />
+  <script>
+    tailwind.config = { theme: { extend: { colors: { wine: '#2a0a0f', burgundy: '#3d1420', blush: '#f5e6d8', gold: '#c9a87c', deeprose: '#8b2942' } } } };
+  </script>
+</head>
+<body class="h-full">
+  <div id="app" class="w-full h-full overflow-auto" style="background: var(--bg);">
+    <%- include('partials/nav', { brand, hasSection }) %>
+    <% if (hasSection('hero')) { %><%- include('partials/hero', { hasSection }) %><% } %>
+    <% if (hasSection('story')) { %><%- include('partials/story', { story }) %><% } %>
+    <% if (hasSection('events')) { %><%- include('partials/events', { events }) %><% } %>
+    <% if (hasSection('rsvp')) { %><%- include('partials/rsvp') %><% } %>
+    <% if (hasSection('gallery')) { %><%- include('partials/gallery', { gallery }) %><% } %>
+    <% if (hasSection('gift')) { %><%- include('partials/gift', { gifts }) %><% } %>
+    <% if (hasSection('wishes')) { %><%- include('partials/wishes', { wishes }) %><% } %>
+    <%- include('partials/footer') %>
+  </div>
+  <script>
+    window.__SITE__ = {
+      siteId: <%= site.id %>,
+      slug: <%- JSON.stringify(site.slug) %>,
+      apiBase: <%- JSON.stringify(apiBase) %>,
+      weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    };
+    window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+  <script src="/themes/theme4/public/script.js"></script>
+  <%- include('../shared/music.ejs', { site }) %>
+</body>
+</html>

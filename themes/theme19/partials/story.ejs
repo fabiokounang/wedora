@@ -1,0 +1,16 @@
+<% const storyTitle = content.story_title || 'Our Love Story'; %>
+<% if (storiesArray && storiesArray.length > 0) { %>
+<section class="t19-reveal t19-section-pad">
+  <h2 class="t19-script t19-section-heading"><%= storyTitle %></h2>
+  <div class="t19-story-list">
+    <% for (const item of storiesArray) { %>
+    <div class="t19-glass-card t19-story-card">
+      <span class="t19-story-emoji" aria-hidden="true">🌸</span>
+      <% if (item.event_date || item.date_label) { %><p class="t19-sans t19-story-date"><%= item.event_date || item.date_label %></p><% } %>
+      <% if (item.title) { %><p class="t19-serif t19-story-title"><%= item.title %></p><% } %>
+      <% if (item.description) { %><p class="t19-story-desc"><%= item.description %></p><% } %>
+    </div>
+    <% } %>
+  </div>
+</section>
+<% } %>

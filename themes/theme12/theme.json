@@ -1,0 +1,30 @@
+{
+  "key": "theme12",
+  "name": "Garden Vows",
+  "version": "1.0.0",
+  "preview": "/themes/theme12/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "events", "required": false, "collection": "events" },
+    { "key": "location", "required": false },
+    { "key": "rsvp", "required": false },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "wishes", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Mempelai 1 (nama lengkap)", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Mempelai 2 (nama lengkap)", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & waktu acara utama", "required": true, "section": "hero" },
+    { "key": "cover_subtitle", "type": "text", "label": "Subjudul sampul (mis. THE WEDDING OF)", "required": false, "section": "hero" },
+    { "key": "keep_hero_visible_after_open", "type": "text", "label": "Hero tetap tampil setelah buka (ya/yes)", "required": false, "section": "hero" },
+    { "key": "couple_quote", "type": "textarea", "label": "Kutipan / motto pasangan", "required": false, "section": "story" },
+    { "key": "partner_one_bio", "type": "textarea", "label": "Bio mempelai 1", "required": false, "section": "story" },
+    { "key": "partner_two_bio", "type": "textarea", "label": "Bio mempelai 2", "required": false, "section": "story" },
+    { "key": "footer_text", "type": "textarea", "label": "Teks penutup", "required": false, "section": "hero" },
+    { "key": "footer_hashtag", "type": "text", "label": "Hashtag (opsional)", "required": false, "section": "hero" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan amplop digital", "required": false, "section": "gift" },
+    { "key": "location_note", "type": "textarea", "label": "Catatan lokasi", "required": false, "section": "location" }
+  ]
+}

@@ -1,0 +1,40 @@
+<section id="home" class="relative w-full flex items-center justify-center text-center px-4" style="min-height: 100%;">
+  <div class="absolute inset-0 bg-gradient-to-b from-deep-red/40 via-dark-bg/60 to-dark-bg z-0"></div>
+  <div class="absolute inset-0 overflow-hidden z-0">
+    <div class="absolute rounded-full" style="width: 120px; height: 120px; background: radial-gradient(circle, rgba(212, 165, 116, 0.12), transparent); top: 15%; left: 20%;"></div>
+    <div class="absolute rounded-full" style="width: 80px; height: 80px; background: radial-gradient(circle, rgba(139, 32, 53, 0.2), transparent); top: 25%; right: 25%;"></div>
+    <div class="absolute rounded-full" style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(212, 165, 116, 0.08), transparent); bottom: 30%; left: 60%;"></div>
+    <div class="absolute rounded-full" style="width: 60px; height: 60px; background: radial-gradient(circle, rgba(245, 230, 208, 0.1), transparent); top: 60%; left: 10%;"></div>
+    <div class="absolute rounded-full" style="width: 100px; height: 100px; background: radial-gradient(circle, rgba(139, 32, 53, 0.15), transparent); bottom: 20%; right: 15%;"></div>
+  </div>
+  <div class="relative z-10 max-w-3xl mx-auto">
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/70 animate-fade-up" id="hero-invite-text"><%= content.hero_tagline || 'Together with their families' %></p>
+    <div class="gold-divider animate-fade-up delay-1"></div>
+    <h1 class="animate-fade-up delay-2">
+      <span class="font-display text-5xl sm:text-7xl lg:text-8xl font-light text-champagne block"><%= content.partner_one %></span>
+      <span class="font-display italic text-gold text-2xl sm:text-3xl my-2 block">&amp;</span>
+      <span class="font-display text-5xl sm:text-7xl lg:text-8xl font-light text-champagne block"><%= content.partner_two %></span>
+    </h1>
+    <div class="gold-divider animate-fade-up delay-3"></div>
+    <% const wd = helpers.toDate(content.wedding_date); %>
+    <p class="font-ui text-xs tracking-[.25em] uppercase text-champagne/60 animate-fade-up delay-3">
+      <%= wd ? helpers.formatDateTime(content.wedding_date) : '' %>
+    </p>
+    <p class="font-body italic text-lg sm:text-xl text-champagne/50 mt-8 max-w-lg mx-auto animate-fade-up delay-5">
+      <%= content.hero_message || 'Two hearts, one timeless promise — a love story written in the stars.' %>
+    </p>
+    <div id="countdown" class="flex justify-center gap-3 sm:gap-6 mt-10 animate-fade-up delay-5">
+      <% [['cd-days', 'Days'], ['cd-hours', 'Hours'], ['cd-mins', 'Mins'], ['cd-secs', 'Secs']].forEach(function (pair) { %>
+      <div class="countdown-box rounded-lg px-4 py-3 sm:px-6 sm:py-4 min-w-[70px]">
+        <div id="<%= pair[0] %>" class="font-display text-2xl sm:text-3xl text-gold">00</div>
+        <div class="font-ui text-[10px] tracking-[.2em] uppercase text-champagne/40 mt-1"><%= pair[1] %></div>
+      </div>
+      <% }) %>
+    </div>
+    <% if (typeof hasSection === 'function' && hasSection('rsvp')) { %>
+    <div class="mt-10 animate-fade-up delay-5">
+      <a href="#rsvp" class="btn-rsvp inline-block rounded-full px-8 py-3 font-ui text-xs tracking-[.2em] uppercase text-champagne">Kindly Respond</a>
+    </div>
+    <% } %>
+  </div>
+</section>

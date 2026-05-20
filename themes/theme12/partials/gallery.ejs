@@ -1,0 +1,20 @@
+<section class="t12-section">
+  <div class="section-reveal" data-reveal style="text-align:center;margin-bottom:1.75rem">
+    <p class="t12-kicker">OUR MOMENTS</p>
+    <h2 class="t12-heading">Galeri</h2>
+  </div>
+  <% if (gallery && gallery.length) { %>
+  <div class="section-zoom gallery-grid" data-reveal>
+    <% gallery.forEach(function (g) { %>
+    <div class="gallery-item">
+      <div class="gallery-inner">
+        <img src="<%= g.image_url || g.thumbnail_url %>" alt="<%= (g.caption || 'Foto').replace(/"/g, '&quot;') %>" loading="lazy" decoding="async">
+      </div>
+    </div>
+    <% }); %>
+  </div>
+  <% } else { %>
+  <p class="section-zoom t12-inner" data-reveal style="text-align:center;opacity:0.55;font-size:0.95rem">Unggah foto galeri di panel admin.</p>
+  <% } %>
+</section>
+<%- include('section-divider', { tone: 'primary' }) %>

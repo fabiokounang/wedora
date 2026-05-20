@@ -1,0 +1,35 @@
+<section id="home" class="relative w-full flex items-center justify-center text-center" style="min-height: 100%;">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="absolute glow-dot" style="width: 6px; height: 6px; border-radius: 50%; background: var(--secondary); top: 20%; left: 15%; z-index: 2;"></div>
+  <div class="absolute glow-dot" style="width: 4px; height: 4px; border-radius: 50%; background: var(--secondary); top: 35%; right: 20%; z-index: 2; animation-delay: 1s;"></div>
+  <div class="absolute glow-dot" style="width: 5px; height: 5px; border-radius: 50%; background: var(--secondary); bottom: 30%; left: 25%; z-index: 2; animation-delay: 2s;"></div>
+  <div class="absolute glow-dot" style="width: 3px; height: 3px; border-radius: 50%; background: var(--secondary); top: 60%; right: 30%; z-index: 2; animation-delay: 0.5s;"></div>
+  <div class="relative z-10 px-6 py-20">
+    <p class="anim-fade anim-d1 uppercase tracking-[6px] text-xs mb-6" style="color: var(--secondary);">
+      <%= content.hero_tagline || "Together with their families" %>
+    </p>
+    <h1 class="anim-fade anim-d2 font-serif-display font-light" style="font-size: clamp(2.8rem, 8vw, 5.5rem); line-height: 1.1; color: var(--text);">
+      <%= content.partner_one %> <span class="italic font-light" style="color: var(--secondary);">&amp;</span> <%= content.partner_two %>
+    </h1>
+    <div class="anim-fade anim-d3 w-16 h-px mx-auto my-6" style="background: var(--secondary);"></div>
+    <p id="heroDateLine" class="anim-fade anim-d3 font-serif-display italic text-lg md:text-xl" style="color: rgba(245, 230, 216, 0.7);">
+      <% const wd = helpers.toDate(content.wedding_date); %>
+      <%= wd ? helpers.formatDateTime(content.wedding_date) : '' %>
+    </p>
+    <p class="anim-fade anim-d4 mt-6 max-w-md mx-auto text-sm leading-relaxed" style="color: rgba(245, 230, 216, 0.6);">
+      <%= content.hero_message || 'Two hearts, one beautiful beginning. We invite you to celebrate our love.' %>
+    </p>
+    <div id="countdown" class="anim-fade anim-d5 mt-10 flex justify-center gap-4 md:gap-8">
+      <% [['cd-days', 'Days'], ['cd-hours', 'Hours'], ['cd-mins', 'Mins'], ['cd-secs', 'Secs']].forEach(function (pair) { %>
+      <div class="text-center">
+        <div id="<%= pair[0] %>" class="font-serif-display text-3xl md:text-4xl font-light" style="color: var(--text);">--</div>
+        <div class="text-[10px] uppercase tracking-[3px] mt-1" style="color: var(--secondary);"><%= pair[1] %></div>
+      </div>
+      <% }) %>
+    </div>
+    <% if (typeof hasSection === 'function' && hasSection('rsvp')) { %>
+    <a href="#rsvp" class="anim-fade anim-d5 inline-block mt-10 px-8 py-3 rounded-full text-xs uppercase tracking-[3px] transition-all duration-300 hover:scale-105" style="background: var(--primary); color: var(--text); border: 1px solid rgba(201, 168, 124, 0.3);">Kindly RSVP</a>
+    <% } %>
+  </div>
+</section>

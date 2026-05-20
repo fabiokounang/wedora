@@ -1,0 +1,38 @@
+{
+  "key": "theme4",
+  "name": "Wine & Gold",
+  "version": "1.0.0",
+  "preview": "/themes/theme4/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "events", "required": true, "collection": "events" },
+    { "key": "rsvp", "required": false },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "gift", "required": false, "collection": "gift_accounts" },
+    { "key": "wishes", "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama Mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama Mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & Jam", "required": true, "section": "hero" },
+    { "key": "hero_tagline", "type": "text", "label": "Tagline atas (kecil)", "section": "hero" },
+    { "key": "hero_message", "type": "textarea", "label": "Pesan hero", "section": "hero" },
+    { "key": "story_title", "type": "text", "label": "Judul Story", "section": "story" },
+    { "key": "story_subtitle", "type": "text", "label": "Subtitle Story", "section": "story" },
+    { "key": "closing_quote", "type": "textarea", "label": "Kutipan penutup Story", "section": "story" },
+    { "key": "events_subtitle", "type": "text", "label": "Subtitle Events", "section": "events" },
+    { "key": "rsvp_deadline", "type": "text", "label": "Teks RSVP", "section": "rsvp" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan Gift", "section": "gift" }
+  ],
+  "theme_settings": {
+    "colors": [
+      { "key": "bg", "default": "#2a0a0f" },
+      { "key": "gold", "default": "#c9a87c" }
+    ],
+    "fonts": [
+      { "key": "display", "options": ["Cormorant Garamond", "Playfair Display"] },
+      { "key": "body", "options": ["Nunito Sans", "Inter"] }
+    ]
+  }
+}

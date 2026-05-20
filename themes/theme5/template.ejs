@@ -1,0 +1,75 @@
+<%
+  const sectionMap = {};
+  for (const s of sections) sectionMap[s.section_key] = s;
+  function hasSection(key) {
+    const s = sectionMap[key];
+    return !s || s.enabled === 1 || s.enabled === true;
+  }
+  const initials = (s) => (s || '').trim().charAt(0).toUpperCase();
+  const brand = `${initials(content.partner_one)} & ${initials(content.partner_two)}`;
+-%>
+<!doctype html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= content.partner_one %> &amp; <%= content.partner_two %> — Wedding</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/css/lightbox.min.css" />
+  <link rel="stylesheet" href="/themes/theme5/public/style.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            burgundy: '#8b2035',
+            velvet: '#6b1528',
+            champagne: '#f5e6d0',
+            gold: '#d4a574',
+            'deep-red': '#4a0e1a',
+            'dark-bg': '#0f0505',
+            'card-bg': '#1a0a0a',
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="h-full bg-dark-bg text-champagne font-body">
+  <div id="app-wrapper" class="w-full h-full overflow-auto relative">
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+    <div class="glow-orb fixed z-0" style="width: 300px; height: 300px; background: rgba(139, 32, 53, 0.15); top: 10%; left: -5%;"></div>
+    <div class="glow-orb fixed z-0" style="width: 250px; height: 250px; background: rgba(212, 165, 116, 0.08); top: 50%; right: -5%; animation-delay: 2s;"></div>
+    <div class="glow-orb fixed z-0" style="width: 200px; height: 200px; background: rgba(139, 32, 53, 0.1); bottom: 10%; left: 30%; animation-delay: 3s;"></div>
+    <%- include('partials/nav', { brand, hasSection }) %>
+    <% if (hasSection('hero')) { %><%- include('partials/hero', { hasSection }) %><% } %>
+    <% if (hasSection('story')) { %><%- include('partials/story', { story }) %><% } %>
+    <% if (hasSection('events')) { %><%- include('partials/events', { events }) %><% } %>
+    <% if (hasSection('rsvp')) { %><%- include('partials/rsvp') %><% } %>
+    <% if (hasSection('gallery')) { %><%- include('partials/gallery', { gallery }) %><% } %>
+    <% if (hasSection('gift')) { %><%- include('partials/gift', { gifts }) %><% } %>
+    <% if (hasSection('wishes')) { %><%- include('partials/wishes', { wishes }) %><% } %>
+    <%- include('partials/footer') %>
+  </div>
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] hidden">
+    <div class="rounded-full px-6 py-3 text-sm font-ui tracking-wider" style="background: rgba(139, 32, 53, 0.9); border: 1px solid rgba(212, 165, 116, 0.3); backdrop-filter: blur(10px);">
+      <span id="toast-text" class="text-champagne"></span>
+    </div>
+  </div>
+  <script>
+    window.__SITE__ = {
+      siteId: <%= site.id %>,
+      slug: <%- JSON.stringify(site.slug) %>,
+      apiBase: <%- JSON.stringify(apiBase) %>,
+      weddingDate: <%- JSON.stringify(content.wedding_date || null) %>,
+    };
+    window.__WISHES__ = <%- JSON.stringify(wishes || []) %>;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.5/js/lightbox.min.js"></script>
+  <script src="/themes/theme5/public/script.js"></script>
+  <%- include('../shared/music.ejs', { site }) %>
+</body>
+</html>

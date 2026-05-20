@@ -1,0 +1,33 @@
+<section id="home" class="relative hero-bg flex flex-col items-center justify-center text-center px-6" style="min-height:100%;padding-top:80px;padding-bottom:60px">
+  <img src="https://images.unsplash.com/photo-1463320726281-696a485928c7?auto=format&fit=crop&w=300&q=80" alt="Leaf" class="leaf-decoration rounded-full" style="top:8%;left:5%;width:120px" />
+  <img src="https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=260&q=80" alt="Leaf" class="leaf-decoration rounded-full" style="top:12%;right:8%;width:80px;transform:rotate(30deg)" />
+  <img src="https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&w=240&q=80" alt="Leaf" class="leaf-decoration rounded-full" style="bottom:15%;left:10%;width:60px;transform:rotate(-20deg)" />
+  <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=280&q=80" alt="Leaf" class="leaf-decoration rounded-full" style="bottom:10%;right:6%;width:100px;transform:rotate(15deg)" />
+  <div class="fade-up relative z-10">
+    <p class="text-xs tracking-[.35em] uppercase text-dusty-500 mb-6">Together with their families</p>
+    <h1 class="font-serif text-sage-800" style="font-size:clamp(2.5rem,8vw,5.5rem);font-weight:300;line-height:1.1;letter-spacing:.02em">
+      <span><%= content.partner_one %></span>
+      <span class="block text-dusty-400 italic" style="font-size:.35em;letter-spacing:.15em;margin:8px 0">&amp;</span>
+      <span><%= content.partner_two %></span>
+    </h1>
+    <% if (content.hero_tagline) { %>
+    <p class="mt-6 text-sage-500 text-sm tracking-wide max-w-md mx-auto"><%= content.hero_tagline %></p>
+    <% } %>
+    <div class="mt-8 flex items-center justify-center gap-3">
+      <div class="h-px w-12 bg-sage-300"></div>
+      <p class="font-serif text-dusty-500 text-lg tracking-wider"><%= helpers.formatDate(content.wedding_date) %></p>
+      <div class="h-px w-12 bg-sage-300"></div>
+    </div>
+    <div class="mt-10 flex gap-4 sm:gap-8 justify-center">
+      <% [['cd-days','Days'],['cd-hours','Hours'],['cd-mins','Minutes'],['cd-secs','Seconds']].forEach(function(p){ %>
+      <div class="text-center">
+        <span id="<%= p[0] %>" class="font-serif text-sage-700 text-3xl sm:text-4xl">0</span>
+        <p class="text-[10px] tracking-[.2em] uppercase text-sage-400 mt-1"><%= p[1] %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 float-anim">
+    <img src="https://img.icons8.com/?size=96&id=39786&format=png&color=8A9E82" alt="Scroll down" class="icon icon-md" />
+  </div>
+</section>

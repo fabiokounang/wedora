@@ -1,0 +1,30 @@
+<section id="gift" class="py-24 px-6" style="background:#e8ede5">
+
+  <div class="max-w-lg mx-auto text-center">
+
+    <div class="text-center mb-12 fade-up">
+
+      <p class="text-xs tracking-[.3em] uppercase text-dusty-500 mb-3">Your presence is our present</p>
+
+      <h2 class="font-serif text-sage-800 text-4xl sm:text-5xl" style="font-weight:300">Wedding Gift</h2>
+
+    </div>
+
+    <% if (content.gift_message) { %>
+
+      <p class="text-sage-500 text-sm mb-8 fade-up"><%= content.gift_message %></p>
+
+    <% } %>
+
+    <%- include('../../shared/partials/gift-cards.ejs', { gifts }) %>
+
+    <% if (!gifts || gifts.length === 0) { %>
+
+      <p class="text-sage-500 italic mt-6">Gift info coming soon.</p>
+
+    <% } %>
+
+  </div>
+
+</section>
+

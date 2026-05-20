@@ -1,0 +1,78 @@
+<%
+  const quote = (content.couple_quote && String(content.couple_quote).trim()) ? String(content.couple_quote).trim() : '';
+  const quoteSrc = (content.couple_quote_source && String(content.couple_quote_source).trim()) ? String(content.couple_quote_source).trim() : '';
+  const storyTitle = (content.story_title && String(content.story_title).trim()) ? String(content.story_title).trim() : 'Perjalanan cinta kami';
+  const defaultMilestones = [
+    { date_label: '2020', title: 'Pertama bertemu', description: 'Kami bertemu di pertemuan teman dan merasakan kedekatan seketika.' },
+    { date_label: '2021', title: 'Kencan pertama', description: 'Ngopi sederhana yang berubah jadi obrolan berjam-jam.' },
+    { date_label: '2024', title: 'Lamaran', description: 'Di bawah langit penuh bintang, pertanyaan terindah diucapkan.' },
+    { date_label: '2025', title: 'Hari bahagia', description: 'Awal perjalanan selamanya bersama.' },
+  ];
+  const rows = (storiesArray && storiesArray.length)
+    ? storiesArray.map((s) => ({
+        date_label: s.date_label || '',
+        title: s.title || '',
+        description: s.description || '',
+      }))
+    : (content.couple_story && String(content.couple_story).trim())
+      ? [{ date_label: '', title: storyTitle, description: String(content.couple_story).trim() }]
+      : defaultMilestones;
+-%>
+<% if (quote) { %>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-xl mx-auto text-center">
+    <svg viewBox="0 0 60 60" class="w-10 mx-auto mb-6 opacity-50" aria-hidden="true">
+      <path d="M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25Z" fill="none" stroke="#d4af37" stroke-width="0.8" />
+    </svg>
+    <p class="font-serif-elegant text-2xl md:text-3xl text-amber-900/70 italic leading-relaxed">&ldquo;<%- quote %>&rdquo;</p>
+    <% if (quoteSrc) { %>
+      <p class="text-xs text-amber-700/40 mt-4 tracking-widest"><%= quoteSrc %></p>
+    <% } %>
+  </div>
+</section>
+<% } %>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-4xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div class="text-center">
+        <div class="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-amber-50 to-amber-100 border-2 border-amber-200/50 flex items-center justify-center mb-6 overflow-hidden">
+          <svg viewBox="0 0 100 100" class="w-24 opacity-30" aria-hidden="true">
+            <circle cx="50" cy="35" r="18" fill="#d4af37" /><ellipse cx="50" cy="80" rx="28" ry="22" fill="#d4af37" />
+          </svg>
+        </div>
+        <p class="text-xs tracking-[0.3em] text-amber-700/40 uppercase mb-2">Mempelai pria</p>
+        <h3 class="font-serif-elegant text-3xl text-amber-900/80 italic"><%= partnerOne %></h3>
+        <% if (content.partner_one_bio) { %>
+          <p class="text-sm text-amber-700/50 mt-2"><%= content.partner_one_bio %></p>
+        <% } %>
+      </div>
+      <div class="text-center">
+        <div class="w-48 h-48 mx-auto rounded-full bg-gradient-to-br from-rose-50 to-rose-100 border-2 border-rose-200/50 flex items-center justify-center mb-6 overflow-hidden">
+          <svg viewBox="0 0 100 100" class="w-24 opacity-30" aria-hidden="true">
+            <circle cx="50" cy="35" r="18" fill="#e8a0b4" /><ellipse cx="50" cy="80" rx="28" ry="22" fill="#e8a0b4" />
+          </svg>
+        </div>
+        <p class="text-xs tracking-[0.3em] text-amber-700/40 uppercase mb-2">Mempelai wanita</p>
+        <h3 class="font-serif-elegant text-3xl text-amber-900/80 italic"><%= partnerTwo %></h3>
+        <% if (content.partner_two_bio) { %>
+          <p class="text-sm text-amber-700/50 mt-2"><%= content.partner_two_bio %></p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-lg mx-auto">
+    <h2 class="font-serif-elegant text-4xl text-center text-amber-900/80 italic mb-12"><%= storyTitle %></h2>
+    <div class="relative ml-2 pl-8 border-l-2 border-amber-200/50 space-y-10">
+      <% rows.forEach(function (item) { %>
+        <div class="relative">
+          <span class="absolute w-3 h-3 rounded-full bg-amber-300/70 ring-4 ring-amber-50 -left-[21px] top-1" aria-hidden="true"></span>
+          <% if (item.date_label) { %><p class="text-xs tracking-widest text-amber-700/40 mb-1"><%= item.date_label %></p><% } %>
+          <% if (item.title) { %><h4 class="font-serif-elegant text-xl text-amber-900/70"><%= item.title %></h4><% } %>
+          <% if (item.description) { %><p class="text-sm text-amber-700/50 mt-1"><%- item.description %></p><% } %>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

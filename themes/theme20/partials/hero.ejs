@@ -1,0 +1,16 @@
+<section class="t20-reveal t20-hero">
+  <div class="t20-hero-inner">
+    <p class="t20-sans t20-eyebrow">The Wedding Celebration of</p>
+    <h1 class="t20-cinzel t20-hero-names"><%= partnerOne %> <span class="t20-amp">&amp;</span> <%= partnerTwo %></h1>
+    <p class="t20-hero-date"><%= heroDateLabel %></p>
+    <div class="t20-ember-divider"></div>
+  </div>
+</section>
+<% if (coupleQuote) { %>
+<section class="t20-reveal t20-section-pad t20-center">
+  <div class="t20-flame-card">
+    <p class="t20-cinzel t20-quote-title">Our Vow</p>
+    <p class="t20-quote-text"><%= coupleQuote %></p>
+  </div>
+</section>
+<% } %>

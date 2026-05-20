@@ -1,0 +1,14 @@
+<section class="t21-hero-section reveal-section" data-section>
+  <div class="relative text-center px-6 z-10">
+    <p class="font-sans-alt text-xs tracking-[0.3em] uppercase mb-4" style="color:var(--taupe)"><%= heroIntro %></p>
+    <h1 class="font-script shimmer text-5xl md:text-7xl mb-6"><%= partnerOne %> &amp; <%= partnerTwo %></h1>
+    <div class="gold-line w-24 mx-auto mb-6"></div>
+    <p class="font-sans-alt text-sm tracking-[0.2em] uppercase" style="color:var(--taupe)"><%= heroDateLabel %></p>
+    <% if (heroVenueLine) { %>
+      <p class="font-sans-alt text-xs tracking-[0.15em] mt-2" style="color:var(--taupe)"><%= heroVenueLine %></p>
+    <% } %>
+    <% if (coupleQuote) { %>
+      <p class="max-w-md mx-auto text-lg leading-relaxed italic mt-6" style="color:var(--brown)">&ldquo;<%- coupleQuote %>&rdquo;</p>
+    <% } %>
+  </div>
+</section>

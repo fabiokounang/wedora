@@ -1,0 +1,47 @@
+    <!-- Modal -->
+<% (events || []).forEach(function (ev) {
+  const q = encodeURIComponent(((ev.venue_name || '') + ' ' + (ev.address || '')).trim());
+  const embed = ev.map_url && String(ev.map_url).indexOf('http') === 0
+    ? ev.map_url
+    : ('https://maps.google.com/maps?width=520&height=400&hl=en&q=' + q + '&t=&z=12&ie=UTF8&iwloc=B&output=embed');
+  const extLink = ev.map_url || ('https://www.google.com/maps/search/?api=1&query=' + q);
+%>
+                        <div class="modal fade show-maps" id="event-<%= ev.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <button type="button" class=" btn-modal" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-xmark"></i>
+                            </button>
+                            <div class="modal-actions">
+                                <h2 style="font-family: ; font-size: px;"><%= ev.title %></h2>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <div class="maps-element">
+                                    <div class="loader-wrapper-modal">
+                                        <div class="lds-default">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <iframe class="maps-embed" width="100%" height="328" id="gmap_canvas_<%= ev.id %>" data-src="<%= embed %>" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                </div>
+                                <a class="btn btn-custom color__button__trans color-secondary mt-3" href="<%= extLink %>" target="_blank" rel="noopener noreferrer">
+                                                                            Location
+                                                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<% }); %>

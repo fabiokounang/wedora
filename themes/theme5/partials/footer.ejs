@@ -1,0 +1,11 @@
+<footer class="relative z-10 w-full px-4 py-16 text-center border-t border-gold/10">
+  <p class="font-display text-3xl gold-shimmer"><%= content.partner_one %> &amp; <%= content.partner_two %></p>
+  <p id="footer-msg" class="text-champagne/30 font-ui text-xs tracking-[.2em] uppercase mt-4">
+    <%= content.footer_note || 'With all our love, thank you for being part of our story' %>
+  </p>
+  <div class="gold-divider mt-6"></div>
+  <% const fd = helpers.toDate(content.wedding_date); %>
+  <p class="text-champagne/20 font-ui text-[10px] tracking-wider mt-4">
+    <%= fd ? helpers.formatDate(fd) : '' %>
+  </p>
+</footer>

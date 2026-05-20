@@ -1,0 +1,17 @@
+/**
+ * Theme10 — palet sedikit bergeser dari default Viding theme_96
+ * (asli: main #ffedd2, primary #e9dac4, secondary #a1855b, pink #e9088a)
+ */
+:root {
+  --color-main: #faf5ef;
+  --color-primary: #e2ddd4;
+  --color-secondary: #8f7349;
+  --color-dark: #1a1c1b;
+  --vd-color-pink: #b83d72;
+  --color-gradient: linear-gradient(180deg, var(--color-primary) 0%, transparent 100%);
+}
+
+/* Logo navbar: path memakai fill hex bawaan Viding — samakan ke aksen baru */
+.logo-viding.logo-custom-color path {
+  fill: #b83d72 !important;
+}

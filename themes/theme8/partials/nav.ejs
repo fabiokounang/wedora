@@ -1,0 +1,21 @@
+<nav class="dot-nav" id="dotNav">
+  <div class="dot active" data-section="hero" title="Beginning"></div>
+  <% if (hasSection('story')) { %>
+  <div class="dot" data-section="story" title="Our Story"></div>
+  <% } %>
+  <% if (hasSection('gallery')) { %>
+  <div class="dot" data-section="gallery" title="Gallery"></div>
+  <% } %>
+  <% if (hasSection('events')) { %>
+  <div class="dot" data-section="events" title="The Day"></div>
+  <% } %>
+  <% if (hasSection('rsvp')) { %>
+  <div class="dot" data-section="rsvp" title="RSVP"></div>
+  <% } %>
+  <% if (hasSection('gift')) { %>
+  <div class="dot" data-section="gift" title="Gift"></div>
+  <% } %>
+  <% if (hasSection('wishes')) { %>
+  <div class="dot" data-section="wishes" title="Wishes"></div>
+  <% } %>
+</nav>

@@ -1,0 +1,22 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy: connect repo → Render detects render.yaml → set env (DB_*, JWT_SECRET, dll.) di dashboard.
+services:
+  - type: web
+    name: wedding-saas
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    # Sebelum versi baru live: buat DB (jika boleh) + semua tabel; migrasi sudah applied di-skip.
+    preDeployCommand: npm run migrate
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY_HOPS
+        value: "1"
+      - key: COOKIE_SECURE
+        value: "true"
+      # Isi di dashboard Render (jangan commit secret):
+      # JWT_SECRET, DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME, DB_SSL=true (TiDB Cloud)
+      # PUBLIC_APP_URL, BASE_DOMAIN, MAIL_*, MIDTRANS_*

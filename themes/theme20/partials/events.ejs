@@ -1,0 +1,19 @@
+<section class="t20-reveal t20-section-pad">
+  <h2 class="t20-cinzel t20-section-heading">Wedding Events</h2>
+  <div class="t20-events-grid">
+    <% for (const ev of eventRows) { %>
+    <div class="t20-flame-card t20-event-card">
+      <div class="t20-event-icon-wrap">
+        <i data-lucide="<%= (ev.event_type && ev.event_type.toLowerCase().includes('resepsi')) ? 'wine' : 'church' %>" class="t20-event-icon"></i>
+      </div>
+      <h3 class="t20-cinzel t20-event-title"><%= ev.name || ev.title || 'Acara' %></h3>
+      <% if (ev.event_date) { %><p class="t20-event-detail"><%= helpers.formatDate(ev.event_date) %></p><% } %>
+      <% if (ev.venue || ev.venue_name) { %><p class="t20-event-venue"><%= ev.venue || ev.venue_name %></p><% } %>
+      <% if (ev.address) { %><p class="t20-event-address"><%= ev.address %></p><% } %>
+      <% if (ev.maps_url || ev.map_url) { %>
+      <a href="<%= ev.maps_url || ev.map_url %>" target="_blank" rel="noopener noreferrer" class="t20-map-link">Buka Maps</a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+</section>

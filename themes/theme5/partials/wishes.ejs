@@ -1,0 +1,18 @@
+<section id="wishes" class="relative z-10 w-full px-4 py-24">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/60 section-reveal">Words From the Heart</p>
+    <h2 class="font-display text-4xl sm:text-5xl text-champagne mt-3 section-reveal">With Love</h2>
+    <div class="gold-divider section-reveal"></div>
+  </div>
+  <div class="max-w-2xl mx-auto mt-8 section-reveal">
+    <form id="wish-form" class="flex flex-col sm:flex-row gap-3">
+      <input type="text" id="wish-name" required class="rounded-lg px-4 py-3 font-body text-lg flex-shrink-0 w-full sm:w-36" placeholder="Name" />
+      <textarea id="wish-msg" required rows="1" class="rounded-lg px-4 py-3 font-body text-lg flex-1 min-h-[48px]" placeholder="Your heartfelt wish..."></textarea>
+      <button type="submit" id="wish-btn" class="btn-rsvp rounded-lg px-4 flex items-center justify-center flex-shrink-0 py-3 sm:py-0">
+        <i data-lucide="send" style="width: 18px; height: 18px"></i>
+      </button>
+    </form>
+  </div>
+  <div id="wishes-list" class="max-w-3xl mx-auto mt-10 grid sm:grid-cols-2 gap-4"></div>
+  <p id="wishes-empty" class="text-center text-champagne/30 font-ui text-xs tracking-wider mt-6">Be the first to leave a heartfelt wish ✨</p>
+</section>

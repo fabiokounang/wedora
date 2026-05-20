@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" role="img" aria-label="Twilight Garden preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A0E14"/>
+      <stop offset="50%" style="stop-color:#2D1524"/>
+      <stop offset="100%" style="stop-color:#0F0A0D"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A84C"/>
+      <stop offset="100%" style="stop-color:#8B2252"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <rect x="60" y="50" width="280" height="200" fill="none" stroke="rgba(201,168,76,0.45)" stroke-width="1"/>
+  <text x="200" y="130" text-anchor="middle" fill="url(#gold)" font-family="Georgia,serif" font-size="22" font-weight="300">A &amp; B</text>
+  <text x="200" y="168" text-anchor="middle" fill="rgba(191,168,154,0.9)" font-family="sans-serif" font-size="10" letter-spacing="0.2em">TWILIGHT GARDEN</text>
+  <circle cx="200" cy="210" r="3" fill="#C9A84C"/>
+</svg>

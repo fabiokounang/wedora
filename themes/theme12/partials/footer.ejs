@@ -1,0 +1,9 @@
+<section class="t12-section" style="text-align:center;padding-bottom:3.5rem">
+  <div class="section-reveal" data-reveal>
+    <svg width="30" height="22" viewBox="0 0 20 14" fill="none" style="margin-bottom:1rem" aria-hidden="true"><path d="M10 14C5 14 0 9 0 5 0 2 2 0 5 0c2 0 4 1.5 5 4C11 1.5 13 0 15 0c3 0 5 2 5 5 0 4-5 9-10 9z" fill="var(--primary)" opacity="0.3" /></svg>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.05rem,2.8vw,1.35rem);font-style:italic;margin:0 0 0.5rem;font-weight:300;line-height:1.55"><%= content.footer_text || 'Terima kasih telah menjadi bagian dari cerita kami.' %></p>
+    <% if (content.footer_hashtag) { %>
+    <p class="t12-kicker" style="opacity:0.45;margin:0">#<%= String(content.footer_hashtag).replace(/^#+/, '') %></p>
+    <% } %>
+  </div>
+</section>

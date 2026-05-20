@@ -1,0 +1,33 @@
+<%
+  const withMap = (events || []).find((e) => e.map_url && String(e.map_url).trim());
+  const primary = (events && events[0]) ? events[0] : null;
+  const venue = (withMap && withMap.venue_name) || (primary && primary.venue_name) || '';
+  const address = (withMap && withMap.address) || (primary && primary.address) || '';
+  const mapUrl = withMap && withMap.map_url ? String(withMap.map_url).trim() : '';
+-%>
+<section class="wedding-section wedding-section--tint" style="text-align:center;">
+  <div class="reveal section-inner" style="max-width:520px;">
+    <h2 class="section-title">Lokasi</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <% if (content.location_note) { %>
+    <p class="section-muted-lead" style="margin-bottom:1.25rem;"><%= content.location_note %></p>
+    <% } %>
+    <div class="map-embed-wrap">
+      <i data-lucide="map-pin" style="color:var(--warm-gold);width:32px;height:32px;margin:0 auto;display:block;"></i>
+      <% if (venue) { %>
+      <p class="font-serif-elegant" style="font-size:1.35rem;color:var(--warm-gold);margin-top:1rem;"><%= venue %></p>
+      <% } %>
+      <% if (address) { %>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-top:0.5rem;line-height:1.5;"><%= address %></p>
+      <% } %>
+      <% if (!venue && !address) { %>
+      <p class="section-muted-lead" style="margin-top:1rem;">Alamat dan peta dapat ditambahkan pada acara di admin.</p>
+      <% } %>
+      <% if (mapUrl) { %>
+      <div class="map-embed-inner">
+        <iframe title="Peta lokasi" src="<%= mapUrl %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</section>

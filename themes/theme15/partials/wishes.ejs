@@ -1,0 +1,28 @@
+﻿<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-md mx-auto">
+    <h2 class="font-serif-elegant text-4xl text-center text-amber-900/80 italic mb-10">Ucapan &amp; doa</h2>
+    <form id="wishForm" class="card-romantic rounded-2xl p-8 space-y-5 mb-6">
+      <div>
+        <label for="wishName" class="text-xs tracking-widest text-amber-700/50 uppercase block mb-1">Nama</label>
+        <input id="wishName" type="text" required class="t15-input" placeholder="Nama Anda" autocomplete="name">
+      </div>
+      <div>
+        <label for="wishMsg" class="text-xs tracking-widest text-amber-700/50 uppercase block mb-1">Ucapan</label>
+        <textarea id="wishMsg" rows="3" required class="t15-input t15-textarea" placeholder="Tuliskan ucapan atau doa…"></textarea>
+      </div>
+      <button type="submit" id="wishBtn" class="btn-romantic w-full text-white py-3 rounded-full text-sm tracking-widest uppercase">Kirim ucapan</button>
+    </form>
+    <div id="wishesList" class="space-y-3">
+      <% if (wishes && wishes.length) { %>
+        <% wishes.forEach(function (w) { %>
+          <div class="card-romantic rounded-xl p-4 t15-wish-card">
+            <% if (w.message) { %><p class="text-sm text-amber-900/70">&ldquo;<%= w.message %>&rdquo;</p><% } %>
+            <p class="text-xs text-amber-700/40 mt-1">— <%= w.guest_name %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p id="noWishes" class="text-center text-sm text-amber-700/45 italic">Jadilah yang pertama meninggalkan ucapan hangat.</p>
+      <% } %>
+    </div>
+  </div>
+</section>

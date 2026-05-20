@@ -1,0 +1,21 @@
+<section id="wishes" class="section-pad" style="background: linear-gradient(180deg, var(--bg) 0%, var(--burgundy, #3d1420) 100%);">
+  <div class="max-w-2xl mx-auto text-center">
+    <div class="reveal">
+      <p class="uppercase tracking-[5px] text-xs mb-3" style="color: var(--secondary);">Share Your Love</p>
+      <h2 class="font-serif-display text-3xl md:text-4xl font-light mb-8" style="color: var(--text);">Guest Wishes</h2>
+    </div>
+    <form id="wishForm" class="reveal card-warm p-6 mb-8 text-left">
+      <div class="mb-4">
+        <label for="wishName" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">Your Name</label>
+        <input type="text" id="wishName" required placeholder="Your name" class="w-full text-sm" />
+      </div>
+      <div class="mb-4">
+        <label for="wishMsg" class="block text-xs uppercase tracking-wider mb-2" style="color: var(--secondary);">Your Message</label>
+        <textarea id="wishMsg" rows="3" required placeholder="Write your heartfelt wishes..." class="w-full text-sm"></textarea>
+      </div>
+      <button type="submit" id="wishBtn" class="w-full py-3 rounded-full text-xs uppercase tracking-[3px] transition-all duration-300 hover:scale-[1.02]" style="background: var(--primary); color: var(--text); border: 1px solid rgba(201, 168, 124, 0.3);">Send Wishes</button>
+      <div id="wishStatus" class="text-center text-sm mt-2 hidden"></div>
+    </form>
+    <div id="wishesList" class="space-y-4 text-left"></div>
+  </div>
+</section>

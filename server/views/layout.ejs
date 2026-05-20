@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' ? title : 'Panel' %> &middot; Undangan Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin/static/admin.css" />
+</head>
+<body class="<%= typeof authSplit !== 'undefined' && authSplit ? 'auth-split' : 'admin-app' %><%= typeof user !== 'undefined' && user ? ' admin-has-sidebar' : '' %>">
+  <% if (!(typeof authSplit !== 'undefined' && authSplit)) { %>
+  <div class="admin-bg-mesh" aria-hidden="true"></div>
+  <% } %>
+
+  <% if (typeof user !== 'undefined' && user) { %>
+  <% const ap = typeof adminPath !== 'undefined' ? adminPath : ''; %>
+  <div class="admin-shell">
+  <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+  <aside class="sidebar" id="admin-sidebar" aria-label="Menu admin" aria-hidden="true">
+    <div class="sidebar-header">
+      <a href="/dashboard" class="sidebar-brand">
+        <span class="sidebar-brand__mark" aria-hidden="true">✦</span>
+        <span class="sidebar-brand__name">Undangan Digital</span>
+      </a>
+    </div>
+
+    <div class="sidebar-inner">
+      <nav class="sidebar-nav" aria-label="Navigasi utama">
+
+        <div class="sidebar-nav__group">
+          <p class="sidebar-nav__group-label" id="nav-group-invitations">Undangan</p>
+          <a href="/dashboard" class="sidebar-nav__link<%= ap === '/dashboard' ? ' is-active' : '' %>" aria-labelledby="nav-group-invitations">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path d="M2 4a1 1 0 011-1h14a1 1 0 011 1v3a1 1 0 01-1 1H3a1 1 0 01-1-1V4zM2 10a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM12 10a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5z" fill="currentColor"/>
+            </svg>
+            Semua undangan
+          </a>
+          <a href="/sites/new" class="sidebar-nav__link<%= ap === '/sites/new' ? ' is-active' : '' %>" aria-labelledby="nav-group-invitations">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" fill="currentColor"/>
+            </svg>
+            Buat undangan baru
+          </a>
+        </div>
+
+        <div class="sidebar-nav__group">
+          <p class="sidebar-nav__group-label" id="nav-group-account">Akun</p>
+          <a href="/settings" class="sidebar-nav__link<%= ap === '/settings' ? ' is-active' : '' %>" aria-labelledby="nav-group-account">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" fill="currentColor"/>
+            </svg>
+            Pengaturan akun
+          </a>
+        </div>
+
+        <div class="sidebar-nav__group">
+          <p class="sidebar-nav__group-label" id="nav-group-themes">Tampilan</p>
+          <a href="/theme-gallery" class="sidebar-nav__link<%= ap === '/theme-gallery' ? ' is-active' : '' %>" aria-labelledby="nav-group-themes">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z" clip-rule="evenodd" fill="currentColor"/>
+            </svg>
+            Katalog tema
+          </a>
+          <a href="/billing" class="sidebar-nav__link<%= ap === '/billing' ? ' is-active' : '' %>" aria-labelledby="nav-group-themes">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path d="M3 5a2 2 0 012-2h10a2 2 0 012 2v1H3V5zM3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm3 3a1 1 0 100 2h3a1 1 0 100-2H6z" fill="currentColor"/>
+            </svg>
+            Billing
+          </a>
+        </div>
+
+        <% if (user.role === 'super_admin') { %>
+        <div class="sidebar-nav__group">
+          <p class="sidebar-nav__group-label" id="nav-group-admin">Admin</p>
+          <a href="/users" class="sidebar-nav__link<%= ap.indexOf('/users') === 0 ? ' is-active' : '' %>" aria-labelledby="nav-group-admin">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" fill="currentColor"/>
+            </svg>
+            Pengguna
+          </a>
+          <a href="/promo-codes" class="sidebar-nav__link<%= ap.indexOf('/promo-codes') === 0 ? ' is-active' : '' %>" aria-labelledby="nav-group-admin">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path d="M4 4h4v2H4V4zm0 5h12v2H4V9zm0 5h8v2H4v-2z" fill="currentColor"/>
+            </svg>
+            Kode promo
+          </a>
+          <a href="/landing-cms" class="sidebar-nav__link<%= ap.indexOf('/landing-cms') === 0 ? ' is-active' : '' %>" aria-labelledby="nav-group-admin">
+            <svg class="sidebar-nav__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16">
+              <path d="M4 3h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v10h10V5H5zm2 2h6v2H7V7zm0 3h6v2H7v-2zm0 3h4v2H7v-2z" fill="currentColor"/>
+            </svg>
+            Konten publik
+          </a>
+        </div>
+        <% } %>
+
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user__avatar"><%= user.name.charAt(0).toUpperCase() %></div>
+        <div class="sidebar-user__info">
+          <span class="sidebar-user__name"><%= user.name %></span>
+          <span class="sidebar-user__role"><%= user.role === 'super_admin' ? 'Administrator' : 'Client' %></span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-main">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-expanded="false" aria-controls="admin-sidebar">
+        <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="visually-hidden">Buka menu</span>
+      </button>
+      <div class="topbar-title">
+        <a href="/dashboard" class="topbar-brand-mobile">
+          <span aria-hidden="true">✦</span> Undangan Digital
+        </a>
+      </div>
+      <div class="user-area">
+        <span class="user-badge"><%= user.role === 'super_admin' ? 'Admin' : 'Client' %></span>
+        <span class="user-name"><%= user.name %></span>
+        <form method="POST" action="/logout" class="logout-form">
+          <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+          <button class="btn-link topbar-logout" type="submit" title="Logout">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" fill="currentColor"/>
+            </svg>
+            <span class="visually-hidden">Logout</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
+  <% } %>
+
+  <main class="<%= typeof authSplit !== 'undefined' && authSplit ? 'main-auth' : 'container' %>">
+    <% if (typeof flash !== 'undefined' && flash) { %>
+      <div class="flash flash-<%= flash.type || 'info' %>"><%= flash.message %></div>
+    <% } %>
+    <%- body %>
+  </main>
+
+  <% if (typeof user !== 'undefined' && user) { %>
+  </div>
+  </div>
+  <% } %>
+
+  <script src="/admin/static/admin.js" defer></script>
+</body>
+</html>

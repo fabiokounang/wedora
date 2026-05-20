@@ -1,0 +1,32 @@
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-md mx-auto">
+    <h2 class="font-serif-elegant text-4xl text-center text-amber-900/80 italic mb-10">RSVP</h2>
+    <form id="rsvpForm" class="card-romantic rounded-2xl p-8 space-y-5" autocomplete="on">
+      <div>
+        <label for="rsvpName" class="text-xs tracking-widest text-amber-700/50 uppercase block mb-1">Nama</label>
+        <input id="rsvpName" name="guest_name" type="text" required class="t14-input" placeholder="Nama lengkap Anda" autocomplete="name">
+      </div>
+      <div>
+        <label for="rsvpPhone" class="text-xs tracking-widest text-amber-700/50 uppercase block mb-1">WhatsApp (opsional)</label>
+        <input id="rsvpPhone" name="guest_phone" type="tel" class="t14-input" inputmode="tel" autocomplete="tel" placeholder="08… / 628…">
+      </div>
+      <div>
+        <p class="text-xs tracking-widest text-amber-700/50 uppercase block mb-2">Kehadiran</p>
+        <div class="flex flex-wrap gap-3">
+          <label class="t14-radio-pill"><input type="radio" name="attend" id="attendYes" class="sr-only" value="yes" checked> <span>Hadir</span></label>
+          <label class="t14-radio-pill"><input type="radio" name="attend" id="attendNo" class="sr-only" value="no"> <span>Berhalangan</span></label>
+        </div>
+      </div>
+      <div>
+        <label for="rsvpGuests" class="text-xs tracking-widest text-amber-700/50 uppercase block mb-1">Jumlah tamu</label>
+        <input id="rsvpGuests" name="guests_count" type="number" min="1" max="20" value="1" class="t14-input" inputmode="numeric">
+      </div>
+      <div>
+        <label for="rsvpMsg" class="text-xs tracking-widest text-amber-700/50 uppercase block mb-1">Pesan (opsional)</label>
+        <textarea id="rsvpMsg" name="notes" rows="3" class="t14-input t14-textarea" placeholder="Ucapan untuk mempelai…"></textarea>
+      </div>
+      <button type="submit" id="rsvpSubmitBtn" class="btn-romantic w-full text-white py-3 rounded-full text-sm tracking-widest uppercase">Kirim RSVP</button>
+      <p id="rsvp-msg" class="text-center text-sm text-green-700/80 hidden">Terima kasih atas konfirmasinya.</p>
+    </form>
+  </div>
+</section>

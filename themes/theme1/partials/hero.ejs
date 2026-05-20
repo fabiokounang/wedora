@@ -1,0 +1,28 @@
+<section id="hero" class="relative w-full" style="min-height:100%">
+  <div class="absolute inset-0" style="background:linear-gradient(135deg,#e8ddd0 0%,#d4c4a8 30%,#c9b99a 60%,#b5a68e 100%)"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse at 30% 40%,rgba(250,248,245,.4) 0%,transparent 70%)"></div>
+  <div class="absolute bottom-0 left-0 w-full h-32" style="background:linear-gradient(to top,#faf8f5,transparent)"></div>
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-32" style="min-height:100%">
+    <p class="text-brown text-sm tracking-[.35em] uppercase mb-6 fade-up">
+      <%= content.hero_tagline || "We're getting married!" %>
+    </p>
+    <h1 class="font-serif text-6xl md:text-8xl font-light text-deep leading-tight fade-up" style="transition-delay:.15s">
+      <span><%= content.partner_one %></span><br>
+      <span class="text-warm text-4xl md:text-5xl italic">&amp;</span><br>
+      <span><%= content.partner_two %></span>
+    </h1>
+    <div class="w-16 h-px bg-warm my-8 fade-up" style="transition-delay:.3s"></div>
+    <p class="font-serif text-xl md:text-2xl text-brown tracking-wide fade-up" style="transition-delay:.45s">
+      <%= helpers.formatDate(content.wedding_date) %>
+    </p>
+    <div class="flex gap-6 md:gap-10 mt-10 fade-up" style="transition-delay:.6s" id="countdown-wrap">
+      <% [['cd-days','Days'],['cd-hours','Hours'],['cd-mins','Minutes'],['cd-secs','Seconds']].forEach(function(pair){ %>
+      <div class="text-center">
+        <span id="<%= pair[0] %>" class="font-serif text-3xl md:text-4xl text-deep">--</span>
+        <p class="text-xs tracking-widest text-brown mt-1 uppercase"><%= pair[1] %></p>
+      </div>
+      <% }) %>
+    </div>
+    <a href="#rsvp" class="mt-12 px-8 py-3 rounded-full bg-brown text-cream text-sm tracking-widest uppercase hover:bg-deep transition-colors duration-300 fade-up" style="transition-delay:.75s">RSVP Now</a>
+  </div>
+</section>

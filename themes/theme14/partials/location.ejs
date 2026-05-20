@@ -1,0 +1,36 @@
+<%
+  const withMap = (eventRows || []).find(function (e) { return e.map_url && String(e.map_url).trim(); });
+  const ev0 = (eventRows && eventRows[0]) ? eventRows[0] : null;
+  const addr = (withMap && withMap.address) || (ev0 && ev0.address) || '';
+  const venue = (withMap && withMap.venue_name) || (ev0 && ev0.venue_name) || '';
+  const mapUrl = withMap && withMap.map_url ? String(withMap.map_url).trim() : '';
+  const mapsSearch = encodeURIComponent([venue, addr].filter(Boolean).join(' '));
+-%>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-lg mx-auto text-center">
+    <h2 class="font-serif-elegant text-4xl text-amber-900/80 italic mb-8">Lokasi</h2>
+    <% if (content.location_note) { %>
+      <p class="text-sm text-amber-700/60 mb-6"><%= content.location_note %></p>
+    <% } %>
+    <div class="card-romantic rounded-2xl overflow-hidden text-left">
+      <% if (mapUrl) { %>
+        <iframe title="Peta lokasi" class="t14-map-frame" src="<%= mapUrl %>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <% } else { %>
+        <div class="h-48 bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center">
+          <div class="text-center">
+            <i data-lucide="map-pin" class="w-10 h-10 text-amber-400/60 mx-auto mb-2"></i>
+            <p class="text-xs text-amber-700/40 px-4">Tambahkan URL peta (embed) pada salah satu acara di admin untuk menampilkan peta.</p>
+          </div>
+        </div>
+      <% } %>
+      <div class="p-6 text-center">
+        <% if (addr || venue) { %>
+          <p class="text-sm text-amber-700/60 mb-4"><%= [venue, addr].filter(Boolean).join(' · ') %></p>
+        <% } %>
+        <% if (mapsSearch) { %>
+          <a href="https://www.google.com/maps/search/?api=1&query=<%= mapsSearch %>" target="_blank" rel="noopener noreferrer" class="btn-romantic inline-block text-white px-8 py-2.5 rounded-full text-xs tracking-widest uppercase no-underline">Buka Google Maps</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

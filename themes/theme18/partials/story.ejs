@@ -1,0 +1,18 @@
+<% const storyTitle = content.story_title || 'Our Story'; %>
+<% if (storiesArray && storiesArray.length > 0) { %>
+<section class="t18-reveal t18-section-pad">
+  <h2 class="t18-serif t18-section-heading"><%= storyTitle %></h2>
+  <div class="t18-story-list">
+    <% for (const [i, item] of storiesArray.entries()) { %>
+    <div class="t18-story-item <%= i % 2 === 0 ? 't18-story-item--left' : 't18-story-item--right' %>">
+      <div class="t18-story-dot"></div>
+      <div class="t18-story-card">
+        <% if (item.event_date || item.date_label) { %><p class="t18-sans t18-story-date"><%= item.event_date || item.date_label %></p><% } %>
+        <% if (item.title) { %><p class="t18-serif t18-story-title"><%= item.title %></p><% } %>
+        <% if (item.description) { %><p class="t18-story-desc"><%= item.description %></p><% } %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+</section>
+<% } %>

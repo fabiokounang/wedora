@@ -1,0 +1,42 @@
+<%
+  const defaultEvents = [
+    { title: 'Akad / pemberkatan', icon: 'church', datetime: content.wedding_date, venue_name: 'Tempat acara', address: '' },
+    { title: 'Resepsi', icon: 'wine', datetime: content.wedding_date, venue_name: 'Ballroom', address: '' },
+  ];
+  const evRows = (eventRows && eventRows.length) ? eventRows : defaultEvents;
+  const icons = ['church', 'wine', 'sparkles', 'heart'];
+-%>
+<section class="py-20 px-6 section-hidden" data-section>
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-serif-elegant text-3xl md:text-4xl text-center text-[#3d3128] mb-16">Rangkaian acara</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <% evRows.forEach(function (ev, idx) {
+           const iconName = icons[idx % icons.length];
+           const dt = helpers.toDate(ev.datetime || content.wedding_date);
+           let timeStr = '';
+           if (dt) {
+             timeStr = String(dt.getHours()).padStart(2, '0') + ':' + String(dt.getMinutes()).padStart(2, '0');
+           }
+      %>
+        <div class="glass-card p-8 text-center">
+          <div class="text-[#d4af37] mb-4">
+            <i data-lucide="<%= iconName %>" class="w-8 h-8 mx-auto"></i>
+          </div>
+          <h3 class="font-serif-elegant text-2xl text-[#3d3128] mb-2"><%= ev.title %></h3>
+          <% if (ev.datetime || content.wedding_date) { %>
+            <p class="text-sm text-[#8b7355] font-medium"><%= helpers.formatDate(ev.datetime || content.wedding_date) %></p>
+          <% } %>
+          <% if (timeStr) { %>
+            <p class="text-sm text-[#6b5a4a]"><%= timeStr %> WIB</p>
+          <% } %>
+          <% if (ev.venue_name) { %>
+            <p class="text-sm text-[#8b7355] mt-3"><%= ev.venue_name %></p>
+          <% } %>
+          <% if (ev.address) { %>
+            <p class="text-xs text-[#6b5a4a] mt-1"><%= ev.address %></p>
+          <% } %>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

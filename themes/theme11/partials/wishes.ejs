@@ -1,0 +1,24 @@
+<section class="wedding-section wedding-section--tint" style="text-align:center;">
+  <div class="reveal section-inner" style="max-width:500px;">
+    <h2 class="section-title">Ucapan &amp; doa</h2>
+    <div class="ornament-divider"><span class="ornament-line"></span><span class="ornament-diamond"></span><span class="ornament-line"></span></div>
+    <div class="wishes-list-stack" id="wishesList">
+      <% (wishes || []).forEach(function (w) { %>
+      <div class="wish-card">
+        <p style="color:var(--text-light);font-size:0.9rem;font-style:italic;line-height:1.5;">&ldquo;<%= w.message %>&rdquo;</p>
+        <p style="color:var(--warm-gold);font-size:0.8rem;margin-top:0.5rem;">— <%= w.guest_name %></p>
+      </div>
+      <% }); %>
+    </div>
+    <div class="wishes-form-block">
+      <form id="wishForm" class="rsvp-form-stack text-left">
+        <label class="sr-only" for="wishName">Nama</label>
+        <input class="wish-form-input" type="text" id="wishName" name="name" placeholder="Nama Anda" required autocomplete="name">
+        <label class="sr-only" for="wishMsg">Ucapan</label>
+        <textarea class="wish-form-input" id="wishMsg" name="message" rows="3" required placeholder="Tuliskan ucapan atau doa"></textarea>
+        <button type="submit" class="rsvp-btn" id="wishBtn">Kirim ucapan</button>
+      </form>
+      <p id="wishStatus" class="rsvp-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+{
+  "name": "wedding-saas-server",
+  "version": "0.1.0",
+  "description": "Multi-tenant wedding invitation SaaS backend",
+  "main": "src/app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "npm run migrate && node src/app.js",
+    "dev": "npm run migrate && nodemon src/app.js",
+    "migrate": "node src/scripts/migrate.js",
+    "db:backup": "node src/scripts/db-backup.js",
+    "db:restore": "node src/scripts/db-restore.js",
+    "seed": "node src/scripts/seed.js",
+    "sync-theme-previews": "node src/scripts/sync-theme-previews.js",
+    "sync-themes": "node src/scripts/sync-themes.js",
+    "check-themes-db": "node src/scripts/check-themes-db.js",
+    "validate-themes": "node src/scripts/validate-theme-manifests.js",
+    "smoke-themes": "node src/scripts/smoke-render-all-themes.js",
+    "e2e:themes:http": "node src/scripts/e2e-http-preview-themes.js",
+    "e2e:themes": "node src/scripts/validate-theme-manifests.js && node src/scripts/smoke-render-all-themes.js",
+    "e2e:theme6": "node src/scripts/e2e-theme6-manage.js",
+    "e2e:reflection": "npx playwright test e2e/edit-reflected-in-all-themes.spec.js",
+    "e2e": "npx playwright test --headed",
+    "e2e:ui": "npx playwright test --ui"
+  },
+  "dependencies": {
+    "@sentry/node": "^9.47.1",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "google-auth-library": "^9.15.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "midtrans-client": "^1.4.3",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.0",
+    "nodemailer": "^8.0.7",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "nodemon": "^3.1.4"
+  }
+}

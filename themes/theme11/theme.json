@@ -1,0 +1,29 @@
+{
+  "key": "theme11",
+  "name": "Twilight Garden",
+  "version": "1.0.0",
+  "preview": "/themes/theme11/public/preview.svg",
+  "sections": [
+    { "key": "hero", "required": true },
+    { "key": "story", "required": false, "collection": "story_items" },
+    { "key": "countdown", "required": false },
+    { "key": "events", "required": false, "collection": "events" },
+    { "key": "gallery", "required": false, "collection": "gallery_items" },
+    { "key": "rsvp", "required": false },
+    { "key": "wishes", "required": false },
+    { "key": "gift", "required": false, "collection": "gift_accounts" },
+    { "key": "location", "required": false }
+  ],
+  "content_fields": [
+    { "key": "partner_one", "type": "text", "label": "Nama mempelai 1", "required": true, "section": "hero" },
+    { "key": "partner_two", "type": "text", "label": "Nama mempelai 2", "required": true, "section": "hero" },
+    { "key": "wedding_date", "type": "datetime", "label": "Tanggal & waktu acara", "required": true, "section": "hero" },
+    { "key": "cover_subtitle", "type": "text", "label": "Subjudul sampul (mis. The Wedding of)", "required": false, "section": "hero" },
+    { "key": "keep_hero_visible_after_open", "type": "text", "label": "Hero tetap tampil setelah buka undangan (isi ya / yes — default: disembunyikan)", "required": false, "section": "hero" },
+    { "key": "story_title", "type": "text", "label": "Judul cerita", "required": false, "section": "story" },
+    { "key": "couple_story", "type": "textarea", "label": "Cerita pasangan (jika tanpa item story)", "required": false, "section": "story" },
+    { "key": "gift_message", "type": "textarea", "label": "Pesan bagian hadiah", "required": false, "section": "gift" },
+    { "key": "footer_text", "type": "textarea", "label": "Teks footer", "required": false, "section": "hero" },
+    { "key": "location_note", "type": "textarea", "label": "Catatan lokasi (opsional)", "required": false, "section": "location" }
+  ]
+}

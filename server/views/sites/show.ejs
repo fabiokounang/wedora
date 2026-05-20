@@ -1,0 +1,440 @@
+<%/* ── Site Show ─────────────────────────────────────────────────────────── */%>
+
+<div class="site-show-page">
+
+<% if (typeof themeSyncOk !== 'undefined' && themeSyncOk) { %>
+  <div class="flash flash-success" style="margin-bottom: 1rem">
+    <% if (user.role === 'super_admin') { %>
+      Tema disinkronkan: cache dimuat ulang; situs demo tema baru juga dibuat di database jika belum ada.
+    <% } else { %>
+      Tema disinkronkan: cache dimuat ulang dari disk.
+    <% } %>
+  </div>
+<% } %>
+
+<%/* ── Page header ──────────────────────────────────────────────────────── */%>
+<div class="page-header site-show-header">
+  <div class="site-show-header__meta">
+    <p class="catalog-eyebrow" style="margin-bottom: 4px">Undangan</p>
+    <div class="site-show-header__title-row">
+      <h1 class="site-show-header__slug"><%= site.slug %></h1>
+      <span class="badge badge-<%= site.status %>"><%= site.status %></span>
+    </div>
+    <p class="muted small">Tema: <strong><%= site.theme_key %></strong></p>
+  </div>
+  <div class="site-show-header__actions">
+    <a href="/preview/<%= site.slug %>" target="_blank" rel="noopener" class="btn btn-primary btn-pill" title="Menampilkan undangan ini: teks, foto, musik, dan pengaturan yang Anda simpan di halaman ini.">Lihat undangan</a>
+    <a href="<%= themeDemoUrl %>" target="_blank" rel="noopener" class="btn btn-ghost btn-pill" title="Halaman contoh di katalog tema: data demo saja, bukan isi undangan yang Anda edit di sini.">Contoh template (katalog)</a>
+    <a href="/sites/<%= site.id %>/rsvps.csv" class="btn btn-ghost btn-pill">⬇ Export RSVP</a>
+    <a href="/sites/<%= site.id %>/wa-blast" class="btn btn-ghost btn-pill">📲 WA Blast</a>
+    <% if (user.role === 'super_admin' && site.status !== 'published') { %>
+      <form method="POST" action="/sites/<%= site.id %>/publish" style="display:inline">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <button class="btn btn-primary btn-pill">Publish</button>
+      </form>
+    <% } else if (user.role === 'super_admin') { %>
+      <form method="POST" action="/sites/<%= site.id %>/unpublish" style="display:inline">
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <button class="btn btn-soft btn-pill">Unpublish</button>
+      </form>
+    <% } %>
+  </div>
+</div>
+
+<% if (typeof showPreviewTip !== 'undefined' && showPreviewTip) { %>
+  <div class="flash flash-success">
+    Site dibuat. Untuk melihat <strong>isi undangan yang Anda isi</strong>, buka
+    <a href="/preview/<%= site.slug %>" target="_blank" rel="noopener">Lihat undangan</a>
+    <span class="muted small">(perlu login). Setelah publish, tamu membuka lewat subdomain / <code>?site=<%= site.slug %></code> di dev.</span>
+  </div>
+<% } %>
+
+<%/* ── Tab bar ──────────────────────────────────────────────────────────── */%>
+<nav class="tabs site-tabs" aria-label="Site sections">
+  <a href="#content" class="tab-link tab-active" data-tab="content">
+    <span class="tab-icon">✏️</span> Content
+  </a>
+  <a href="#sections" class="tab-link" data-tab="sections">
+    <span class="tab-icon">🗂️</span> Sections
+  </a>
+  <% (manifest.sections || []).forEach(function(s) { if (s.collection) { %>
+    <a href="#<%= s.collection %>" class="tab-link" data-tab="<%= s.collection %>">
+      <span class="tab-icon">📋</span> <%= s.key %>
+    </a>
+  <% } }) %>
+  <a href="#rsvps" class="tab-link" data-tab="rsvps">
+    <span class="tab-icon">✉️</span> RSVPs <span class="tab-count"><%= rsvps.length %></span>
+  </a>
+  <a href="#wishes" class="tab-link" data-tab="wishes">
+    <span class="tab-icon">💬</span> Wishes <span class="tab-count"><%= wishes.length %></span>
+  </a>
+  <a href="#settings" class="tab-link" data-tab="settings">
+    <span class="tab-icon">⚙️</span> Settings
+  </a>
+</nav>
+
+<%/* ── Content tab ──────────────────────────────────────────────────────── */%>
+<section id="tab-content" class="tab-pane tab-pane-active">
+  <div class="co-panel tab-panel-body">
+    <div class="tab-panel-head">
+      <h2 class="tab-panel-title">Content</h2>
+      <p class="muted small">Isi data pasangan, acara, dan teks undangan.</p>
+    </div>
+    <form method="POST" action="/sites/<%= site.id %>/content" class="form content-form">
+      <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+      <div class="content-form__grid">
+        <% (manifest.content_fields || []).forEach(function(f) {
+             const val = (content.data || {})[f.key] || '';
+        %>
+          <div class="form-group<%= f.type === 'textarea' ? ' form-group--wide' : '' %>">
+            <label class="form-group__label" for="cf-<%= f.key %>">
+              <span class="form-group__label-main">
+                <%= f.label || f.key %>
+                <% if (f.required) { %><span class="form-req" aria-hidden="true">*</span><% } %>
+              </span>
+              <% if (f.section) { %><span class="form-group__section-tag muted small" title="Bagian di tema"><%= f.section %></span><% } %>
+            </label>
+            <% if (f.type === 'textarea') { %>
+              <textarea id="cf-<%= f.key %>" name="<%= f.key %>" rows="3" class="form-group__control" <%= f.required ? 'required' : '' %>><%= val %></textarea>
+            <% } else if (f.type === 'datetime') { %>
+              <input id="cf-<%= f.key %>" type="datetime-local" name="<%= f.key %>" value="<%= val ? String(val).replace(' ', 'T').slice(0,16) : '' %>" class="form-group__control" <%= f.required ? 'required' : '' %> />
+            <% } else if (f.type === 'color') { %>
+              <div class="form-group__color-wrap">
+                <input id="cf-<%= f.key %>" type="color" name="<%= f.key %>" value="<%= val || '#000000' %>" class="form-group__color" />
+                <span class="form-group__color-val muted small"><%= val || '#000000' %></span>
+              </div>
+            <% } else { %>
+              <input id="cf-<%= f.key %>" type="text" name="<%= f.key %>" value="<%= val %>" class="form-group__control" <%= f.required ? 'required' : '' %> />
+            <% } %>
+          </div>
+        <% }) %>
+      </div>
+      <div class="form-footer">
+        <button type="submit" class="btn btn-primary btn-pill">Simpan Content</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%/* ── Sections tab ─────────────────────────────────────────────────────── */%>
+<section id="tab-sections" class="tab-pane">
+  <div class="co-panel tab-panel-body">
+    <div class="tab-panel-head">
+      <h2 class="tab-panel-title">Sections</h2>
+      <p class="muted small">Aktifkan atau nonaktifkan bagian halaman undangan, atur urutannya.</p>
+    </div>
+    <form method="POST" action="/sites/<%= site.id %>/sections" class="form">
+      <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+      <%
+        const sectionMap = {};
+        (sections || []).forEach(function(s) { sectionMap[s.section_key] = s; });
+      %>
+      <div class="sections-grid">
+        <% (manifest.sections || []).forEach(function(m, idx) {
+             const s = sectionMap[m.key] || { enabled: 1, sort_order: idx + 1 };
+        %>
+          <div class="section-row<%= m.required ? ' section-row--required' : '' %>">
+            <input type="hidden" name="section_key[]" value="<%= m.key %>" />
+            <div class="section-row__info">
+              <strong class="section-row__key"><%= m.key %></strong>
+              <% if (m.required) { %><span class="badge badge-draft" style="font-size:0.7rem">required</span><% } %>
+            </div>
+            <label class="switch section-row__toggle" title="<%= m.required ? 'Wajib aktif' : 'Aktifkan/nonaktifkan' %>">
+              <input type="checkbox" name="enabled_<%= m.key %>" <%= s.enabled ? 'checked' : '' %> <%= m.required ? 'disabled checked' : '' %> />
+              <span class="switch__track"></span>
+            </label>
+            <div class="section-row__order">
+              <label class="muted small" style="margin-bottom: 2px">Urutan</label>
+              <input type="number" name="sort_order_<%= m.key %>" value="<%= s.sort_order %>" min="1" max="99" class="section-row__num" />
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <div class="form-footer">
+        <button type="submit" class="btn btn-primary btn-pill">Simpan Sections</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<%/* ── Collection tabs (story, events, gallery, gifts, …) ─────────────── */%>
+<% (manifest.sections || []).forEach(function(s) { if (s.collection) { %>
+  <section id="tab-<%= s.collection %>" class="tab-pane">
+    <div class="co-panel tab-panel-body">
+      <div class="tab-panel-head">
+        <h2 class="tab-panel-title"><%= s.key %> <span class="muted small">(<%= s.collection %>)</span></h2>
+      </div>
+      <%- include('../partials/collection', { site, collection: s.collection, items: collections[s.collection] || [] }) %>
+    </div>
+  </section>
+<% } }) %>
+
+<%/* ── RSVPs tab ────────────────────────────────────────────────────────── */%>
+<section id="tab-rsvps" class="tab-pane">
+  <div class="co-panel tab-panel-body">
+    <div class="tab-panel-head tab-panel-head--split">
+      <div>
+        <h2 class="tab-panel-title">RSVPs <span class="tab-count tab-count--inline"><%= rsvps.length %></span></h2>
+        <p class="muted small">Daftar konfirmasi kehadiran tamu.</p>
+      </div>
+      <a href="/sites/<%= site.id %>/rsvps.csv" class="btn btn-soft btn-pill">⬇ Export CSV</a>
+    </div>
+    <% if (rsvps.length === 0) { %>
+      <div class="empty-state">
+        <p class="empty-state__title">Belum ada RSVP</p>
+        <p class="muted small">RSVP dari tamu akan muncul di sini.</p>
+      </div>
+    <% } else { %>
+      <div class="data-table-scroll">
+        <table class="table data-table">
+          <thead>
+            <tr>
+              <th>Waktu</th>
+              <th>Nama tamu</th>
+              <th>Telepon</th>
+              <th>Hadir</th>
+              <th>Jml tamu</th>
+              <th>Catatan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% rsvps.forEach(function(r) { %>
+              <tr>
+                <td class="small muted dt-nowrap"><%= r.created_at %></td>
+                <td><strong><%= r.guest_name %></strong></td>
+                <td class="small dt-mono"><%= r.guest_phone || '—' %></td>
+                <td>
+                  <span class="badge badge-<%= r.attendance === 'yes' ? 'published' : 'draft' %>">
+                    <%= r.attendance === 'yes' ? 'Hadir' : r.attendance === 'no' ? 'Tidak hadir' : r.attendance %>
+                  </span>
+                </td>
+                <td class="text-center"><%= r.guests_count %></td>
+                <td class="small muted"><%= r.notes || '' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%/* ── Wishes tab ───────────────────────────────────────────────────────── */%>
+<section id="tab-wishes" class="tab-pane">
+  <div class="co-panel tab-panel-body">
+    <div class="tab-panel-head">
+      <h2 class="tab-panel-title">Wishes <span class="tab-count tab-count--inline"><%= wishes.length %></span></h2>
+      <p class="muted small">Pesan dan doa dari para tamu.</p>
+    </div>
+    <% if (wishes.length === 0) { %>
+      <div class="empty-state">
+        <p class="empty-state__title">Belum ada wishes</p>
+        <p class="muted small">Ucapan selamat dari tamu akan muncul di sini.</p>
+      </div>
+    <% } else { %>
+      <div class="wishes-list">
+        <% wishes.forEach(function(w) { %>
+          <div class="wish-card">
+            <div class="wish-card__head">
+              <div class="wish-card__avatar"><%= w.guest_name ? w.guest_name.charAt(0).toUpperCase() : '?' %></div>
+              <div class="wish-card__meta">
+                <strong class="wish-card__name"><%= w.guest_name %></strong>
+                <span class="muted small wish-card__time"><%= w.created_at %></span>
+              </div>
+              <span class="badge badge-<%= w.approved ? 'published' : 'draft' %> wish-card__badge">
+                <%= w.approved ? 'Disetujui' : 'Menunggu' %>
+              </span>
+            </div>
+            <p class="wish-card__message"><%= w.message %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%/* ── Settings tab ─────────────────────────────────────────────────────── */%>
+<section id="tab-settings" class="tab-pane">
+  <div class="co-panel tab-panel-body">
+    <div class="tab-panel-head">
+      <h2 class="tab-panel-title">Settings</h2>
+      <p class="muted small">Konfigurasi tema, musik, dan pengaturan lanjutan.</p>
+    </div>
+    <% /* Form POST terpisah (bukan nested) — nested <form> di dalam settings membuat tombol Simpan tidak bekerja di banyak browser */ %>
+    <form id="orphan-theme-sync-<%= site.id %>" method="POST" action="/themes/sync" hidden>
+      <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+      <input type="hidden" name="return_to" value="/sites/<%= site.id %>#settings" />
+    </form>
+    <% if (user.role === 'super_admin') { %>
+      <% if (site.status === 'draft') { %>
+      <form id="orphan-wf-<%= site.id %>-inreview" method="POST" action="/sites/<%= site.id %>/workflow" hidden>
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="hidden" name="status" value="in_review" />
+      </form>
+      <% } %>
+      <% if (site.status === 'in_review') { %>
+      <form id="orphan-wf-<%= site.id %>-todraft" method="POST" action="/sites/<%= site.id %>/workflow" hidden>
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="hidden" name="status" value="draft" />
+      </form>
+      <form id="orphan-wf-<%= site.id %>-toapproved" method="POST" action="/sites/<%= site.id %>/workflow" hidden>
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="hidden" name="status" value="approved" />
+      </form>
+      <% } %>
+      <% if (site.status === 'approved') { %>
+      <form id="orphan-wf-<%= site.id %>-needrev" method="POST" action="/sites/<%= site.id %>/workflow" hidden>
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+        <input type="hidden" name="status" value="in_review" />
+      </form>
+      <form id="orphan-pub-<%= site.id %>" method="POST" action="/sites/<%= site.id %>/publish" hidden>
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+      </form>
+      <% } %>
+      <% if (site.status === 'published') { %>
+      <form id="orphan-unpub-<%= site.id %>" method="POST" action="/sites/<%= site.id %>/unpublish" hidden>
+        <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+      </form>
+      <% } %>
+    <% } %>
+    <form method="POST" action="/sites/<%= site.id %>/settings?_csrf=<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>" class="form settings-form" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+
+      <div class="settings-section">
+        <h3 class="settings-section__title">Tema</h3>
+        <p class="muted small settings-intro">
+          <strong>Sinkron tema</strong> memuat ulang <code>theme.json</code> dan template dari disk (berguna setelah mengedit file tema).
+          <strong>Contoh template (katalog)</strong> membuka halaman demo publik (<code>?site=preview-<%= site.theme_key %></code>) dengan <em>data contoh</em> — bukan teks, foto, atau musik dari undangan ini.
+          Untuk melihat hasil yang Anda simpan di tab Content &amp; Settings, gunakan tombol <strong>Lihat undangan</strong> di bagian atas halaman.
+        </p>
+        <div class="settings-theme-actions">
+          <button type="submit" form="orphan-theme-sync-<%= site.id %>" class="btn btn-soft btn-pill">Sinkron tema</button>
+          <a href="<%= themeDemoUrl %>" target="_blank" rel="noopener" class="btn btn-soft btn-pill" title="Data demo katalog, bukan undangan ini">Contoh template (katalog)</a>
+        </div>
+        <div class="form-group">
+          <label class="form-group__label" for="set-theme">Template tema</label>
+          <select id="set-theme" name="theme_key" class="form-group__control">
+            <% themes.forEach(function(t) { %>
+              <option value="<%= t.key %>" <%= site.theme_key === t.key ? 'selected' : '' %>><%= t.name %> (<%= t.key %>)</option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3 class="settings-section__title">Musik latar</h3>
+        <label class="switch switch--music settings-music-toggle">
+          <input type="checkbox" name="music_enabled" value="1" <%= (site.music_enabled == 1 || site.music_enabled === true) ? 'checked' : '' %> />
+          <span class="switch__track"></span>
+          <span class="switch__label-text">
+            Aktifkan musik latar
+            <span class="switch__hint muted small">Saat aktif, tamu melihat tombol musik di pojok halaman undangan (semua tema).</span>
+          </span>
+        </label>
+        <div class="settings-music-fields">
+          <div class="form-group">
+            <label class="form-group__label" for="set-music-file">Unggah file MP3 (opsional)</label>
+            <input id="set-music-file" type="file" name="music_file" accept=".mp3,audio/mpeg,audio/mp3" class="form-group__control" />
+            <span class="form-group__hint muted small">Jika memilih file di sini, file ini dipakai sebagai musik latar. Maks. 25 MB.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="set-music-url">URL file musik (MP3), jika tidak mengunggah</label>
+            <input id="set-music-url" type="text" name="music_url" value="<%= site.music_url || '' %>" placeholder="https://… atau /uploads/…" class="form-group__control" />
+            <span class="form-group__hint muted small">Link langsung ke file audio, atau kosongkan jika hanya memakai unggahan MP3 di atas.</span>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="set-music-start">Pemutaran untuk pengunjung</label>
+            <select id="set-music-start" name="music_start" class="form-group__control">
+              <option value="autoplay" <%= (site.music_autoplay == 1 || site.music_autoplay === true) ? 'selected' : '' %>>Coba autoplay saat halaman dibuka (browser bisa memblokir)</option>
+              <option value="tap" <%= (site.music_autoplay != 1 && site.music_autoplay !== true) ? 'selected' : '' %>>Hanya setelah tamu mengetuk tombol musik (disarankan)</option>
+            </select>
+            <span class="form-group__hint muted small">Mengatur perilaku di sisi tamu. Banyak browser memblokir suara otomatis di HP.</span>
+          </div>
+        </div>
+      </div>
+
+      <% if (user.role === 'super_admin') { %>
+        <div class="settings-section settings-section--workflow">
+          <h3 class="settings-section__title">Workflow status</h3>
+          <% var wfOrder = ['draft', 'in_review', 'approved', 'published'];
+             var wfLabels = { draft: 'Draft', in_review: 'Review', approved: 'Disetujui', published: 'Live' };
+             var wfStatusLabels = { draft: 'Draft', in_review: 'Dalam review', approved: 'Disetujui', published: 'Published', archived: 'Diarsipkan' };
+             var wfStep = wfOrder.indexOf(site.status);
+             var wfArchived = site.status === 'archived';
+             var wfInFlow = wfStep >= 0;
+          %>
+          <div class="settings-workflow-card">
+            <div class="settings-workflow-card__head">
+              <div class="settings-workflow-card__badge-wrap">
+                <span class="badge badge-<%= site.status %> workflow-status-pill"><%= wfStatusLabels[site.status] || site.status %></span>
+              </div>
+              <% if (wfArchived) { %>
+                <p class="muted small settings-workflow-card__hint">Situs diarsipkan. Tamu tidak lagi mengakses halaman undangan.</p>
+              <% } else { %>
+                <p class="muted small settings-workflow-card__hint">Alur internal sebelum go-live. Pilih aksi di bawah sesuai tahap saat ini.</p>
+              <% } %>
+            </div>
+            <% if (!wfArchived && wfInFlow) { %>
+            <ol class="workflow-steps" aria-label="Tahapan workflow">
+              <% wfOrder.forEach(function(st, i) {
+                   var stepClass = i < wfStep ? 'is-done' : (i === wfStep ? 'is-current' : 'is-upcoming');
+              %>
+                <li class="workflow-steps__item <%= stepClass %>"><span class="workflow-steps__label"><%= wfLabels[st] %></span></li>
+              <% }); %>
+            </ol>
+            <% } %>
+            <div class="workflow-actions">
+            <% if (site.status === 'draft') { %>
+              <button type="submit" form="orphan-wf-<%= site.id %>-inreview" class="btn btn-soft btn-pill">Kirim ke review</button>
+            <% } %>
+            <% if (site.status === 'in_review') { %>
+              <button type="submit" form="orphan-wf-<%= site.id %>-todraft" class="btn btn-soft btn-pill">Kembalikan ke draft</button>
+              <button type="submit" form="orphan-wf-<%= site.id %>-toapproved" class="btn btn-primary btn-pill">Setujui</button>
+            <% } %>
+            <% if (site.status === 'approved') { %>
+              <button type="submit" form="orphan-wf-<%= site.id %>-needrev" class="btn btn-soft btn-pill">Perlu revisi</button>
+              <button type="submit" form="orphan-pub-<%= site.id %>" class="btn btn-primary btn-pill">Publish</button>
+            <% } %>
+            <% if (site.status === 'published') { %>
+              <button type="submit" form="orphan-unpub-<%= site.id %>" class="btn btn-soft btn-pill">Unpublish (kembali approved)</button>
+            <% } %>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3 class="settings-section__title">Admin</h3>
+          <div class="settings-admin-grid">
+            <div class="form-group">
+              <label class="form-group__label" for="set-owner">Assigned client (owner)</label>
+              <select id="set-owner" name="owner_user_id" class="form-group__control">
+                <option value="" <%= !site.owner_user_id ? 'selected' : '' %>>— None —</option>
+                <% (clients || []).forEach(function(c) { %>
+                  <option value="<%= c.id %>" <%= Number(site.owner_user_id) === Number(c.id) ? 'selected' : '' %>><%= c.name %> &lt;<%= c.email %>&gt;</option>
+                <% }) %>
+              </select>
+              <span class="form-group__hint muted small">User ini hanya melihat situs yang mereka miliki di dashboard.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-group__label" for="set-managed-by">Managed by</label>
+              <select id="set-managed-by" name="managed_by" class="form-group__control">
+                <option value="admin" <%= site.managed_by === 'admin' ? 'selected' : '' %>>Admin</option>
+                <option value="self" <%= site.managed_by === 'self' ? 'selected' : '' %>>Self (client)</option>
+              </select>
+            </div>
+            <div class="form-group settings-admin-grid__full">
+              <label class="form-group__label" for="set-domain">Custom domain</label>
+              <input id="set-domain" type="text" name="custom_domain" value="<%= site.custom_domain || '' %>" class="form-group__control" placeholder="undangan.example.com" />
+            </div>
+          </div>
+        </div>
+      <% } %>
+
+      <div class="form-footer">
+        <button type="submit" class="btn btn-primary btn-pill">Simpan Settings</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</div><%/* /.site-show-page */%>

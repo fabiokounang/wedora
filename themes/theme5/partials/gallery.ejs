@@ -1,0 +1,21 @@
+<section id="gallery" class="relative z-10 w-full px-4 py-24">
+  <div class="max-w-3xl mx-auto text-center">
+    <p class="font-ui text-xs tracking-[.3em] uppercase text-gold/60 section-reveal">Captured in Time</p>
+    <h2 class="font-display text-4xl sm:text-5xl text-champagne mt-3 section-reveal">Moments</h2>
+    <div class="gold-divider section-reveal"></div>
+  </div>
+  <div class="max-w-5xl mx-auto mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+    <% (gallery || []).forEach(function (item, idx) {
+         const tall = idx % 3 === 1;
+    %>
+    <a href="<%= item.image_url %>" data-lightbox="theme5-gallery" <% if (item.caption) { %>data-title="<%= item.caption %>"<% } %> class="gallery-item block <%= tall ? 'md:row-span-2' : 'aspect-square' %> rounded-lg overflow-hidden section-reveal">
+      <div class="gallery-inner w-full h-full <%= tall ? 'min-h-[280px]' : '' %>">
+        <img src="<%= item.thumbnail_url || item.image_url %>" alt="<%= item.caption || 'Photo' %>" class="w-full h-full object-cover" />
+      </div>
+    </a>
+    <% }) %>
+    <% if (!gallery || gallery.length === 0) { %>
+      <p class="col-span-full text-center text-champagne/35 font-ui text-sm">Foto galeri akan tampil di sini setelah diunggah.</p>
+    <% } %>
+  </div>
+</section>

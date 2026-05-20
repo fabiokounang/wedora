@@ -1,0 +1,43 @@
+<section id="events" class="scene" style="background:linear-gradient(160deg,var(--surface),var(--ivory))">
+  <div class="w-full max-w-4xl mx-auto px-6 py-24 text-center">
+    <div class="stagger-1 chapter-num">The Wedding Day</div>
+    <h2 class="stagger-1 font-story text-4xl md:text-5xl font-light mt-4" style="color:var(--deep)">Celebration Details</h2>
+    <div class="stagger-2 gold-line"></div>
+    <% if (content.events_subtitle) { %>
+    <div class="stagger-2 font-story text-xl mt-2 italic" style="color:var(--dusty-pink)"><%= content.events_subtitle %></div>
+    <% } else { %>
+    <div class="stagger-2 font-story text-xl mt-2 italic" style="color:var(--dusty-pink)"><%= helpers.formatDate(content.wedding_date) %></div>
+    <% } %>
+    <div class="grid md:grid-cols-2 gap-12 mt-16 stagger-3">
+      <% (events || []).forEach(function(ev, idx) { %>
+      <div class="text-center p-8" style="border:1px solid rgba(196,169,106,.2)">
+        <svg class="mx-auto mb-4" width="32" height="32" viewBox="0 0 32 32">
+          <% if (idx % 2 === 0) { %>
+          <path d="M16 4 L20 12 L16 8 L12 12Z" fill="none" stroke="var(--gold)" stroke-width=".8" />
+          <circle cx="16" cy="20" r="8" fill="none" stroke="var(--gold)" stroke-width=".5" />
+          <% } else { %>
+          <circle cx="16" cy="14" r="6" fill="none" stroke="var(--gold)" stroke-width=".5" />
+          <path d="M8 26 Q16 20 24 26" fill="none" stroke="var(--gold)" stroke-width=".8" />
+          <% } %>
+        </svg>
+        <div class="chapter-num mb-2"><%= ev.event_type || ev.title %></div>
+        <% if (ev.datetime) { %>
+        <h3 class="font-story text-2xl" style="color:var(--deep)"><%= helpers.formatDateTime(ev.datetime) %></h3>
+        <% } %>
+        <% if (ev.venue_name) { %>
+        <p class="font-story text-lg mt-2" style="color:var(--taupe)"><%= ev.venue_name %></p>
+        <% } %>
+        <% if (ev.address) { %>
+        <p class="font-story text-base mt-1" style="color:var(--taupe);opacity:.7"><%= ev.address %></p>
+        <% } %>
+        <% if (ev.map_url) { %>
+        <a href="<%= ev.map_url %>" target="_blank" rel="noopener" class="inline-block mt-3 text-xs tracking-widest uppercase" style="color:var(--gold)">View Map →</a>
+        <% } %>
+      </div>
+      <% }) %>
+      <% if (!events || events.length === 0) { %>
+      <p class="col-span-full font-story text-base" style="color:var(--taupe)">Event details coming soon...</p>
+      <% } %>
+    </div>
+  </div>
+</section>
