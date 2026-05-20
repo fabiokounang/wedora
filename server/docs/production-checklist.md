@@ -21,6 +21,13 @@ Target ~100+ undangan aktif: satu Node + MySQL dengan backup rutin biasanya cuku
 
 - Migrasi: `npm run migrate`, atau otomatis lewat `prestart` saat `npm start` / `predev` saat `npm run dev`.
 - **Render + TiDB:** `render.yaml` menjalankan `preDeployCommand: npm run migrate` sebelum deploy. Set `DB_SSL=true` untuk TiDB Cloud.
+- Error `Unknown column 'music_enabled' in 'sites'`: DB production belum dapat migrasi musik. Redeploy (jalankan `014_site_music_columns.sql`) atau di TiDB Console jalankan:
+  ```sql
+  ALTER TABLE sites ADD COLUMN music_enabled TINYINT(1) NOT NULL DEFAULT 0;
+  ALTER TABLE sites ADD COLUMN music_autoplay TINYINT(1) NOT NULL DEFAULT 0;
+  ALTER TABLE sites ADD COLUMN music_url VARCHAR(1024) NULL;
+  ```
+  Pastikan log deploy menampilkan `> running migration 014_site_music_columns.sql`.
 - Jika TiDB hanya menyediakan satu database (tanpa hak `CREATE DATABASE`): buat DB di panel, set `DB_NAME`, opsional `DB_SKIP_CREATE_DATABASE=true`.
 - Backup otomatis harian — `npm run db:backup` (output di `server/backups/`). Perlu `mysqldump` di PATH; restore: `DB_RESTORE_CONFIRM=yes npm run db:restore -- path/to/file.sql.gz` (butuh `mysql` CLI).
 - Uji **restore** ke staging sekali per kuarter.
