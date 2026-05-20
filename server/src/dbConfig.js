@@ -40,6 +40,13 @@ function getMysqlBaseOptions({ database, multipleStatements } = {}) {
   if (database !== false) {
     opts.database = database === undefined ? getDbName() : database;
   }
+  if (process.env.NODE_ENV === 'production') {
+      opts.ssl = {
+          minVersion: 'TLSv1.2',
+          rejectUnauthorized: true
+      };
+  }
+
   if (multipleStatements) opts.multipleStatements = true;
   return opts;
 }
