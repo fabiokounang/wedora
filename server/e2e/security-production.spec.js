@@ -15,6 +15,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
 const { test, expect } = require('@playwright/test');
 const { query, one, pool } = require('../src/db');
+const { LIMIT_ONE } = require('../src/models/sqlColumns');
 
 const BASE = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000';
 const TS = Date.now();
@@ -88,7 +89,7 @@ test.describe('1 — Promo RBAC: client blocked from /promo-codes', () => {
   });
 
   test('04 — POST /promo-codes/:id (update) as client → 403', async ({ playwright }) => {
-    const promo = await one('SELECT id FROM promo_codes ORDER BY id LIMIT 1');
+    const promo = await one('SELECT id FROM promo_codes ORDER BY id LIMIT ?', [LIMIT_ONE]);
     if (!promo) return;
     const ctx = await apiLogin(playwright, CLIENT.email, CLIENT.password);
     const res = await ctx.post(`/promo-codes/${promo.id}`, {
@@ -100,7 +101,7 @@ test.describe('1 — Promo RBAC: client blocked from /promo-codes', () => {
   });
 
   test('05 — POST /promo-codes/:id/delete as client → 403', async ({ playwright }) => {
-    const promo = await one('SELECT id FROM promo_codes ORDER BY id LIMIT 1');
+    const promo = await one('SELECT id FROM promo_codes ORDER BY id LIMIT ?', [LIMIT_ONE]);
     if (!promo) return;
     const ctx = await apiLogin(playwright, CLIENT.email, CLIENT.password);
     const res = await ctx.post(`/promo-codes/${promo.id}/delete`, { maxRedirects: 0 });
@@ -452,7 +453,7 @@ test.describe('6 — Public endpoint validation & abuse', () => {
   let pubSiteId;
 
   test('60 — setup: create a draft and a published site', async () => {
-    const admin = await one("SELECT id FROM users WHERE role = 'super_admin' LIMIT 1");
+    const admin = await one("SELECT id FROM users WHERE role = 'super_admin' LIMIT ?", [LIMIT_ONE]);
     await pool.query(
       `INSERT INTO sites (slug, theme_key, status, owner_user_id, managed_by, site_type)
        VALUES (?, 'flavor01', 'draft', ?, 'admin', 'invitation')`,

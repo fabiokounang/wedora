@@ -7,6 +7,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
 const { test, expect } = require('@playwright/test');
 const { query, one } = require('../src/db');
+const { PROMO_CODE_COLUMNS, LIMIT_ONE } = require('../src/models/sqlColumns');
 
 const SUPER_EMAIL = process.env.E2E_SUPER_EMAIL || 'admin@wedding.local';
 const SUPER_PASSWORD = process.env.E2E_SUPER_PASSWORD || 'admin123';
@@ -142,7 +143,7 @@ test.describe('2 — CRUD Kode Promo', () => {
     await page.waitForURL(/promo-codes\?notice=created/);
 
     await expect(page.locator('.flash-success, .flash.flash-success')).toBeVisible();
-    const row = await one('SELECT * FROM promo_codes WHERE code = ?', [PROMO_CODE]);
+    const row = await one(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE code = ?`, [PROMO_CODE]);
     expect(row).toBeTruthy();
     expect(Number(row.discount_value)).toBe(25);
     expect(Number(row.max_uses)).toBe(10);
@@ -166,7 +167,7 @@ test.describe('2 — CRUD Kode Promo', () => {
     await detailsEl.locator('button[type="submit"]:has-text("Simpan")').click();
     await page.waitForURL(/promo-codes\?notice=updated/);
 
-    const row = await one('SELECT * FROM promo_codes WHERE id = ?', [promoId]);
+    const row = await one(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE id = ?`, [promoId]);
     expect(Number(row.discount_value)).toBe(50);
     expect(Number(row.active)).toBe(0);
   });
@@ -206,7 +207,7 @@ test.describe('3 — Konten Publik CMS (semua tab)', () => {
   let originalBrand;
 
   test('20 — simpan: backup brand lama', async () => {
-    const row = await one('SELECT content FROM landing_settings ORDER BY id DESC LIMIT 1');
+    const row = await one('SELECT content FROM landing_settings ORDER BY id DESC LIMIT ?', [LIMIT_ONE]);
     if (row && row.content) {
       try {
         const c = typeof row.content === 'string' ? JSON.parse(row.content) : row.content;
@@ -284,7 +285,7 @@ test.describe('3 — Konten Publik CMS (semua tab)', () => {
   });
 
   test('22 — verifikasi: field tersimpan di DB', async () => {
-    const row = await one('SELECT content FROM landing_settings ORDER BY id DESC LIMIT 1');
+    const row = await one('SELECT content FROM landing_settings ORDER BY id DESC LIMIT ?', [LIMIT_ONE]);
     expect(row).toBeTruthy();
     const c = typeof row.content === 'string' ? JSON.parse(row.content) : row.content;
     expect(c.seo.homeTitle).toBe(`${S} Home`);

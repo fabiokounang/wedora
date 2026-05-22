@@ -1,11 +1,28 @@
 const { pool, query, one } = require('../db');
+const {
+  SITES_COLUMNS,
+  SITES_SELECT_PREFIXED,
+  PAYMENT_ORDER_COLUMNS,
+  PROMO_CODE_COLUMNS,
+  MEDIA_COLUMNS,
+  collectionColumns,
+  LIMIT_ONE,
+} = require('./sqlColumns');
+
+function selectSiteSql(whereClause) {
+  return `SELECT ${SITES_COLUMNS} FROM sites WHERE ${whereClause}`;
+}
 
 async function getSiteById(id) {
-  return one('SELECT * FROM sites WHERE id = ?', [id]);
+  return one(selectSiteSql('id = ?'), [id]);
 }
 
 async function getSiteBySlug(slug) {
-  return one('SELECT * FROM sites WHERE slug = ?', [slug]);
+  return one(selectSiteSql('slug = ? LIMIT ?'), [slug, LIMIT_ONE]);
+}
+
+async function getSiteByCustomDomain(host) {
+  return one(selectSiteSql('custom_domain = ? LIMIT ?'), [host, LIMIT_ONE]);
 }
 
 async function listSites(filter = {}) {
@@ -26,7 +43,7 @@ async function listSites(filter = {}) {
   }
   const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
   const sql = `
-    SELECT sites.*, owner.role AS owner_user_role,
+    SELECT ${SITES_SELECT_PREFIXED}, owner.role AS owner_user_role,
       (SELECT COUNT(*) FROM rsvps r WHERE r.site_id = sites.id) AS rsvp_count,
       (SELECT COUNT(*) FROM wishes w WHERE w.site_id = sites.id) AS wish_count
     FROM sites
@@ -54,7 +71,7 @@ async function createSite({
     'INSERT INTO sites (owner_user_id, slug, site_type, theme_key, managed_by, status, custom_domain, music_enabled, music_autoplay, music_url) VALUES (?,?,?,?,?,?,?,?,?,?)',
     [owner_user_id, slug, st, theme_key, managed_by, status, custom_domain, music_enabled ? 1 : 0, music_autoplay ? 1 : 0, music_url],
   );
-  return one('SELECT * FROM sites WHERE id = ?', [res.insertId]);
+  return one(selectSiteSql('id = ?'), [res.insertId]);
 }
 
 async function updateSiteById(siteId, patch = {}) {
@@ -81,17 +98,17 @@ async function updateSiteById(siteId, patch = {}) {
   if (!fields.length) return getSiteById(siteId);
   params.push(siteId);
   await query(`UPDATE sites SET ${fields.join(', ')} WHERE id = ?`, params);
-  return one('SELECT * FROM sites WHERE id = ?', [siteId]);
+  return one(selectSiteSql('id = ?'), [siteId]);
 }
 
 async function publishSite(siteId) {
   await query("UPDATE sites SET status = 'published', published_at = NOW() WHERE id = ?", [siteId]);
-  return one('SELECT * FROM sites WHERE id = ?', [siteId]);
+  return one(selectSiteSql('id = ?'), [siteId]);
 }
 
 async function unpublishSite(siteId) {
   await query("UPDATE sites SET status = 'approved' WHERE id = ?", [siteId]);
-  return one('SELECT * FROM sites WHERE id = ?', [siteId]);
+  return one(selectSiteSql('id = ?'), [siteId]);
 }
 
 async function setSiteStatus(siteId, status) {
@@ -103,7 +120,7 @@ async function setSiteStatus(siteId, status) {
   const patch = { status };
   if (status !== 'published') patch.published_at = null;
   await updateSiteById(siteId, patch);
-  return one('SELECT * FROM sites WHERE id = ?', [siteId]);
+  return one(selectSiteSql('id = ?'), [siteId]);
 }
 
 async function findUserByEmail(email) {
@@ -364,27 +381,32 @@ function getCollectionConfig(table) {
 
 async function listCollection(table, siteId) {
   getCollectionConfig(table);
-  return query(`SELECT * FROM ${table} WHERE site_id = ? ORDER BY sort_order ASC, id ASC`, [siteId]);
+  const cols = collectionColumns(table);
+  return query(`SELECT ${cols} FROM ${table} WHERE site_id = ? ORDER BY sort_order ASC, id ASC`, [siteId]);
 }
 
 async function createCollectionItem(table, siteId, values) {
   const cfg = getCollectionConfig(table);
   const fields = cfg.fields.filter((f) => Object.prototype.hasOwnProperty.call(values, f));
-  const cols = ['site_id', ...fields];
-  const placeholders = cols.map(() => '?').join(',');
+  const insertCols = ['site_id', ...fields];
+  const placeholders = insertCols.map(() => '?').join(',');
   const params = [siteId, ...fields.map((f) => values[f])];
-  const res = await query(`INSERT INTO ${table} (${cols.join(',')}) VALUES (${placeholders})`, params);
-  return one(`SELECT * FROM ${table} WHERE id = ?`, [res.insertId]);
+  const res = await query(`INSERT INTO ${table} (${insertCols.join(',')}) VALUES (${placeholders})`, params);
+  const selectCols = collectionColumns(table);
+  return one(`SELECT ${selectCols} FROM ${table} WHERE id = ?`, [res.insertId]);
 }
 
 async function updateCollectionItem(table, siteId, id, values) {
   const cfg = getCollectionConfig(table);
+  const cols = collectionColumns(table);
   const fields = cfg.fields.filter((f) => Object.prototype.hasOwnProperty.call(values, f));
-  if (fields.length === 0) return one(`SELECT * FROM ${table} WHERE id = ? AND site_id = ?`, [id, siteId]);
+  if (fields.length === 0) {
+    return one(`SELECT ${cols} FROM ${table} WHERE id = ? AND site_id = ?`, [id, siteId]);
+  }
   const setSql = fields.map((f) => `${f} = ?`).join(', ');
   const params = [...fields.map((f) => values[f]), id, siteId];
   await query(`UPDATE ${table} SET ${setSql} WHERE id = ? AND site_id = ?`, params);
-  return one(`SELECT * FROM ${table} WHERE id = ? AND site_id = ?`, [id, siteId]);
+  return one(`SELECT ${cols} FROM ${table} WHERE id = ? AND site_id = ?`, [id, siteId]);
 }
 
 async function deleteCollectionItem(table, siteId, id) {
@@ -461,12 +483,12 @@ async function createMedia(siteId, { filename, original_name, mime_type, size, u
     'INSERT INTO media (site_id, filename, original_name, mime_type, size, url) VALUES (?,?,?,?,?,?)',
     [siteId, filename, original_name, mime_type, size, url]
   );
-  return one('SELECT * FROM media WHERE id = ?', [res.insertId]);
+  return one(`SELECT ${MEDIA_COLUMNS} FROM media WHERE id = ?`, [res.insertId]);
 }
 
 async function listMediaBySite(siteId, limit = 500) {
   return query(
-    'SELECT * FROM media WHERE site_id = ? ORDER BY created_at DESC LIMIT ?',
+    `SELECT ${MEDIA_COLUMNS} FROM media WHERE site_id = ? ORDER BY created_at DESC LIMIT ?`,
     [siteId, limit]
   );
 }
@@ -552,11 +574,13 @@ async function createPaymentOrder(opts, conn) {
   ];
   if (conn) {
     const [res] = await conn.query(sql, params);
-    const [rows] = await conn.query('SELECT * FROM payment_orders WHERE id = ?', [res.insertId]);
+    const [rows] = await conn.query(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE id = ?`, [
+      res.insertId,
+    ]);
     return rows[0] || null;
   }
   const res = await query(sql, params);
-  return one('SELECT * FROM payment_orders WHERE id = ?', [res.insertId]);
+  return one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE id = ?`, [res.insertId]);
 }
 
 async function updatePaymentOrderSnapFields(orderId, snapToken, snapRedirectUrl) {
@@ -567,23 +591,27 @@ async function updatePaymentOrderSnapFields(orderId, snapToken, snapRedirectUrl)
 }
 
 async function getPaymentOrderByOrderId(orderId) {
-  return one('SELECT * FROM payment_orders WHERE order_id = ? LIMIT 1', [orderId]);
+  return one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ? LIMIT ?`, [
+    orderId,
+    LIMIT_ONE,
+  ]);
 }
 
 async function listPaymentOrdersByUser(userId, limit = 20) {
   return query(
-    `SELECT * FROM payment_orders WHERE user_id = ? ORDER BY created_at DESC, id DESC LIMIT ?`,
+    `SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE user_id = ? ORDER BY created_at DESC, id DESC LIMIT ?`,
     [userId, limit]
   );
 }
 
 async function getLatestPaidOrderByUser(userId) {
   return one(
-    `SELECT * FROM payment_orders
+    `SELECT ${PAYMENT_ORDER_COLUMNS}
+     FROM payment_orders
      WHERE user_id = ? AND status = 'paid'
      ORDER BY paid_at DESC, updated_at DESC, id DESC
-     LIMIT 1`,
-    [userId]
+     LIMIT ?`,
+    [userId, LIMIT_ONE]
   );
 }
 
@@ -647,7 +675,10 @@ async function updatePaymentOrderAfterMidtrans(
 
 async function getPromoCodeByCode(code) {
   if (!code) return null;
-  return one('SELECT * FROM promo_codes WHERE code = ? LIMIT 1', [String(code).toUpperCase()]);
+  return one(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE code = ? LIMIT ?`, [
+    String(code).toUpperCase(),
+    LIMIT_ONE,
+  ]);
 }
 
 async function countPaidOrdersWithPromoCode(code) {
@@ -669,7 +700,7 @@ async function countUserPaidOrdersWithPromoCode(userId, code) {
 }
 
 async function listPromoCodes() {
-  return query('SELECT * FROM promo_codes ORDER BY id DESC');
+  return query(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes ORDER BY id DESC`);
 }
 
 async function createPromoCode(row) {
@@ -691,7 +722,7 @@ async function createPromoCode(row) {
       row.active ? 1 : 0,
     ]
   );
-  return one('SELECT * FROM promo_codes WHERE id = ?', [res.insertId]);
+  return one(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE id = ?`, [res.insertId]);
 }
 
 async function updatePromoCode(id, row) {
@@ -721,11 +752,11 @@ async function updatePromoCode(id, row) {
       id,
     ]
   );
-  return one('SELECT * FROM promo_codes WHERE id = ?', [id]);
+  return one(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE id = ?`, [id]);
 }
 
 async function getPromoCodeById(id) {
-  return one('SELECT * FROM promo_codes WHERE id = ?', [id]);
+  return one(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE id = ?`, [id]);
 }
 
 async function deletePromoCode(id) {
@@ -772,6 +803,7 @@ module.exports = {
   COLLECTION_TABLES,
   getSiteById,
   getSiteBySlug,
+  getSiteByCustomDomain,
   listSites,
   createSite,
   updateSiteById,

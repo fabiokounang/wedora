@@ -12,6 +12,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const crypto = require('crypto');
 const { test, expect } = require('@playwright/test');
 const { query, one } = require('../src/db');
+const { PAYMENT_ORDER_COLUMNS, LIMIT_ONE } = require('../src/models/sqlColumns');
 
 const BASE = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000';
 const SUPER_EMAIL = process.env.E2E_SUPER_EMAIL || 'admin@wedding.local';
@@ -378,8 +379,8 @@ test.describe('Billing & Paket', () => {
     const loc = res.headers().location || '';
     if (loc.includes('checkout_error') && loc.includes('Midtrans')) {
       const order = await one(
-        "SELECT * FROM payment_orders WHERE user_id = ? AND promo_code = ? ORDER BY id DESC LIMIT 1",
-        [clientBId, PROMO_CODE_50],
+        `SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE user_id = ? AND promo_code = ? ORDER BY id DESC LIMIT ?`,
+        [clientBId, PROMO_CODE_50, LIMIT_ONE],
       );
       if (!order) {
         expect(loc).not.toContain('checkout_error');
@@ -389,8 +390,8 @@ test.describe('Billing & Paket', () => {
       }
     } else {
       const order = await one(
-        "SELECT * FROM payment_orders WHERE user_id = ? AND promo_code = ? ORDER BY id DESC LIMIT 1",
-        [clientBId, PROMO_CODE_50],
+        `SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE user_id = ? AND promo_code = ? ORDER BY id DESC LIMIT ?`,
+        [clientBId, PROMO_CODE_50, LIMIT_ONE],
       );
       expect(order).toBeTruthy();
       expect(Number(order.gross_amount)).toBe(Math.floor(PLAN_AMOUNTS.starter / 2));
@@ -464,7 +465,7 @@ test.describe('Billing & Paket', () => {
     expect(j.ok).toBe(true);
     expect(j.status).toBe('paid');
 
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(order.status).toBe('paid');
     expect(order.payment_type).toBe('bank_transfer');
     expect(order.paid_at).toBeTruthy();
@@ -510,7 +511,7 @@ test.describe('Billing & Paket', () => {
       },
     });
     expect(res.status()).toBe(200);
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(order.status).toBe('expired');
   });
 
@@ -532,7 +533,7 @@ test.describe('Billing & Paket', () => {
       },
     });
     expect(res.status()).toBe(200);
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(order.status).toBe('cancelled');
   });
 

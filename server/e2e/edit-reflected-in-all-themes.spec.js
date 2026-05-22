@@ -14,6 +14,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const bcrypt = require('bcryptjs');
 const { test, expect } = require('@playwright/test');
 const { query } = require('../src/db');
+const { LIMIT_ONE } = require('../src/models/sqlColumns');
 const { getValidThemeKeys, themeLoader } = require('./helpers/themeKeys');
 const {
   getExpectedThemeKeys,
@@ -39,7 +40,7 @@ async function ensureE2eSuperAdminPassword() {
     hash,
     SUPER_EMAIL,
   ]);
-  const row = await query('SELECT id FROM users WHERE email = ? LIMIT 1', [SUPER_EMAIL]);
+  const row = await query('SELECT id FROM users WHERE email = ? LIMIT ?', [SUPER_EMAIL, LIMIT_ONE]);
   if (!row.length) {
     throw new Error(`User ${SUPER_EMAIL} tidak ada. Jalankan: npm run seed`);
   }

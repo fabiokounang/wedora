@@ -1,4 +1,5 @@
 const q = require('../models/queries');
+const { PROMO_CODE_COLUMNS, LIMIT_ONE } = require('../models/sqlColumns');
 
 function normalizePromoCode(raw) {
   if (raw == null) return '';
@@ -63,7 +64,10 @@ async function validatePromoForCheckout({ codeRaw, planCode, planAmount, userId,
   const oneFn = async (sql, params) => { const rows = await queryFn(sql, params); return rows[0] || null; };
 
   const promo = conn
-    ? await oneFn('SELECT * FROM promo_codes WHERE code = ? LIMIT 1 FOR UPDATE', [code])
+    ? await oneFn(`SELECT ${PROMO_CODE_COLUMNS} FROM promo_codes WHERE code = ? LIMIT ? FOR UPDATE`, [
+        code,
+        LIMIT_ONE,
+      ])
     : await q.getPromoCodeByCode(code);
 
   if (!promo) {

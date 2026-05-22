@@ -273,9 +273,10 @@ async function postSettings(jar, siteId) {
 
 async function verifyGiftQrInDb(siteId) {
   const { query } = require('../db');
+  const { LIMIT_ONE } = require('../models/sqlColumns');
   const rows = await query(
-    'SELECT id, qr_image_url FROM gift_accounts WHERE site_id = ? ORDER BY id DESC LIMIT 1',
-    [siteId]
+    'SELECT id, qr_image_url FROM gift_accounts WHERE site_id = ? ORDER BY id DESC LIMIT ?',
+    [siteId, LIMIT_ONE]
   );
   const row = rows[0];
   if (!row) throw new Error('no gift_accounts row');

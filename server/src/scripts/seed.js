@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const { query, one } = require('../db');
+const { LIMIT_ONE } = require('../models/sqlColumns');
 const themeLoader = require('../services/themeLoader');
 
 async function upsertSuperAdmin() {
@@ -186,7 +187,7 @@ async function insertSharedDemoCollections(siteId) {
 
 /** Owner for seeded/lazy preview sites: prefer existing super_admin, else bootstrap admin user. */
 async function resolvePreviewSitesOwnerId() {
-  const row = await one("SELECT id FROM users WHERE role = 'super_admin' ORDER BY id LIMIT 1", []);
+  const row = await one("SELECT id FROM users WHERE role = 'super_admin' ORDER BY id LIMIT ?", [LIMIT_ONE]);
   if (row) return row.id;
   return upsertSuperAdmin();
 }

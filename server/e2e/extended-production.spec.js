@@ -14,6 +14,7 @@ const path = require('path');
 const fs = require('fs');
 const { test, expect } = require('@playwright/test');
 const { query, one } = require('../src/db');
+const { LIMIT_ONE } = require('../src/models/sqlColumns');
 
 const BASE = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000';
 const SUPER_EMAIL = process.env.E2E_SUPER_EMAIL || 'admin@wedding.local';
@@ -64,7 +65,7 @@ test.describe('1 — Upload Media Validation', () => {
 
   test('00 — setup: login + find a site', async ({ playwright }) => {
     superCtx = await apiLogin(playwright.request, SUPER_EMAIL, SUPER_PASSWORD);
-    const site = await one('SELECT id FROM sites LIMIT 1');
+    const site = await one('SELECT id FROM sites LIMIT ?', [LIMIT_ONE]);
     expect(site).toBeTruthy();
     testSiteId = site.id;
   });
@@ -316,9 +317,9 @@ test.describe('3 — CSV RSVP Export', () => {
 
   test('20 — setup', async ({ playwright }) => {
     superCtx = await apiLogin(playwright.request, SUPER_EMAIL, SUPER_PASSWORD);
-    const site = await one("SELECT id FROM sites WHERE status = 'published' LIMIT 1");
+    const site = await one("SELECT id FROM sites WHERE status = 'published' LIMIT ?", [LIMIT_ONE]);
     if (!site) {
-      const anySite = await one('SELECT id FROM sites LIMIT 1');
+      const anySite = await one('SELECT id FROM sites LIMIT ?', [LIMIT_ONE]);
       testSiteId = anySite ? anySite.id : null;
     } else {
       testSiteId = site.id;
@@ -375,11 +376,11 @@ test.describe('4 — Public Guest UI', () => {
   let apiCtx;
 
   test('30 — setup: find a published site', async ({ playwright }) => {
-    const site = await one("SELECT slug FROM sites WHERE status = 'published' LIMIT 1");
+    const site = await one("SELECT slug FROM sites WHERE status = 'published' LIMIT ?", [LIMIT_ONE]);
     if (site) {
       publishedSlug = site.slug;
     } else {
-      const anySite = await one('SELECT id, slug FROM sites LIMIT 1');
+      const anySite = await one('SELECT id, slug FROM sites LIMIT ?', [LIMIT_ONE]);
       if (anySite) {
         await query("UPDATE sites SET status = 'published' WHERE id = ?", [anySite.id]);
         publishedSlug = anySite.slug;
@@ -460,7 +461,7 @@ test.describe('4 — Public Guest UI', () => {
   });
 
   test('39 — draft site → 403 for RSVP/wish', async () => {
-    const draft = await one("SELECT slug FROM sites WHERE status = 'draft' LIMIT 1");
+    const draft = await one("SELECT slug FROM sites WHERE status = 'draft' LIMIT ?", [LIMIT_ONE]);
     if (!draft) return;
     const r1 = await apiCtx.post(`${BASE}/api/public/site/${draft.slug}/rsvps`, {
       data: { guest_name: 'Test', attendance: 'yes' },
@@ -480,7 +481,7 @@ test.describe('5 — WA Blast', () => {
   let testSiteId;
 
   test('40 — setup: find a site', async () => {
-    const site = await one('SELECT id FROM sites LIMIT 1');
+    const site = await one('SELECT id FROM sites LIMIT ?', [LIMIT_ONE]);
     expect(site).toBeTruthy();
     testSiteId = site.id;
   });

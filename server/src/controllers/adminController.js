@@ -22,6 +22,7 @@ const { signToken, setAuthCookie, clearAuthCookie } = require('../middleware/aut
 const accountEmail = require('../services/accountEmail');
 const mailSvc = require('../services/mail');
 const waPhone = require('../utils/waPhone');
+const { LIMIT_ONE } = require('../models/sqlColumns');
 
 const WORKFLOW_NEXT = {
   draft: new Set(['in_review', 'archived']),
@@ -695,7 +696,7 @@ async function createSite(req, res) {
   try {
     await conn.beginTransaction();
 
-    const [[slugRow]] = await conn.query('SELECT id FROM sites WHERE slug = ? LIMIT 1', [slug]);
+    const [[slugRow]] = await conn.query('SELECT id FROM sites WHERE slug = ? LIMIT ?', [slug, LIMIT_ONE]);
     if (slugRow) {
       await conn.rollback();
       conn.release();

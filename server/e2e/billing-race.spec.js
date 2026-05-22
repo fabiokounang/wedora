@@ -17,6 +17,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const crypto = require('crypto');
 const { test, expect } = require('@playwright/test');
 const { query, one } = require('../src/db');
+const { PAYMENT_ORDER_COLUMNS } = require('../src/models/sqlColumns');
 
 const BASE = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000';
 const SUPER_EMAIL = process.env.E2E_SUPER_EMAIL || 'admin@wedding.local';
@@ -117,7 +118,7 @@ test.describe('Payment race conditions & concurrency', () => {
       expect(j.status).toBe('paid');
     }
 
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(order.status).toBe('paid');
     expect(order.paid_at).toBeTruthy();
 
@@ -169,7 +170,7 @@ test.describe('Payment race conditions & concurrency', () => {
     expect(rSettlement.status()).toBe(200);
     expect(rExpire.status()).toBe(200);
 
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(['paid', 'expired']).toContain(order.status);
   });
 
@@ -200,7 +201,7 @@ test.describe('Payment race conditions & concurrency', () => {
     const j = await res.json();
     expect(j.alreadyPaid).toBe(true);
 
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(order.status).toBe('paid');
     expect(String(order.paid_at)).toContain('2026-01-01');
   });
@@ -231,7 +232,7 @@ test.describe('Payment race conditions & concurrency', () => {
     });
     expect(res.status()).toBe(200);
 
-    const order = await one('SELECT * FROM payment_orders WHERE order_id = ?', [orderId]);
+    const order = await one(`SELECT ${PAYMENT_ORDER_COLUMNS} FROM payment_orders WHERE order_id = ?`, [orderId]);
     expect(order.paid_at).toBeTruthy();
     expect(String(order.paid_at)).toContain('2026-01-15');
   });

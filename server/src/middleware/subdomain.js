@@ -1,4 +1,4 @@
-const { one } = require('../db');
+const q = require('../models/queries');
 
 const RESERVED_SUBDOMAINS = new Set(['admin', 'api', 'www', '']);
 
@@ -75,7 +75,7 @@ async function resolveHost(req, res, next) {
     } else if (subdomain && !RESERVED_SUBDOMAINS.has(subdomain)) {
       slug = subdomain;
     } else if (custom) {
-      const bySite = await one('SELECT * FROM sites WHERE custom_domain = ? LIMIT 1', [host]);
+      const bySite = await q.getSiteByCustomDomain(host);
       if (bySite) {
         req.site = bySite;
         req.routeKind = 'site';
@@ -84,7 +84,7 @@ async function resolveHost(req, res, next) {
     }
 
     if (slug) {
-      let site = await one('SELECT * FROM sites WHERE slug = ? LIMIT 1', [slug]);
+      let site = await q.getSiteBySlug(slug);
       if (site) {
         req.site = site;
         req.routeKind = 'site';
@@ -101,7 +101,7 @@ async function resolveHost(req, res, next) {
             const seed = require('../scripts/seed');
             const ownerId = await seed.resolvePreviewSitesOwnerId();
             await seed.ensureSinglePreviewSite(ownerId, themeKey);
-            site = await one('SELECT * FROM sites WHERE slug = ? LIMIT 1', [slug]);
+            site = await q.getSiteBySlug(slug);
             if (site) {
               req.site = site;
               req.routeKind = 'site';
